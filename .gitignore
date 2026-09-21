@@ -1,4 +1,6 @@
 # 部署只需要 index.html 和 assets/，其余为本地工作文件
+# 背景图已压成 jpg，原 PNG 留本地作素材
+assets/*.png
 .superpowers/
 .playwright-cli/
 docs/
