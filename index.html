@@ -227,6 +227,11 @@
   .cell.l:hover{box-shadow:0 20px 36px rgba(96,76,48,.17)}
   .cell.l h4{font-family:var(--serif);font-size:16px;font-weight:600;margin-bottom:7px}
   .cell.l p{font-size:12.5px;line-height:1.78;color:var(--ink2)}
+  .cell.l .lvls{display:block;margin-bottom:7px;line-height:1.4}
+  .cell.l .lvl{display:inline-block;font-size:10px;letter-spacing:.08em;font-family:var(--serif);font-weight:600;padding:2px 7px;margin:0 4px 2px 0;border-radius:3px;vertical-align:middle}
+  .cell.l .lvl.nat{background:linear-gradient(135deg,#9a3a24,#732a18);color:#fff;box-shadow:0 2px 6px rgba(122,42,24,.32)}
+  .cell.l .lvl.prov{background:linear-gradient(135deg,#b8853a,#8a6020);color:#fff}
+  .cell.l .lvl.sch{background:rgba(145,120,84,.16);color:#8a6a3a;border:1px solid rgba(145,120,84,.32)}
   .cell.a{grid-area:ai;margin-left:8px;padding:20px 18px 20px 28px;border:0;border-left:1px solid rgba(185,138,78,.62);
     background:linear-gradient(90deg,rgba(234,213,170,.28),transparent 72%);transform:rotate(.35deg)}
   .cell.a::before{content:'✦';position:absolute;left:-9px;top:15px;color:var(--gold);font-size:13px;background:#f4ede1;padding:2px}
@@ -600,9 +605,9 @@ var TIMELINE=[
     a:{t:'规则先于模型', d:'异常归因靠的是可追踪的流程和分类模板，不是靠一个更聪明的模型。这是我最早的"AI 只是工具链一环"的直觉。', todo:true} },
   { y:'2023.09', l:{t:'浙江财经大学 · 数量经济学硕士', d:'GPA 4.6/5，学院综测 1/43。开始系统做因果推断与机器学习。'},
     a:{t:'问题驱动 → 机制假设 → 模型验证 → 稳健性检验', d:'这是我在论文里练出来的闭环，也是我后来做 AI 产品的默认工作方式。'} },
-  { y:'2025.05', l:{t:'能源经济大赛国赛二等奖 · 挑战杯省赛银奖', d:'V2G 放电定价研究，第二作者。'},
+  { y:'2025.05', l:{t:'能源经济大赛国赛二等奖 · 挑战杯省赛银奖', d:'V2G 放电定价研究，第二作者。', tag:[{t:'国家级'},{t:'省级'}]},
     a:{t:'模型给弹性，决策看阈值', d:'V2G 研究发现补贴超过阈值后参与意愿反而放缓：模型能算出弹性，"在哪停"是机制设计。AI 也一样，算得再好也要有人划边界。'} },
-  { y:'2025.06', l:{t:'新苗人才计划立项 · 挑战杯校赛一等奖', d:'两个项目的第一负责人。'},
+  { y:'2025.06', l:{t:'新苗人才计划立项 · 挑战杯校赛一等奖', d:'两个项目的第一负责人。', tag:[{t:'省部级'},{t:'校级'}]},
     a:{t:'把黑箱拆成路径', d:'结构方程模型把"购买意愿"拆成一条条可验证的路径。后来面对 AI 我也用同一把刀：不接受"它就是变聪明了"，拆到能验证为止。'} },
   { y:'2025–2026', l:{t:'五篇论文', d:'SCI Q2 已发表一篇、SCI Q1 在投一篇、EI 会议三篇（V2G 放电定价、宏观经济预测、财政政策分析）。'},
     a:{t:'模型擅长寻优，规则由人定', d:'连着写灰色模型与机器学习预测的论文，越写越清楚边界：给定规则，模型能找到很优的解；但规则对不对、结论有没有用，得有人负责。'} },
@@ -618,7 +623,8 @@ var TIMELINE=[
   TIMELINE.forEach(function(r){
     var a=r.a;
     html+='<div class="row">';
-    html+='<div class="cell l"><h4>'+r.l.t+'</h4><p>'+r.l.d+'</p></div>';
+    var ltag=r.l.tag?'<span class="lvls">'+r.l.tag.map(function(tg){var c=tg.t.indexOf('国家')>=0?'nat':tg.t.indexOf('省')>=0?'prov':'sch';return '<span class="lvl '+c+'">'+tg.t+'</span>';}).join('')+'</span>':'';
+    html+='<div class="cell l">'+ltag+'<h4>'+r.l.t+'</h4><p>'+r.l.d+'</p></div>';
     html+='<div class="yr"><span>'+r.y+'</span></div>';
     if(a){
       html+='<div class="cell a'+(a.todo?' todo':'')+'">'
