@@ -394,6 +394,13 @@
   .sh-sec p{font-size:13px;line-height:1.85;color:#5b5040}
   .sh-tech{display:flex;flex-wrap:wrap;gap:7px}
   .sh-tech span{font-size:11px;padding:5px 11px;border-radius:99px;background:rgba(160,138,104,.15);color:#6b5a3e}
+  .sh-honors{display:flex;flex-wrap:nowrap;gap:8px;overflow-x:auto;padding-bottom:7px;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .sh-honors::-webkit-scrollbar{display:none}
+  .sh-honors span{flex:0 0 auto;white-space:nowrap;font-size:11.5px;font-family:var(--serif);font-weight:600;
+    padding:6px 10px;border-radius:99px;background:rgba(160,138,104,.15);color:#6b5a3e;border:1px solid rgba(160,138,104,.3)}
+  .sh-honors span.top{background:linear-gradient(135deg,#9a3a24,#732a18);color:#fff;border:0;
+    box-shadow:0 3px 8px rgba(122,42,24,.3)}
   .sh-hi{list-style:none;padding:0}
   .sh-hi li{font-size:12.5px;line-height:1.7;color:#5b5040;padding-left:18px;position:relative;margin-bottom:7px}
   .sh-hi li::before{content:'';position:absolute;left:2px;top:8px;width:7px;height:7px;border-radius:50%;background:var(--leaf)}
@@ -758,7 +765,8 @@ var PROJECTS=[
    pos:'浙江财经大学数量经济学硕士（2023.09–2026.06，GPA 4.6/5，学院综测 1/43），本科青岛大学金融学。中间在软通动力做过近一年的支付宝渠道运维组长。',
    who:'求职方向：AI 产品经理（主），产品经理 / 数据分析 / 战略分析（备）。',
    tech:['Python','R（因果森林 / DML）','SQL','FastAPI','Next.js / React','因果推断','机器学习'],
-   done:'5 篇论文：SCI Q2 已发表 1 篇、SCI Q1 在投 1 篇、EI 会议 3 篇。荣誉：国家奖学金（学院综测 1/43）、一等学业奖学金、三好研究生、优秀研究生干部、校级优秀毕业论文。竞赛：能源经济学术创意大赛国赛二等奖、挑战杯浙江省赛银奖、新苗人才计划立项、挑战杯校赛一等奖、统计建模大赛国赛三等奖。',
+   done:'5 篇论文：SCI Q2 已发表 1 篇、SCI Q1 在投 1 篇、EI 会议 3 篇。竞赛：能源经济学术创意大赛国赛二等奖、挑战杯浙江省赛银奖、新苗人才计划立项、挑战杯校赛一等奖、统计建模大赛国赛三等奖。',
+   honors:['国家奖学金','一等学业奖学金','三好研究生','优秀研究生干部','校级优秀毕业论文'],
    hi:['习惯「问题驱动 → 机制假设 → 模型验证 → 稳健性检验」闭环','聚焦任务编排、风险识别和最终验收，不绑定单一模型','对事实、规则、异常路径和最终结果负责']}
 ];
 
@@ -1477,6 +1485,7 @@ function enterCard(token){
 function openSheet(i){
   var p=PROJECTS[i];
   var tech=(p.tech||[]).map(function(t){return '<span>'+t+'</span>'}).join('');
+  var honors=(p.honors||[]).map(function(t,i){return '<span'+(i===0?' class="top"':'')+'>'+t+'</span>'}).join('');
   var hi=(p.hi||[]).map(function(t){return '<li>'+t+'</li>'}).join('');
   $('sheetIn').innerHTML=
      '<button class="sheet-x" id="sheetX">关闭</button>'
@@ -1486,6 +1495,7 @@ function openSheet(i){
     +'<div class="sh-sec"><h5>它是什么</h5><p>'+p.pos+'</p></div>'
     +'<div class="sh-sec"><h5>面向谁</h5><p>'+p.who+'</p></div>'
     +'<div class="sh-sec"><h5>技术栈</h5><div class="sh-tech">'+tech+'</div></div>'
+    +(p.honors?'<div class="sh-sec"><h5>荣誉</h5><div class="sh-honors">'+honors+'</div></div>':'')
     +'<div class="sh-sec"><h5>做到哪了</h5><p>'+p.done+'</p></div>'
     +'<div class="sh-sec"><h5>我做的关键判断</h5><ul class="sh-hi">'+hi+'</ul></div>'
     +(p.u ? '<a class="sh-go" href="'+p.u+'" target="_blank" rel="noopener">打开线上版本 →</a>'
