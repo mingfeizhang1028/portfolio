@@ -1,0 +1,17 @@
+# 部署只需要 index.html 和 assets/，其余为本地工作文件
+.superpowers/
+.playwright-cli/
+docs/
+_c8.js
+_c9.js
+findings.md
+progress.md
+task_plan.md
+打开作品集.cmd
+.tmp_*
+*.b64
+ChatGPT Image*.png
+
+# 系统杂物
+.DS_Store
+Thumbs.db
