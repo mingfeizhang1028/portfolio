@@ -494,6 +494,9 @@
   .sh-sec{margin-bottom:20px}
   .sh-sec h5{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3);margin-bottom:8px}
   .sh-sec p{font-size:13px;line-height:1.9;color:#c2d2ec}
+  .sh-basic{list-style:none;margin:0;display:grid;gap:6px}
+  .sh-basic li{display:grid;grid-template-columns:40px 1fr;gap:12px;font-size:13px;line-height:1.85;color:#c2d2ec}
+  .sh-basic b{font-weight:600;color:var(--blue2);letter-spacing:.04em}
   .sh-tech{display:flex;flex-wrap:wrap;gap:8px}
   .sh-tech span{font-size:11px;padding:6px 13px;border-radius:99px;color:#c6dafb;
     background:rgba(79,140,255,.1);border:1px solid rgba(79,140,255,.26)}
@@ -1029,7 +1032,7 @@ var ANGLES=[
 ];
 var ABOUT={t:'关于我', s:'数量经济学硕士 · 国家奖学金 · 主导论文 3 篇 · 求职方向 AI 产品经理', intro:'我的个人档案页，放着我做过的事，也放着我一路长出来的方法。',
    tags:['数量经济学硕士','国家奖学金','AI 产品经理'], u:'',
-   pos:'浙江财经大学数量经济学硕士（2023.09–2026.06，GPA 4.6/5，学院综测 1/43），本科青岛大学金融学。中间在软通动力做过近一年的支付宝渠道运维组长。',
+   pos:[['学历','2016.09–2020.06 青岛大学 · 金融学本科；2023.09–2026.06 浙江财经大学 · 数量经济学硕士'],['工作','2020.06–2021.05 软通动力 · 支付宝渠道运维组长'],['学业','硕士 GPA 4.6/5，学院综测 1/43']],
    who:'求职方向：AI 产品经理（主），产品经理 / 数据分析 / 战略分析（备）。',
    tech:['Python','R（因果森林 / DML）','SQL','FastAPI','Next.js / React','因果推断','机器学习'],
    done:'论文：主导 SCI 一区在投 1 篇、EI 会议 2 篇；参与署名 EI 会议 1 篇、SCI 二区 1 篇。竞赛：能源经济学术创意大赛国赛二等奖、挑战杯浙江省赛银奖、新苗人才计划立项、挑战杯校赛一等奖、统计建模大赛国赛三等奖。',
@@ -1092,7 +1095,7 @@ function openAbout(){
     +'<div class="sh-kick">PROFILE / 关于我</div>'
     +'<h3 class="sh-h">'+p.t+'</h3>'
     +'<p class="sh-s">'+p.s+'</p>'
-    +'<div class="sh-sec"><h5>基本情况</h5><p>'+p.pos+'</p></div>'
+    +'<div class="sh-sec"><h5>基本情况</h5><ul class="sh-basic">'+p.pos.map(function(r){return '<li><b>'+r[0]+'</b><span>'+r[1]+'</span></li>'}).join('')+'</ul></div>'
     +'<div class="sh-sec"><h5>求职方向</h5><p>'+p.who+'</p></div>'
     +'<div class="sh-sec"><h5>工具与方法</h5><div class="sh-tech">'+tech+'</div></div>'
     +'<div class="sh-sec"><h5>荣誉</h5><div class="sh-honors">'+honors+'</div></div>'
