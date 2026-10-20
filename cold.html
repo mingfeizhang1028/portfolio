@@ -299,7 +299,7 @@
   .orbit-list-trigger:hover,.orbit-list-trigger:focus-visible{color:#edf3ff;border-color:#8cd9e6}
   .tl-scrim{position:fixed;inset:0;z-index:49;background:rgba(2,6,16,.62);backdrop-filter:blur(5px);opacity:0;pointer-events:none;transition:opacity .35s}
   .tl-scrim.on{opacity:1;pointer-events:auto}
-  .tl-drawer{position:fixed;top:0;right:0;bottom:0;z-index:50;width:min(470px,92vw);padding:34px 32px;overflow-y:auto;color:var(--tx);background:linear-gradient(155deg,#182b42,#0b1426 72%);border-left:1px solid rgba(109,190,255,.4);box-shadow:-30px 0 90px rgba(1,5,15,.6);transform:translateX(102%);transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+  .tl-drawer{position:fixed;top:0;right:0;bottom:0;z-index:50;width:min(470px,92vw);padding:92px 32px 34px;overflow-y:auto;color:var(--tx);background:linear-gradient(155deg,#182b42,#0b1426 72%);border-left:1px solid rgba(109,190,255,.4);box-shadow:-30px 0 90px rgba(1,5,15,.6);transform:translateX(102%);transition:transform .4s cubic-bezier(.2,.8,.2,1)}
   .tl-drawer.on{transform:none}
   .tl-drawer .d-close{float:right;background:none;border:1px solid rgba(255,255,255,.25);border-radius:99px;padding:6px 12px;color:var(--tx2);cursor:pointer}
   .tl-drawer .d-date{font-size:12px;letter-spacing:.12em;color:#55e5bc;margin:2px 0 12px}
@@ -323,27 +323,36 @@
   .tl-index-item:hover,.tl-index-item:focus-visible{color:#fff;background:rgba(109,190,255,.08)}
   .tl-index-item small{display:block;margin-top:4px;color:var(--tx3);font-size:10px}
   /* ================= 掷骰探索 ================= */
-  /* 内容区圆角细边框（对齐参考图） */
+  /* 内容区圆角细边框；用弹性布局把「骰子 / 结果卡 / 六节点」分成互不重叠的三块 */
+  #v-dice{--die-s:clamp(104px,min(16vw,24vh),196px);--stage:calc(var(--die-s)*1.36)}
   .board{position:absolute;inset:88px clamp(14px,2.6vw,30px) 24px;
     border:1px solid rgba(255,255,255,.13);border-radius:26px;
-    background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012) 42%,transparent)}
-  /* 骰子区（放大 + 冰晶加厚） */
-  .diepos{position:absolute;left:19%;top:26%;transform:translate(-50%,-50%);
-    width:290px;height:290px;display:grid;place-items:center;z-index:6}
+    background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012) 42%,transparent);
+    display:flex;align-items:stretch;gap:clamp(24px,4vw,72px);
+    padding:clamp(16px,3vh,36px) clamp(18px,3vw,48px) clamp(116px,13vh,132px)}
+
+  /* 左：骰子区。徽标 / 骰子 / 提示纵向排列，彼此留白，不再压在一起 */
+  .dice-stage{flex:0 0 auto;display:flex;align-items:center;justify-content:center;
+    padding-left:clamp(0px,2vw,26px)}
+  .diepos{display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:clamp(9px,1.5vh,18px);z-index:6}
+  .die-wrap{position:relative;flex:0 0 auto;width:var(--stage);height:var(--stage);display:grid;place-items:center}
   .diepos .hopper{width:100%;height:100%;display:grid;place-items:center;animation:bob 5.5s ease-in-out infinite}
-  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-11px)}}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
   .diepos.throw .hopper{animation:none}
   .diepos .sway{transform-style:preserve-3d;animation:sway 8s ease-in-out infinite alternate}
   @keyframes sway{from{transform:rotateX(-21deg) rotateY(-22deg)}to{transform:rotateX(-17deg) rotateY(-10deg)}}
   /* 首次掷骰后锁定到固定 3/4 俯视角，让结果顶面稳定可读（与参考图一致） */
   .diepos.locked .sway{animation:none;transform:rotateX(-26deg) rotateY(-16deg)}
-  .diepos .dieglow{position:absolute;width:380px;height:380px;border-radius:50%;z-index:-1;
+  .diepos .dieglow{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+    width:146%;height:146%;border-radius:50%;z-index:-1;
     background:radial-gradient(circle,rgba(79,140,255,.36),transparent 66%);filter:blur(10px);
     opacity:calc(.12 + var(--glow-amt,.6)*.88);transition:opacity .3s}
-  .diepos .pool{position:absolute;bottom:15px;width:300px;height:80px;border-radius:50%;
+  .diepos .pool{position:absolute;left:50%;bottom:2%;transform:translateX(-50%);
+    width:112%;height:32%;border-radius:50%;
     background:radial-gradient(ellipse,rgba(246,169,59,.42),rgba(246,169,59,.1) 55%,transparent 76%);filter:blur(7px);
     opacity:calc(.3 + var(--glow-amt,.6)*.7);transition:opacity .3s}
-  .diepos .die{--s:250px;--h:125px;cursor:pointer}
+  .diepos .die{--s:var(--die-s);--h:calc(var(--die-s) / 2);cursor:pointer}
   /* 冰晶质感加厚：更厚的晶壁与内折光 */
   .diepos .die .f{border-width:2px;border-color:rgba(255,255,255,.78);
     box-shadow:inset 0 0 34px rgba(255,255,255,.3),inset 0 4px 9px rgba(255,255,255,.85),
@@ -351,62 +360,61 @@
   /* 悬停只提亮晶壁：直接给 .die 加 filter 会生成分组上下文，把 preserve-3d 压成平面 */
   .diepos .die:hover .f{box-shadow:inset 0 0 42px rgba(255,255,255,.44),inset 0 4px 10px rgba(255,255,255,.95),
       inset 0 -14px 28px rgba(84,124,196,.24)}
-  .die-badge{position:absolute;top:-6px;left:64%;white-space:nowrap;z-index:8;
-    font-size:12px;letter-spacing:.08em;color:#cfe0ff;padding:8px 15px;border-radius:11px;
+  .die-badge{white-space:nowrap;z-index:8;
+    font-size:13.5px;letter-spacing:.06em;color:#d6e6ff;padding:8px 15px;border-radius:11px;
     background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
     box-shadow:0 10px 26px rgba(3,8,22,.5),inset 0 1px 0 rgba(255,255,255,.14);
     backdrop-filter:blur(14px)}
   .die-badge b{color:#8fc2ff;font-variant-numeric:tabular-nums}
-  .die-tap{position:absolute;bottom:-4px;left:50%;transform:translateX(-50%);white-space:nowrap;
-    font-size:11px;letter-spacing:.1em;color:var(--tx3)}
+  .die-tap{white-space:nowrap;font-size:13px;letter-spacing:.08em;color:var(--tx3)}
   .diepos.throw .die-tap{display:none}
 
-  /* 六节点路径 */
-  .nodes{position:absolute;left:clamp(24px,7vw,110px);right:clamp(24px,7vw,110px);top:50%;z-index:5}
-  .nline{position:absolute;left:4%;right:4%;top:7px;height:2px;border-radius:2px;
+  /* 右（窄屏为下）：结果卡 + 六节点路径 */
+  .dice-rail{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;
+    justify-content:flex-end;align-items:stretch;gap:clamp(18px,2.2vh,28px)}
+  .nodes{position:relative;z-index:5}
+  .nline{position:absolute;left:3%;right:3%;top:7px;height:2px;border-radius:2px;
     background:rgba(130,165,225,.18)}
   .nfill{position:absolute;left:0;top:0;height:100%;width:0;border-radius:2px;
     background:linear-gradient(90deg,var(--blue),var(--blue2));box-shadow:0 0 10px var(--blue-glow);
     transform-origin:left;transition:width .7s cubic-bezier(.2,.8,.2,1)}
-  .nrow{position:relative;display:flex}
-  .node{flex:1;display:flex;flex-direction:column;align-items:center;gap:13px;cursor:default;
-    background:none;border:0;color:var(--tx3);font-family:inherit;position:relative}
-  .dot{width:15px;height:15px;border-radius:50%;background:#1a2945;border:1.5px solid rgba(180,205,250,.4);
-    box-shadow:0 0 0 6px rgba(12,20,40,.72);transition:all .35s}
-  .lab{font-size:12.5px;letter-spacing:.04em;transition:color .3s;text-align:center;line-height:1.5}
+  .nrow{position:relative;display:flex;align-items:flex-start}
+  .node{flex:1;display:flex;flex-direction:column;align-items:center;gap:14px;cursor:default;
+    background:none;border:0;color:var(--tx3);font-family:inherit;position:relative;padding:1px 2px 0}
+  .dot{position:relative;display:block;width:16px;height:16px;border-radius:50%;background:#1a2945;
+    border:1.5px solid rgba(180,205,250,.4);box-shadow:0 0 0 5px rgba(12,20,40,.72);
+    transition:background .35s,border-color .35s,box-shadow .35s}
+  .lab{font-size:15px;letter-spacing:.05em;transition:color .3s,font-size .3s;text-align:center;line-height:1.4;white-space:nowrap}
   .node.done .dot{background:var(--blue);border-color:#b9d6ff;
-    box-shadow:0 0 0 6px rgba(79,140,255,.14),0 0 16px var(--blue-glow)}
+    box-shadow:0 0 0 5px rgba(79,140,255,.14),0 0 16px var(--blue-glow)}
   .node.done .lab{color:#b9cdec}
-  .node.cur .dot{position:relative;width:72px;height:72px;margin-top:-28px;border-radius:50%;
-    background:radial-gradient(circle,rgba(79,140,255,.2),rgba(79,140,255,.05) 62%,transparent 76%);
-    border:2px solid rgba(165,205,255,.92);
-    box-shadow:0 0 0 7px rgba(79,140,255,.16),0 0 40px rgba(95,170,255,.95);
+  /* 当前节点用外圈光环表示，不改变节点尺寸，避免整行跳动 */
+  .node.cur .dot{background:radial-gradient(circle,#a9cdff,rgba(79,140,255,.9));border-color:#e2efff;
+    box-shadow:0 0 18px rgba(95,170,255,.95)}
+  .node.cur .dot::after{content:'';position:absolute;left:50%;top:50%;width:56px;height:56px;margin:-28px 0 0 -28px;
+    border-radius:50%;border:2px solid rgba(165,205,255,.9);pointer-events:none;
     animation:dotPulse 1.8s ease-in-out infinite}
-  .node.cur .lab{position:absolute;top:8px;left:50%;transform:translate(-50%,-50%);width:92px;
-    color:#fff;font-weight:600;text-shadow:0 0 14px rgba(95,170,255,.95)}
-  @keyframes dotPulse{0%,100%{box-shadow:0 0 0 7px rgba(79,140,255,.16),0 0 30px rgba(95,170,255,.85)}
-    50%{box-shadow:0 0 0 15px rgba(79,140,255,.06),0 0 52px rgba(95,170,255,1)}}
+  .node.cur .lab{color:#fff;font-weight:600;font-size:16px;text-shadow:0 0 16px rgba(95,170,255,.95)}
+  @keyframes dotPulse{0%,100%{box-shadow:0 0 0 5px rgba(79,140,255,.18),0 0 24px rgba(95,170,255,.8);opacity:.9}
+    50%{box-shadow:0 0 0 12px rgba(79,140,255,.05),0 0 46px rgba(95,170,255,1);opacity:1}}
 
-  /* 白色玻璃信息卡（对齐参考图） */
-  .pop{--ax:50%;position:absolute;z-index:9;width:298px;padding:21px 22px 19px;border-radius:17px;pointer-events:none;
+  /* 白色玻璃信息卡：固定在节点上方，不覆盖骰子与节点 */
+  .pop{position:relative;z-index:9;width:min(348px,100%);min-height:196px;margin:0 auto;
+    padding:22px 24px 20px;border-radius:18px;pointer-events:none;
     background:linear-gradient(168deg,#ffffff 0%,#edf3fc 100%);color:#1d2940;
     box-shadow:0 34px 80px rgba(3,9,24,.65),0 0 0 1px rgba(255,255,255,.65),0 0 48px rgba(79,140,255,.28);
-    opacity:0;transform:translate(-50%,-10px) scale(.96);transition:opacity .45s ease,transform .5s cubic-bezier(.2,.9,.25,1),left .55s cubic-bezier(.2,.9,.25,1),top .55s cubic-bezier(.2,.9,.25,1)}
-  .pop.on{opacity:1;transform:translate(-50%,0) scale(1);pointer-events:auto}
-  .pop::before{content:'';position:absolute;top:-7px;left:var(--ax);transform:translateX(-50%) rotate(45deg);
-    width:14px;height:14px;background:#fff;border-left:1px solid rgba(180,200,230,.6);border-top:1px solid rgba(180,200,230,.6)}
-  /* 卡片位于节点上方时，箭头翻到底部指向节点 */
-  .pop.up::before{top:auto;bottom:-7px;border-left:0;border-top:0;
-    border-right:1px solid rgba(180,200,230,.6);border-bottom:1px solid rgba(180,200,230,.6)}
-  .pop h3{font-family:var(--serif);font-size:19px;font-weight:600;color:#16243c}
-  .pop .ptags{display:flex;flex-wrap:wrap;gap:7px;margin:11px 0 13px}
-  .pop .ptags span{font-size:10.5px;padding:4px 10px;border-radius:7px;font-weight:600;letter-spacing:.02em}
+    opacity:0;transform:translateY(10px) scale(.97);
+    transition:opacity .4s ease,transform .5s cubic-bezier(.2,.9,.25,1)}
+  .pop.on{opacity:1;transform:none;pointer-events:auto}
+  .pop h3{font-family:var(--serif);font-size:22px;font-weight:600;color:#16243c;letter-spacing:.04em}
+  .pop .ptags{display:flex;flex-wrap:wrap;gap:8px;margin:13px 0 14px}
+  .pop .ptags span{font-size:12px;padding:5px 11px;border-radius:7px;font-weight:600;letter-spacing:.02em}
   .pop .ptags .t1{background:rgba(79,140,255,.12);color:#2a5fc0}
   .pop .ptags .t2{background:rgba(246,150,45,.14);color:#b06d12}
   .pop .ptags .t3{background:rgba(120,140,175,.14);color:#48577a}
-  .pop p{font-size:12.5px;line-height:1.75;color:#51607d}
-  .pop .pbtns{display:flex;gap:10px;margin-top:16px}
-  .pop .pbtns button{flex:1;cursor:pointer;font-size:12.5px;font-weight:600;padding:10px 0;border-radius:99px;letter-spacing:.04em}
+  .pop p{font-size:13.5px;line-height:1.8;color:#4a5b78}
+  .pop .pbtns{display:flex;gap:10px;margin-top:18px}
+  .pop .pbtns button{flex:1;cursor:pointer;font-size:13.5px;font-weight:600;padding:11px 0;border-radius:99px;letter-spacing:.04em}
   .pop .pdetail{color:#fff;border:1px solid #2b55ad;background:linear-gradient(135deg,#2c5fc7,#173a7d);
     box-shadow:0 8px 18px rgba(44,95,199,.35)}
   .pop .pmore{color:#2a4880;border:1.5px solid rgba(43,85,173,.5);background:#fff;
@@ -530,23 +538,29 @@
     .tl-drawer{top:auto;left:0;right:0;bottom:0;width:100%;max-height:82vh;padding:26px 22px 30px;border-left:0;border-top:1px solid rgba(109,190,255,.4);border-radius:22px 22px 0 0;transform:translateY(102%)}
     .tl-drawer.on{transform:none}
 
-    .board{top:74px;left:8px;right:8px;bottom:8px;border-radius:18px}
-    .diepos{left:50%;top:24%;width:168px;height:168px}
-    .diepos .die{--s:124px;--h:62px}
-    .diepos .dieglow{width:220px;height:220px}
-    .diepos .pool{width:180px}
-    .die-badge{left:auto;right:-14px;top:-12px}
-    .nodes{left:14px;right:14px;top:52%}
-    .node{gap:9px}
+    .board{top:74px;left:8px;right:8px;bottom:8px;border-radius:18px;
+      flex-direction:column;align-items:stretch;justify-content:flex-start;
+      gap:14px;padding:14px 14px 196px}
+    #v-dice{--die-s:clamp(96px,32vw,128px)}
+    .dice-stage{flex:1 1 auto;min-height:0;padding-left:0}
+    .diepos{gap:10px}
+    .die-badge{font-size:12px;padding:7px 12px}
+    .die-tap{font-size:12px}
+    .dice-rail{width:100%;flex:0 0 auto;gap:16px}
+    .pop{width:100%;min-height:0;padding:18px 18px 16px;border-radius:16px}
+    .pop h3{font-size:19px}
+    .pop .ptags{margin:10px 0 12px}
+    .pop .ptags span{font-size:11px;padding:4px 9px}
+    .pop p{font-size:13px;line-height:1.75}
+    .pop .pbtns{margin-top:14px}
+    .pop .pbtns button{font-size:13px;padding:10px 0}
+    .nline{left:3%;right:3%;top:5px}
+    .node{gap:10px;padding:0}
     .dot{width:12px;height:12px;box-shadow:0 0 0 4px rgba(12,20,40,.72)}
-    .node.cur .dot{width:52px;height:52px;margin-top:-20px}
-    .node.cur .lab{width:64px;font-size:10px;top:6px}
-    .lab{font-size:10px;max-width:56px;line-height:1.35}
-    .pop{position:fixed;left:12px;right:12px;bottom:200px;width:auto;top:auto;z-index:30;
-      transform:translateY(14px) scale(.98)}
-    .pop.on{transform:translateY(0) scale(1)}
-    .pop::before{display:none}
-    .dock{left:12px;right:12px;bottom:84px;align-items:center;gap:8px}
+    .node.cur .dot::after{width:44px;height:44px;margin:-22px 0 0 -22px}
+    .lab{font-size:13.5px;line-height:1.35}
+    .node.cur .lab{font-size:14.5px}
+    .dock{left:12px;right:12px;bottom:100px;align-items:center;gap:8px}
     .dockbar{padding:9px 12px}
     .prog{width:110px}
     .prog-wrap{padding:7px 13px}
@@ -567,6 +581,27 @@
     .path-preview{gap:12px;margin-top:8px}
     .pp{padding:16px 18px}
     .pp .pp-txt b{font-size:15px}
+  }
+  /* 矮窗口（常见于笔记本半屏浏览）：压缩卡片与节点，保证三块都放得下 */
+  @media(min-width:761px) and (max-height:660px){
+    .board{padding:14px clamp(16px,2.6vw,36px) 124px;gap:clamp(14px,2.4vw,36px)}
+    .pop{min-height:0;padding:14px 18px 13px}
+    .pop h3{font-size:18px}
+    .pop .ptags{margin:9px 0 10px;gap:6px}
+    .pop .ptags span{font-size:11px;padding:3px 8px}
+    .pop p{font-size:12.5px;line-height:1.65}
+    .pop .pbtns{margin-top:12px;gap:8px}
+    .pop .pbtns button{padding:8px 0;font-size:12.5px}
+    .node{gap:8px}
+    .lab{font-size:13.5px}
+    .node.cur .lab{font-size:14.5px}
+  }
+  /* 高窗口：结果卡与骰子共用一条水平中线，视觉上成为一组 */
+  @media(min-width:761px) and (min-height:661px){
+    .dice-rail{position:relative}
+    .pop{position:absolute;left:50%;top:50%;margin:0;width:min(348px,92%);
+      transform:translate(-50%,calc(-50% + 10px)) scale(.97)}
+    .pop.on{transform:translate(-50%,-50%)}
   }
   @media(prefers-reduced-motion:reduce){
     *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;
@@ -784,31 +819,36 @@
   </div>
 
   <div class="board">
-    <div class="diepos" id="diePos">
-      <div class="dieglow"></div>
-      <div class="pool"></div>
-      <div class="die-badge" id="dieBadge">六面 · 六个角度</div>
-      <div class="hopper" id="hopper">
-        <div class="sway">
-          <div class="die" id="dcDie">
-            <div class="f f1"><i class="pips p1"></i></div>
-            <div class="f f2"><i class="pips p6"></i></div>
-            <div class="f f3"><i class="pips p3"></i></div>
-            <div class="f f4"><i class="pips p4"></i></div>
-            <div class="f f5"><i class="pips p5"></i></div>
-            <div class="f f6"><i class="pips p2"></i></div>
+    <div class="dice-stage">
+      <div class="diepos" id="diePos">
+        <div class="die-badge" id="dieBadge">六面 · 六个角度</div>
+        <div class="die-wrap">
+          <div class="dieglow"></div>
+          <div class="pool"></div>
+          <div class="hopper" id="hopper">
+            <div class="sway">
+              <div class="die" id="dcDie">
+                <div class="f f1"><i class="pips p1"></i></div>
+                <div class="f f2"><i class="pips p6"></i></div>
+                <div class="f f3"><i class="pips p3"></i></div>
+                <div class="f f4"><i class="pips p4"></i></div>
+                <div class="f f5"><i class="pips p5"></i></div>
+                <div class="f f6"><i class="pips p2"></i></div>
+              </div>
+            </div>
           </div>
         </div>
+        <div class="die-tap">点骰子，决定下一段路径</div>
       </div>
-      <div class="die-tap">点骰子，决定下一段路径</div>
     </div>
 
-    <div class="nodes" id="nodes">
-      <div class="nline"><div class="nfill" id="nfill"></div></div>
-      <div class="nrow" id="nrow"></div>
+    <div class="dice-rail">
+      <div class="pop" id="pop"></div>
+      <div class="nodes" id="nodes">
+        <div class="nline"><div class="nfill" id="nfill"></div></div>
+        <div class="nrow" id="nrow"></div>
+      </div>
     </div>
-
-    <div class="pop" id="pop"></div>
   </div>
 
   <div class="dock">
@@ -852,7 +892,6 @@ function show(id){
   document.querySelectorAll('.navlinks button').forEach(function(b){
     b.classList.toggle('on',b.getAttribute('data-to')===id)});
   $('sheet').classList.remove('on');
-  if(id==='v-dice') positionPop();
 }
 document.addEventListener('click',function(e){
   var t=e.target.closest&&e.target.closest('[data-to]');
@@ -1013,39 +1052,6 @@ var nodeEls=[];
     });
   });
 })();
-function positionPop(){
-  if(cur<0||!nodeEls[cur]) return;
-  var pop=$('pop');
-  /* 窄屏交给 CSS 的底部浮层，不写内联坐标 */
-  if(window.innerWidth<=760){pop.style.left='';pop.style.top='';pop.classList.remove('up');return;}
-  var board=pop.offsetParent||document.querySelector('.board');
-  var br=board.getBoundingClientRect();
-  var row=$('nrow').getBoundingClientRect();
-  var dot=nodeEls[cur].querySelector('.dot').getBoundingClientRect();
-  var dock=document.querySelector('.dock').getBoundingClientRect();
-  var ctr=document.querySelector('.ctrls').getBoundingClientRect();
-  var popW=pop.offsetWidth||298, popH=pop.offsetHeight||200;
-  /* 水平：尽量让卡片中线对准节点，靠边则夹回，箭头单独对准节点 */
-  var cx=dot.left+dot.width/2-br.left;
-  var x=Math.max(popW/2+8,Math.min(br.width-popW/2-8,cx));
-  var ax=Math.max(22,Math.min(popW-22,cx-(x-popW/2)));
-  pop.style.setProperty('--ax',ax+'px');
-  pop.style.left=x+'px';
-  /* 垂直：底部为两个控制条预留空间；先尝试放在节点行下方，放不下再放上方 */
-  var bandBottom=Math.min(dock.top,ctr.top)-br.top-12;
-  var belowTop=row.bottom-br.top+12;
-  var aboveTop=dot.top-br.top-14-popH;
-  var top;
-  if(belowTop+popH<=bandBottom){ top=belowTop; pop.classList.remove('up'); }
-  else if(aboveTop>=10){ top=aboveTop; pop.classList.add('up'); }
-  else{
-    var belowGap=Math.max(0,bandBottom-belowTop);
-    var aboveGap=Math.max(0,dot.top-br.top-10);
-    if(aboveGap>belowGap){ top=10; pop.classList.add('up'); }
-    else { top=Math.max(10,bandBottom-popH); pop.classList.remove('up'); }
-  }
-  pop.style.top=top+'px';
-}
 
 /* ============ 角度详情 ============ */
 function jumpToTimeline(id){
@@ -1126,7 +1132,6 @@ function openPop(i,showing){
     +'<div class="pbtns"><button class="pdetail">查看详情</button><button class="pmore">继续探索</button></div>';
   popEl.querySelector('.pdetail').addEventListener('click',function(){openSheet(i)});
   popEl.querySelector('.pmore').addEventListener('click',function(){throwDie()});
-  positionPop();
   requestAnimationFrame(function(){popEl.classList.add('on')});
 }
 
@@ -1235,7 +1240,6 @@ $('cSnd').addEventListener('input',function(){
 document.documentElement.style.setProperty('--wind-spd',(0.6+wind*1.4).toFixed(2));
 document.documentElement.style.setProperty('--glow-amt',glow.toFixed(2));
 
-window.addEventListener('resize',function(){positionPop()});
 refreshFound();
 </script>
 </body>
