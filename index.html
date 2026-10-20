@@ -254,7 +254,7 @@
   /* ================= 骰子 · 藤蔓探险 ================= */
   #v-dice{overflow:hidden;background:#dfe6d1}
   #v-dice::before{content:'';position:absolute;inset:-20%;pointer-events:none;z-index:1;
-    background:radial-gradient(ellipse at 50% 44%,transparent 28%,rgba(64,73,47,.08) 70%,rgba(49,53,37,.35) 100%);mix-blend-mode:multiply}
+    background:radial-gradient(ellipse at 50% 44%,transparent 30%,rgba(64,73,47,.035) 72%,rgba(49,53,37,.14) 100%);mix-blend-mode:multiply}
   .dc-bar{position:fixed;z-index:30;left:50%;transform:translateX(-50%);bottom:26px;display:flex;align-items:center;gap:18px;
     padding:12px 18px;background:rgba(247,242,225,.76);backdrop-filter:blur(18px) saturate(1.12);
     border:1px solid rgba(114,92,54,.32);box-shadow:0 20px 42px rgba(35,54,32,.28),inset 0 1px rgba(255,255,255,.6);
@@ -264,6 +264,7 @@
     clip-path:polygon(7px 0,100% 0,100% calc(100% - 7px),calc(100% - 7px) 100%,0 100%,0 7px)}
   .dc-bar .val{font-size:12px;color:var(--ink2);min-width:112px}
   .dc-bar .val b{color:var(--gold2);font-variant-numeric:tabular-nums}
+  .dc-bar .val .dc-intro{display:block;max-width:270px;margin-top:4px;color:#6b6048;font-size:11px;line-height:1.45;white-space:normal}
   .dc-bar label{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink2)}
   .dc-bar input[type=range]{width:96px;accent-color:#c9a86a}
   .dc-bar input[type=checkbox]{accent-color:#c9a86a}
@@ -278,7 +279,7 @@
     background-image:linear-gradient(180deg,rgba(232,239,226,.1),rgba(68,91,57,.2)),url('assets/dice-valley-bg.jpg');
     background-size:cover;background-position:center center;transform:translate3d(calc(var(--cam-x)*-.1),calc(var(--cam-y)*-.06),0);transform-origin:50% 56%}
   .dc-scenery::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,250,229,.12),transparent 45%,rgba(39,58,37,.26));mix-blend-mode:multiply}
-  .dc-scenery::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 42%,transparent 20%,rgba(32,48,35,.12) 76%,rgba(29,38,28,.36) 100%)}
+  .dc-scenery::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 42%,transparent 22%,rgba(32,48,35,.06) 78%,rgba(29,38,28,.18) 100%)}
   .dc-scenery .ridge{position:absolute;left:-5%;right:-5%;bottom:24%;height:43%;
     background:linear-gradient(155deg,transparent 0 18%,rgba(159,186,141,.18) 18.4% 31%,transparent 31.5% 45%,rgba(96,128,88,.22) 45.5% 61%,transparent 61.5%);
     opacity:.62;filter:blur(1.4px);mix-blend-mode:soft-light}
@@ -300,7 +301,7 @@
   @keyframes dcPollen{to{transform:translate3d(8px,-14px,0);opacity:.68}}
   .dc-stage svg{position:absolute;inset:0;width:100%;height:100%;z-index:2}
   .vineA{fill:none;stroke:#b8cc9e;stroke-width:4.4;stroke-linecap:round;opacity:.88}
-  .vineB{fill:none;stroke:#415b39;stroke-width:15;stroke-linecap:round;filter:drop-shadow(10px 14px 8px rgba(35,53,32,.3))}
+  .vineB{fill:none;stroke:#415b39;stroke-width:15;stroke-linecap:round;filter:drop-shadow(8px 10px 7px rgba(35,53,32,.18))}
   .branch{fill:none;stroke:#647f50;stroke-width:6.6;stroke-linecap:round;filter:drop-shadow(5px 8px 6px rgba(35,53,32,.25))}
   .leaf{fill:var(--leaf2);opacity:.95;filter:drop-shadow(2px 3px 2px rgba(70,88,54,.15))}
   #lf1,#lf4{fill:#8da879}#lf2,#lf5{fill:#c2d3ad}
@@ -353,16 +354,16 @@
     border:1px solid rgba(139,111,73,.35);box-shadow:0 19px 36px rgba(83,66,43,.27);text-align:center;
     max-width:min(280px,70vw);line-height:1.58;
     clip-path:polygon(8px 0,100% 0,100% calc(100% - 9px),calc(100% - 9px) 100%,0 100%,0 8px);
-    transform:translate(-50%,calc(-50% + 24px)) rotate(var(--rot)) scale(.97);opacity:0;pointer-events:none;will-change:transform,opacity;
+    transform:translate(-50%,calc(-50% + 24px)) rotate(var(--rot)) scale(calc(.97 * var(--card-scale,1)));opacity:0;pointer-events:none;will-change:transform,opacity;
     transition:transform .72s cubic-bezier(.22,.72,.25,1),opacity .58s ease-out}
   .card::before{content:'';position:absolute;width:12px;height:12px;border-radius:50%;left:50%;top:7px;transform:translateX(-50%);
     background:radial-gradient(circle at 35% 30%,#f2d18a,#a97735 66%);box-shadow:0 2px 4px rgba(73,48,23,.35)}
-  .card.on{opacity:1;transform:translate(-50%,-50%) rotate(var(--rot)) scale(1);pointer-events:auto}
-  .card.exit{opacity:0;transform:translate(-50%,calc(-50% + 22px)) rotate(var(--rot)) scale(.98);pointer-events:none}
+  .card.on{opacity:1;transform:translate(-50%,-50%) rotate(var(--rot)) scale(var(--card-scale,1));pointer-events:auto}
+  .card.exit{opacity:0;transform:translate(-50%,calc(-50% + 22px)) rotate(var(--rot)) scale(calc(.98 * var(--card-scale,1)));pointer-events:none}
   .card b,.card i,.card .link{opacity:0;transform:translateY(5px);transition:opacity .34s ease-out,transform .46s ease-out}
-  .card b{display:block;font-family:var(--serif);font-size:14px;color:#4f402c;margin:3px 0 4px;transition-delay:.08s}
-  .card i{font-style:normal;font-size:10.5px;color:var(--ink3);transition-delay:.18s}
-  .card .link{display:inline-block;margin-top:9px;font-size:10.5px;color:var(--gold2);font-weight:600;
+  .card b{display:block;font-family:var(--serif);font-size:15px;color:#4f402c;margin:3px 0 4px;transition-delay:.08s}
+  .card i{font-style:normal;font-size:11.5px;color:var(--ink3);transition-delay:.18s}
+  .card .link{display:inline-block;margin-top:9px;font-size:11.5px;color:var(--gold2);font-weight:600;
     text-decoration:none;border-bottom:1px solid rgba(185,138,78,.5);cursor:pointer;background:none;border-left:0;border-right:0;border-top:0;
     padding:0 0 1px;font-family:inherit}
   .card .link:hover{color:#6b4f22;border-color:#6b4f22}
@@ -404,6 +405,14 @@
   .sh-hi{list-style:none;padding:0}
   .sh-hi li{font-size:12.5px;line-height:1.7;color:#5b5040;padding-left:18px;position:relative;margin-bottom:7px}
   .sh-hi li::before{content:'';position:absolute;left:2px;top:8px;width:7px;height:7px;border-radius:50%;background:var(--leaf)}
+  .sh-rels{display:flex;flex-wrap:wrap;gap:8px}
+  .sh-rel{display:inline-flex;align-items:center;gap:7px;padding:7px 12px;border:1px solid rgba(160,138,104,.42);border-radius:99px;background:rgba(255,255,255,.5);color:#5b5040;font-size:12.5px;cursor:pointer;font-family:inherit}
+  .sh-rel:hover{border-color:#9a3a24;color:#9a3a24}
+  .sh-rel span{color:#9d8e75;font-size:11px;letter-spacing:.04em}
+  .row.hit .cell{box-shadow:0 0 0 2px rgba(154,58,36,.45);border-radius:10px}
+  .row.hit{align-self:stretch}
+  #v-hero .about-link{margin-top:14px;display:inline-block;font-size:12.5px;letter-spacing:.08em;color:#6b5a3e;border-bottom:1px solid rgba(107,90,62,.35);padding-bottom:2px;cursor:pointer;background:none;font-family:inherit}
+  #v-hero .about-link:hover{color:#9a3a24;border-color:#9a3a24}
   .sh-go{display:inline-block;margin-top:4px;font-size:13px;font-weight:600;color:#3b2f1e;text-decoration:none;
     padding:11px 24px;border-radius:99px;background:linear-gradient(160deg,#f4e6c4,#ddc292);
     box-shadow:0 8px 20px rgba(150,120,80,.24)}
@@ -417,6 +426,128 @@
   @media(prefers-reduced-motion:reduce){
     *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
     .row.reveal-ready{opacity:1;transform:none}
+  }
+
+  /* ================= 2026 · 野生攀援统一场景 ================= */
+  .paper{background-color:#dce5d1;background-image:
+    linear-gradient(180deg,rgba(245,244,229,.90) 0%,rgba(226,232,210,.72) 48%,rgba(93,117,75,.43) 100%),
+    url('assets/dice-valley-bg.jpg');background-size:cover;background-position:center 42%;}
+  #v-hero.paper,#v-fork.paper,#v-timeline.paper{background-color:#dce5d1;background-image:
+    linear-gradient(180deg,rgba(245,244,229,.90) 0%,rgba(226,232,210,.72) 48%,rgba(93,117,75,.43) 100%),
+    url('assets/dice-valley-bg.jpg');background-size:cover;background-repeat:no-repeat;}
+  .paper::after{content:'';position:absolute;inset:0;z-index:0;pointer-events:none;
+    background:radial-gradient(ellipse at 50% 28%,rgba(255,248,211,.22),transparent 35%),
+      linear-gradient(180deg,transparent 48%,rgba(47,70,43,.18) 100%);mix-blend-mode:multiply;}
+  #v-hero.paper,#v-fork.paper{background-position:center 46%;}
+  #v-timeline.paper{background-position:center 53%;padding-bottom:150px;}
+  #v-hero.paper::before,#v-fork.paper::before,#v-timeline.paper::before{opacity:.22;mix-blend-mode:soft-light;}
+  #v-hero.paper::after,#v-fork.paper::after,#v-timeline.paper::after{
+    background:linear-gradient(180deg,rgba(75,96,57,.06),rgba(57,70,42,.32)),
+      radial-gradient(ellipse at 26% 70%,rgba(70,52,32,.20),transparent 32%),
+      radial-gradient(ellipse at 77% 88%,rgba(51,42,29,.24),transparent 38%);
+    mix-blend-mode:multiply;
+  }
+  #v-hero>.deco::before,#v-fork>.deco::before,#v-timeline>.deco::before{display:none;}
+  #v-hero::after,#v-fork::after,#v-timeline::after{content:'';position:absolute;left:-8%;right:-8%;top:auto;bottom:-7%;height:30%;z-index:1;pointer-events:none;
+    background:linear-gradient(180deg,rgba(75,96,57,.08),rgba(57,70,42,.42)),
+      radial-gradient(ellipse at 26% 70%,rgba(70,52,32,.28),transparent 32%),
+      radial-gradient(ellipse at 77% 88%,rgba(51,42,29,.34),transparent 38%);
+    clip-path:ellipse(96% 100% at 50% 100%);}
+
+  .hero-scene{min-height:590px;}
+  .hero-vine{filter:drop-shadow(0 16px 10px rgba(34,58,36,.25));}
+  .hero-vine .v-dark{stroke:#385939;stroke-width:22;stroke-linecap:round;}
+  .hero-vine .v-light{stroke:#88a879;stroke-width:7;stroke-linecap:round;opacity:.78;}
+  .hero-vine .twig{stroke:#526f49;stroke-width:5.5;}
+  .hero-vine .twig.fine{stroke:#6f8d5e;stroke-width:3.2;opacity:.86;}
+  .hero-vine .tendril{fill:none;stroke:#5f804f;stroke-width:2.5;stroke-linecap:round;opacity:.78;}
+  .hero-mountains{display:none;}
+  .hero-vine .leaf{fill:#658958;opacity:.98;}
+  .hero-vine .leaf.alt{fill:#a7bd8d;}
+  .hero-vine .bud-dot{fill:#d8ca9f;stroke:#526c46;stroke-width:2.4;}
+  .hero-sun{background:radial-gradient(circle,rgba(255,244,196,.7),rgba(255,238,176,.18) 42%,transparent 72%);}
+  .hero-die-wrap{right:7%;bottom:10%;width:270px;height:260px;}
+  .hero-die-wrap .die{--s:150px;--h:75px;}
+  .hero-die-wrap::before{width:250px;height:92px;left:-22px;bottom:18px;background:radial-gradient(ellipse,rgba(76,99,57,.42),rgba(126,151,95,.18) 50%,transparent 72%);}
+  .floor{width:300px;height:86px;border-radius:58% 42% 44% 56% / 44% 48% 52% 56%;background:
+    linear-gradient(180deg,rgba(141,157,91,.8),rgba(91,76,47,.85)),
+    repeating-linear-gradient(168deg,rgba(240,221,177,.18) 0 2px,transparent 2px 12px);
+    filter:blur(.2px);transform:translate(12px,100px) rotate(-9deg);box-shadow:inset 0 14px 18px rgba(217,208,157,.18),0 18px 18px rgba(44,46,29,.22);animation:none;}
+  .floor::after{content:'';position:absolute;inset:16% 12%;background:radial-gradient(ellipse at 30% 35%,rgba(42,46,27,.28) 0 2px,transparent 3px),radial-gradient(ellipse at 72% 68%,rgba(232,209,155,.3) 0 2px,transparent 3px);opacity:.8;}
+
+  .fork-in{max-width:1120px;}
+  .fork-in::before{background:linear-gradient(90deg,#3f603c,#76915d,#3f603c);width:14px;height:98px;box-shadow:8px 8px 12px rgba(36,60,38,.22);}
+  .forks::before,.forks::after{border-top-color:#466541;filter:drop-shadow(6px 9px 7px rgba(41,65,39,.22));}
+  .fork{background:linear-gradient(145deg,rgba(244,242,219,.62),rgba(214,226,198,.44));border:1px solid rgba(71,96,57,.32);box-shadow:0 24px 50px rgba(48,66,40,.17),inset 0 1px rgba(255,255,255,.62);backdrop-filter:blur(12px) saturate(.88);}
+  .fork:hover{background:linear-gradient(145deg,rgba(252,249,230,.78),rgba(217,230,201,.62));box-shadow:0 34px 68px rgba(48,66,40,.26);}
+  .fork .go{color:#4e6b43;}
+  .fork-in .q{color:#30452f;text-shadow:0 2px 0 rgba(245,242,218,.72);}
+  .fork-in .qsub{color:#43583f;text-shadow:0 1px 0 rgba(245,242,218,.65);}
+  .mini-vine path{stroke:#557747;stroke-width:5.4;}
+  .mini-vine circle{fill:#e9e0be;stroke:#547246;stroke-width:1.8;}
+  .mini-vine circle.on{fill:#c9a86a;stroke:#80613a;}
+
+  /* 时间线：从双列信息图改为一株有根有枝的植物。 */
+  .tl-head{max-width:1080px;padding-left:38px;margin-bottom:54px;}
+  .tl-head::before{left:4px;top:2px;bottom:0;width:9px;border-radius:80% 20% 60% 40%;background:linear-gradient(180deg,#496a43,#79945d,#c1a26a);box-shadow:4px 9px 12px rgba(44,69,41,.22);transform:rotate(-2deg);}
+  .tl-head h2{color:#30492f;text-shadow:0 2px 0 rgba(245,242,218,.55);}
+  .tl-head p{max-width:790px;color:#4f6249;}
+  .tl-legend{gap:22px;color:#55704b;}
+  .tl-legend i::before{background:#587a4d;box-shadow:0 2px 4px rgba(55,79,45,.2);}
+  .tl-legend i.ai::before{height:2px;background:#b18b4e;border-top:1px dashed rgba(90,69,34,.44);}
+  #tlRows{position:relative;max-width:1080px;margin:0 auto;}
+  #tlRows::before{content:'';position:absolute;left:50%;top:-34px;bottom:-50px;width:12px;border-radius:70% 30% 55% 45%;background:linear-gradient(90deg,#3d5c39 0 24%,#6f8d57 32% 68%,#405f3b 76%);box-shadow:8px 13px 16px rgba(44,69,41,.19);transform:translateX(-50%) rotate(-1.5deg);z-index:0;}
+  .row{max-width:none;margin:0 auto 28px;grid-template-columns:minmax(0,1fr) 92px minmax(0,1fr);grid-template-areas:"left year ai" "line line line";align-items:center;}
+  .row.reveal-ready{transform:translateY(18px);}
+  .row:nth-child(odd) .cell.l{transform:translateX(-12px) rotate(-.8deg);}
+  .row:nth-child(even) .cell.l{transform:translateX(16px) rotate(.8deg);}
+  .row:nth-child(odd) .cell.a{transform:translateX(15px) rotate(.7deg);}
+  .row:nth-child(even) .cell.a{transform:translateX(-18px) rotate(-.7deg);}
+  .yr{font-size:18px;color:#dcd0a9;z-index:2;}
+  .yr::before{top:50%;bottom:auto;width:28px;height:28px;border-radius:58% 42% 55% 45%;background:radial-gradient(circle at 35% 28%,#e8d9a9 0 12%,#b98a4e 38%,#5b784a 72%);box-shadow:0 0 0 6px rgba(218,224,193,.62),7px 8px 10px rgba(39,60,37,.24);transform:translate(-50%,-50%) rotate(18deg);}
+  .yr::after{width:10px;height:22px;top:calc(50% - 15px);left:calc(50% + 14px);border-radius:80% 20% 80% 20%;background:#a7bf8a;transform:rotate(30deg);box-shadow:0 0 0 2px rgba(71,98,57,.14);}
+  .row:nth-child(even) .yr::after{left:auto;right:calc(50% + 14px);transform:rotate(210deg);}
+  .yr span{padding:7px 5px;background:rgba(60,82,48,.72);border:1px solid rgba(238,225,174,.32);box-shadow:0 5px 10px rgba(40,57,37,.18);text-shadow:0 1px 2px rgba(29,45,27,.5);}
+  .cell{padding:19px 22px;z-index:1;}
+  .cell.l{border:1px solid rgba(95,123,73,.26);background:linear-gradient(140deg,rgba(247,246,225,.84),rgba(221,231,205,.66));box-shadow:0 16px 30px rgba(52,71,43,.15),inset 0 1px rgba(255,255,255,.72);clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);}
+  .cell.l::before{right:-22px;width:35px;height:2px;background:linear-gradient(90deg,#678457,#b7c892);box-shadow:0 2px 4px rgba(48,72,42,.18);}
+  .cell.l h4{color:#30492f;}
+  .cell.l p{color:#53664c;}
+  .cell.a{margin-left:8px;border-left:1px solid rgba(177,139,79,.7);background:linear-gradient(90deg,rgba(231,218,176,.70),rgba(247,240,211,.32));padding-left:27px;}
+  .cell.a::before{content:'✦';left:-9px;top:13px;color:#c59c58;background:#e5e4c9;}
+  .cell.a::after{content:'';position:absolute;left:-28px;top:50%;width:28px;height:1px;background:repeating-linear-gradient(90deg,rgba(179,143,83,.7) 0 5px,transparent 5px 9px);}
+  .cell.a h4{color:#71582f;}
+  .cell.a p{color:#6b5b3a;}
+  .cell.a.todo{background:linear-gradient(90deg,rgba(176,160,117,.48),rgba(247,240,211,.18) 78%);}
+  .linkline{height:1px;margin:9px 18% 0;background:linear-gradient(90deg,transparent,rgba(114,146,85,.22),rgba(184,143,79,.25),transparent);}
+  #v-timeline::after{height:24%;bottom:-1%;}
+
+  @media(max-width:900px){
+    .hero-die-wrap{width:220px;height:220px;right:4%;bottom:0;}
+    .hero-die-wrap .die{--s:120px;--h:60px;}
+    .hero-die-wrap::before{width:215px;height:78px;left:-18px;bottom:8px;}
+    .floor{width:218px;height:68px;transform:translate(10px,82px) rotate(-9deg);}
+  }
+  @media(max-width:760px){
+    #v-timeline.paper{padding-bottom:110px;}
+    .tl-head{padding-left:27px;margin-bottom:36px;}
+    #tlRows{padding-left:8px;}
+    #tlRows::before{left:22px;top:-25px;bottom:-30px;width:9px;transform:rotate(-2deg);}
+    .row{grid-template-columns:44px 1fr;grid-template-areas:"year left" "year ai" "line line";gap:8px;margin-bottom:22px;}
+    .yr{grid-area:year;align-self:start;padding-top:13px;font-size:12px;}
+    .yr::before{left:22px;width:22px;height:22px;}
+    .yr::after{left:34px;right:auto;width:8px;height:17px;top:calc(50% - 13px);}
+    .row:nth-child(even) .yr::after{left:34px;right:auto;transform:rotate(210deg);}
+    .yr span{position:relative;left:-3px;padding:5px 3px;background:rgba(60,82,48,.78);font-size:11px;}
+    .cell.l,.row:nth-child(even) .cell.l{transform:none;margin-left:0;padding:16px 16px 15px;}
+    .cell.l::before{left:-20px;right:auto;width:22px;}
+    .cell.a,.row:nth-child(even) .cell.a{transform:none;margin-left:0;padding:14px 14px 16px 20px;}
+    .cell.a::after{left:-20px;width:20px;}
+    .linkline{display:none;}
+    .hero-mountains{display:none;}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .hero-die-wrap .die,.floor{animation:none!important;}
   }
 </style>
 </head>
@@ -435,10 +566,11 @@
       <div class="hero-rule">沿藤蔓认识我</div>
       <p class="sub">数量经济学硕士 · 求职方向 <b>AI 产品经理</b><br>把模糊问题拆成能验证的路径，并对事实、风险和结果负责</p>
       <div class="tags">
-        <span class="tag">国家奖学金</span><span class="tag">5 篇论文 · 2 项国赛奖</span>
+        <span class="tag">国家奖学金</span><span class="tag">主导论文 3 篇 · 2 项国赛奖</span>
         <span class="tag">5 个从 0 到 1 的作品</span><span class="tag">AI 产品 / 用户研究</span>
       </div>
       <button class="enter" id="toFork">沿藤蔓出发 <span class="arr">→</span></button>
+      <button class="about-link" id="navAbout" type="button">档案 · 关于我 →</button>
     </div>
     <div class="hero-scene" aria-hidden="true">
       <div class="hero-sun"></div>
@@ -451,6 +583,8 @@
         <path class="v-dark" d="M18 526 C112 472 132 394 228 390 C343 385 340 266 451 265 C561 264 583 164 744 128"/>
         <path class="v-light" d="M18 526 C112 472 132 394 228 390 C343 385 340 266 451 265 C561 264 583 164 744 128"/>
         <path class="twig" d="M154 426 C117 380 109 347 118 310M355 326 C326 280 326 246 351 214M555 226 C535 176 545 143 583 112"/>
+        <path class="twig fine" d="M92 485 C74 454 68 430 79 406M278 372 C272 338 282 312 306 294M474 258 C489 228 506 211 530 197M632 163 C655 145 674 132 700 128"/>
+        <path class="tendril" d="M119 310 C93 294 87 270 103 252 C116 238 135 244 133 260 C131 272 116 275 110 264M351 214 C379 196 388 176 373 160 C359 146 341 155 344 169 C347 180 360 181 366 171M583 112 C607 93 610 73 596 63 C584 55 572 64 578 76 C583 84 594 82 598 74"/>
         <path class="leaf" d="M146 418 C105 418 82 389 81 357 C118 355 145 379 146 418Z"/>
         <path class="leaf alt" d="M226 387 C241 343 278 329 309 343 C291 377 264 395 226 387Z"/>
         <path class="leaf" d="M346 320 C301 314 282 285 286 254 C324 258 350 280 346 320Z"/>
@@ -500,7 +634,7 @@
           </svg>
         </div>
         <h3>循迹 · 双轨时间线</h3>
-        <p>经历像旧叶片，AI 理解像新芽。沿时间生长，看看我为什么一步步走到这里。</p>
+        <p>地上的经历向光生长，地下的判断慢慢扎根。沿着主藤，回看方法如何成形。</p>
         <span class="go">循着藤蔓往前 →</span>
       </button>
       <button class="fork" data-to="v-dice">
@@ -513,7 +647,7 @@
           </svg>
         </div>
         <h3>掷骰 · 项目探险</h3>
-        <p>骰子从空中落下、砸弯藤蔓并自然滚停。朝上的一面会唤醒对应的项目芽苞。</p>
+        <p>骰子落进同一片山谷，滚停后唤醒一枚项目芽苞。把偶然交给路径，把判断留在手里。</p>
         <span class="go">交给偶然一次 →</span>
       </button>
     </div>
@@ -525,10 +659,10 @@
   <div class="deco"><div class="wash" style="width:500px;height:500px;right:-160px;top:-140px;background:#cfe0c2;opacity:.4"></div></div>
   <button class="back" data-to="v-fork">← 换一条路</button>
   <div class="tl-head">
-    <div class="kick">Timeline / 双轨</div>
-    <h2>我做过的事，和我因此理解的 AI</h2>
-    <p>我本科读金融，硕士转数量经济学，中间在支付宝做过一年多的渠道运维。这条线看着散，但每一段都在往同一件事上收：怎么把一个模糊的问题拆成能验证的东西，然后对结果负责。</p>
-    <div class="tl-legend"><i>我做了什么</i><i class="ai">我因此怎么理解 AI</i></div>
+    <div class="kick">Growth map / 沿藤回看</div>
+    <h2>沿着一株藤蔓，回看我如何长出方法</h2>
+    <p>从金融本科到数量经济学，再到渠道运维、研究和 AI 产品。回头看，这些经历连成了一条线：世界越看越大，我要做的事越来越清楚。</p>
+    <div class="tl-legend"><i>地上 · 我做过的事</i><i class="ai">地下 · 我的认知</i></div>
   </div>
   <div id="tlRows"></div>
 </section>
@@ -536,7 +670,7 @@
 <!-- ============ 丢骰子 ============ -->
 <section class="view paper" id="v-dice">
   <button class="back" data-to="v-fork">← 换一条路</button>
-  <div class="dc-hint">让骰子自然停稳 · 对应的项目芽苞会开花 · 点纸笺看详情</div>
+  <div class="dc-hint">让骰子自然停稳 · 对应的角度芽苞会开花 · 点纸笺看详情</div>
   <div class="dc-stage paper" id="dcStage">
     <div class="dc-world" id="dcWorld">
       <div class="dc-scenery" aria-hidden="true">
@@ -600,38 +734,57 @@ $('toFork').addEventListener('click',function(){show('v-fork')});
 
 /* =====================================================================
    2. 时间线内容
-   左边 = 真实经历（来自简历）；右边 = 对 AI 的理解。
-   ⚠️ 标了「待你补」的是我给不了的，必须你自己写。
+   地上 = 我做过的事（事实）；地下 = 我的认知（判断）。
+   事实与冷光版锁死一致，措辞按自然探索版放开。
    ===================================================================== */
+/* 时间线行与角度「相关经历」的对应关系（顺序与 TIMELINE 一致） */
+var TL_IDS=['edu-undergrad','recycle','try-and-work','softcom','edu-master','first-llm','grey-contest','papers','v2g','xinmiao','thesis','honors','job-workbench','hangzhou-month','fake-reader','deskpet','wechat-miniapp','dice'];
 var TIMELINE=[
-  { y:'2016.09', l:{t:'青岛大学 · 金融学本科', d:'本科四年，第一次用代码处理数据。'},
-    a:{t:'数据先于智能', d:'第一次用 MATLAB 处理金融数据就发现，卡住我的不是算得快不快，而是数据干不干净。后来面对 AI 也是同一课：先问喂了什么，再问它有多聪明。'} },
-  { y:'2018.04', l:{t:'校园废品回收平台负责人', d:'带着一个小团队跑校园回收，第一次把一件事拆成可执行的流程。'},
-    a:{t:'先懂人，再谈智能', d:'做问卷、画用户画像、写商业计划书的那两年让我确认：方案先要回答"替用户省了哪一步"。直到今天评估 AI 产品，我仍然先看这个。'} },
-  { y:'2021.05', l:{t:'软通动力 · 支付宝渠道运维组长', d:'盯支付 / 转账 / 退款的核心指标，做异常比对与归因，沉淀标准流程和培训体系。'},
-    a:{t:'规则先于模型', d:'异常归因靠的是可追踪的流程和分类模板，不是靠一个更聪明的模型。这是我最早的"AI 只是工具链一环"的直觉。', todo:true} },
-  { y:'2023.09', l:{t:'浙江财经大学 · 数量经济学硕士', d:'GPA 4.6/5，学院综测 1/43。开始系统做因果推断与机器学习。'},
-    a:{t:'问题驱动 → 机制假设 → 模型验证 → 稳健性检验', d:'这是我在论文里练出来的闭环，也是我后来做 AI 产品的默认工作方式。'} },
-  { y:'2025.05', l:{t:'能源经济大赛国赛二等奖 · 挑战杯省赛银奖', d:'V2G 放电定价研究，第二作者。', tag:[{t:'国家级'},{t:'省级'}]},
-    a:{t:'模型给弹性，决策看阈值', d:'V2G 研究发现补贴超过阈值后参与意愿反而放缓：模型能算出弹性，"在哪停"是机制设计。AI 也一样，算得再好也要有人划边界。'} },
-  { y:'2025.06', l:{t:'新苗人才计划立项 · 挑战杯校赛一等奖', d:'两个项目的第一负责人。', tag:[{t:'省部级'},{t:'校级'}]},
-    a:{t:'把黑箱拆成路径', d:'结构方程模型把"购买意愿"拆成一条条可验证的路径。后来面对 AI 我也用同一把刀：不接受"它就是变聪明了"，拆到能验证为止。'} },
-  { y:'2025–2026', l:{t:'五篇论文', d:'SCI Q2 已发表一篇、SCI Q1 在投一篇、EI 会议三篇（V2G 放电定价、宏观经济预测、财政政策分析）。'},
-    a:{t:'模型擅长寻优，规则由人定', d:'连着写灰色模型与机器学习预测的论文，越写越清楚边界：给定规则，模型能找到很优的解；但规则对不对、结论有没有用，得有人负责。'} },
-  { y:'2025.07', l:{t:'毕业论文 · 数字参与（CFPS 实证）', d:'用大样本微观数据做数字参与的实证研究，获校级优秀毕业论文。'},
-    a:{t:'相关不等于真有效', d:'DML 和因果森林把"数字参与有用"拆成：对谁有效、走哪条渠道、是真效果还是赶上了趋势。评估 AI 产品是同一件事：别把相关当因果。'} },
-  { y:'2025.09', l:{t:'国家奖学金 · 学院综测 1/43', d:'硕士期间最高级别学业荣誉，按成绩与综合测评覆盖全院研究生评定。同期获一等学业奖学金、三好研究生与优秀研究生干部。', tag:[{t:'国家级'}]},
-    a:{t:'看它能稳定通过什么测试', d:'评国奖靠可核查的绩点与综测，不是讲故事。我对 AI 的输出也用同一把尺子：不问它听起来多对，问它能稳定通过哪些测试、在什么样本上会失效。'} },
-  { y:'2026.05', l:{t:'伪人读书', d:'面向经典阅读的 AI 模拟读者，Next.js + FastAPI，已跑通完整阅读链路。'},
-    a:{t:'把复杂问题拆成可验证的小模块，小步试错、快速迭代', d:'一个"读经典很难"的模糊体验，拆成了锚段打分、剧透过滤、笔记链这些能单独验证的模块。'} },
-  { y:'2026.06', l:{t:'求职工作台 · 芽砚 · 决策骰子 · AI 量化投研', d:'四个从 0 到 1 的作品，分别覆盖求职闭环、桌面陪伴、随机决策和量化投研。'},
-    a:{t:'能力口径聚焦任务编排、风险识别和最终验收，不绑定单一模型', d:'我组织 AI 生成候选方案和实现草稿，但对事实、规则、异常路径和最终结果负责。'} }
+  /* 一 · 还没搞清要做什么 */
+  { y:'2016.09', l:{t:'青岛大学 · 金融学本科', d:'读金融，却总觉得这些假设和现实隔着一段距离。'},
+    a:{t:'先问「它有什么用」，再决定投不投入', d:'我得先知道一样东西有什么用，才肯用心学，所以我一直觉得这个专业没用。真正想通是在工作以后：经济是把人和事变有效率的工具，不是它没用，是我当时没见过现实。'} },
+  { y:'2018.04', l:{t:'校园废品回收 · 策划书与原型', d:'室友拉我进创业比赛组，「废品能不能网购」是我提的。'},
+    a:{t:'做得好，和进得去，是两件事', d:'赛程表出来那天，上面没有我们，省赛早就推上去了，我们连入场券都没交。我把那张机制图又看了一遍，它其实没什么问题。从那以后我做事的第一步，都是先把规则摸清楚。'} },
+  { y:'2020.06', l:{t:'毕业后的一年 · 先去看现实', d:'两次考研没上岸，我决定先去工作。'},
+    a:{t:'我要的不是多一年时间', d:'我要的是知道现实到底长什么样，所以我挑了最快能让我看清自己缺什么的地方。'} },
+  { y:'2021.05', l:{t:'软通动力 · 支付宝渠道运维组长', d:'外包岗，从组里第一个人做到组长，团队最后五个人。'},
+    a:{t:'交出去，比自己做更难', d:'离职前那几天，我把手头的事写成一张清单：哪一块拆给谁、谁的性格适合接哪一块、新组长要盯住哪几件事；写完跟上司一条条过，过完两遍我才交。自己做只要对自己负责，交出去却要对接手的人负责。'} },
+  /* 二 · 境况停滞，认知在扩 */
+  { y:'2023.09', l:{t:'浙江财经大学 · 数量经济学硕士', d:'第一志愿没走成，按专业方向一所一所比，最后调剂到浙财。'},
+    a:{t:'挑学校只看两条', d:'一个能让我研究数字经济的专业方向，和一个愿意回我消息的老师。'} },
+  { y:'2024', l:{t:'第一次用大模型写论文', d:'先让它写代码，后来让它写正文。'},
+    a:{t:'判断得我自己保管', d:'它经常忘记我们前面聊过什么、我确定了哪些判断，我只好一遍遍把上下文重新喂给它。它能替我写我不擅长的，但判断得我自己保管。'} },
+  { y:'2025.01', l:{t:'灰色预测模型的改造 · 能源经济大赛国赛二等奖', d:'给模型补上「时滞」，再拿它去参赛。', tag:[{t:'国家级'}]},
+    a:{t:'改假设，而不是继续调参', d:'一个时间序列里并不是每一期都在起作用，如果只取其中一部分时间、筛选协变量时也算上时滞，结果会不会更准？试下来确实更准。做都做了，我就一条条向导师论证，不然不是白做了吗。'} },
+  { y:'2025.01', l:{t:'论文与署名', d:'主导 SCI 一区在审论文一篇、会议论文两篇，参与署名两篇。'},
+    a:{t:'把「主导」和「参与」分开写', d:'我不擅长记东西，也不喜欢精细活，代码底子一般，所以我愿意把这两类分开写：被追问的时候，我要答得清楚。'} },
+  { y:'2025.05', l:{t:'挑战杯省赛银奖 · 接手 V2G 项目', d:'原负责人转备考，剩下的活落到了我身上。', tag:[{t:'省级'}]},
+    a:{t:'让数据和机制决定方向', d:'原来的假设是线性关系，我看出来方向不对，就把内生性和非线性一起纳进来重做设定，再去说服老师。这是我最拿得准的一次取舍，这个项目的方向不由我的偏好决定。'} },
+  { y:'2025.06', l:{t:'挑战杯校赛一等奖 · 新苗人才计划立项', d:'自己选题做的购买意愿研究，我是第一负责人。', tag:[{t:'省部级'},{t:'校级'}]},
+    a:{t:'换一个评价体系，结果完全不同', d:'评委说它更像研究生的作品、没解决真实问题，所以没有往上推荐；转投省级新苗人才计划，我本来觉得不行，尽量往要求上靠，结果立项了。我后来拿国奖，主要靠的就是它。'} },
+  { y:'2025.07', l:{t:'毕业论文 · 数字经济背景下居民数字参与的收入效应研究', d:'用 CFPS 微观数据，把两组维度织成一张网。'},
+    a:{t:'砍掉一半，把篇幅让给重点', d:'我最想做的那块其实是机会不平等，所以模型创建上我下的功夫最多。内容太大，我必须决定重点呈现什么，于是砍掉了不少传统的展开讨论。'} },
+  { y:'2025.09', l:{t:'学业荣誉', d:'研三综测 1/43，两次一等学业奖学金、国家奖学金。', tag:[{t:'国家级'}]},
+    a:{t:'评价体系刚好和我做的事对齐', d:'这是唯一一次两边合上的时候。'} },
+  /* 三 · 把认知变成产品 */
+  { y:'2026.05', l:{t:'求职工作台', d:'本来指望靠它找到工作。'},
+    a:{t:'砍掉需要规模才能验证的功能', d:'我看了一圈，没有能直接拿来用的产品，就自己判断求职者不像 HR 背后有公司买单，付费意愿低，目标人群也不稳定。磨到最后对我真正有用的只剩三件：就业市场分析、简历改写、打招呼语改写。砍的时候我没有舍不得，它需要的条件我暂时凑不齐。'} },
+  { y:'2026.06', l:{t:'杭州的那一个月', d:'什么都没干，也没想通什么，只是重新问了自己一遍。'},
+    a:{t:'境况停在原地，认知往前走', d:'那一个月里我有时什么都不做，有时去研究一直好奇却没彻底研究过的东西。看小说的时候我发现，真正有深度的书没有讲解几乎读不进去。我没有得出什么大道理，只是把「我到底想做什么」问到了底。'} },
+  { y:'2026.07', l:{t:'伪人读书', d:'让几个不同人设的 AI 读者陪同一本书。'},
+    a:{t:'一个人的问题，不等于一群人的问题', d:'我要解决的问题源自我自己读不懂。但这件事得有人真的来用，才知道它是不是真的存在。'} },
+  { y:'2026.07', l:{t:'芽砚 Deskpet', d:'看别人的桌宠眼馋，自己做一只。'},
+    a:{t:'换路，比死磕划算', d:'先按小猫的动作逐帧生成图片，动起来别扭、还常有错帧；后来看短剧的时候想到，不如直接生成视频再抽帧，换成这个做法才做成。'} },
+  { y:'2026.08', l:{t:'华飞家电微信小程序', d:'家里的公司要转零售，我来定义它该做什么。'},
+    a:{t:'先想清楚我们比电商平台多什么', d:'他们只想要一个能看店里有什么的小程序，我跟他们讲那跟淘宝京东没区别。真正能拿得出手的是线下的东西：到店看样机、上门服务、把活动办到店里。中间有一版库存和核销流程是我自己想当然做的，跟实际业务差太远，被整段砍掉了。'} },
+  { y:'2026.09', l:{t:'决策骰子', d:'常在聊天框里丢骰子，干脆自己做了一个。'},
+    a:{t:'需求极小、自己就是用户的时候，动作最快', d:'说干就干，近两天做完并上线。从想法到线上，中间没有别人，也没有审批。'} }
 ];
 (function renderTimeline(){
   var box=$('tlRows'), html='';
-  TIMELINE.forEach(function(r){
+  TIMELINE.forEach(function(r,idx){
     var a=r.a;
-    html+='<div class="row">';
+    html+='<div class="row" data-id="'+(TL_IDS[idx]||'')+'">';
     var ltag=r.l.tag?'<span class="lvls">'+r.l.tag.map(function(tg){var c=tg.t.indexOf('国家')>=0?'nat':tg.t.indexOf('省')>=0?'prov':'sch';return '<span class="lvl '+c+'">'+tg.t+'</span>';}).join('')+'</span>':'';
     html+='<div class="cell l">'+ltag+'<h4>'+r.l.t+'</h4><p>'+r.l.d+'</p></div>';
     html+='<div class="yr"><span>'+r.y+'</span></div>';
@@ -730,52 +883,69 @@ Rope.prototype.yAt=function(x){
   return by;
 };
 
-var PROJECTS=[
-  {t:'求职工作台', s:'把市场调查 → 简历优化 → 企业联系串成可追溯闭环', u:'',
-   pos:'本地优先的单体求职工作台。同一个 job_id 贯穿岗位分析、简历版本、招呼语和联系记录，是一条可追溯的闭环，而不是四个各管一段的工具。',
-   who:'反复研究岗位、要给不同岗位定制简历、并且会主动联系企业的个人求职者。首期只做 Windows 本地单用户。',
-   tech:['FastAPI','SQLite + FTS5','Ollama qwen3-embedding','混合检索 RAG','Pydantic'],
-   done:'阶段 1–3 已完成，38 项测试通过。已完成公司/岗位三层去重、UTF-8/GB18030 CSV 预览确认、事实确认与撤回、证据包、中文定向简历质量检查、简历版本管理。招呼语、联系人、浏览器插件尚未开始。',
-   hi:['混合检索 Recall@5 达到 100%','生成后做 grounding 校验，防止编造','本地规则优先，远程模型默认关闭']},
-  {t:'伪人读书', s:'面向经典阅读的 AI 模拟读者 · Next.js + FastAPI', u:'',
-   pos:'面向经典和高理解成本书籍的阅读工具。你读原文的时候，会"偶遇"几个性格和领域知识都不同的 AI 模拟读者，看他们顺序阅读时留下的批注、疑问和观点变化。',
-   who:'有阅读意愿、但很难稳定进入经典作品的成年读者。',
-   tech:['Next.js 16','React 19 + TS','PWA','FastAPI + SQLAlchemy + Alembic','可恢复 Python worker','Playwright'],
-   done:'主路已验证 —— 真实 DeepSeek 连续 4 个阅读节自动发布。后端 pytest 134 通过、mypy 覆盖 35 个源文件、前端 Vitest 73 通过。',
-   hi:['初见模式剧透过滤','确定性锚段打分，不靠模型随机发挥','静态版本不可变冻结，保证可复现']},
-  {t:'芽砚 Deskpet', s:'住在 Windows 桌面角落的水彩狐猫 · PyQt5', u:'',
-   pos:'一只住在 Windows 桌面角落的水彩狐猫，陪你聊天、记任务、专注工作。它不是养成游戏，也不是虚拟主播，就是一个安静的陪伴型桌面伙伴。',
-   who:'长时间坐在电脑前工作、希望有个低干扰陪伴和轻量任务记录工具的 Windows 用户。',
-   tech:['Python 3.10+','PyQt5 透明置顶窗口','OpenAI 兼容 Responses API','SSE 流式','可选 STT/TTS'],
-   done:'桌面触摸反馈动画、流式聊天、专注陪伴（1–120 分钟，支持暂停/继续/重启恢复）、任务记录、语音接口、设置面板均已完成。情绪状态、RAG 长期记忆、多会话、工具调用尚未实现。',
-   hi:['密钥只存 Windows 凭据管理器，没有任何服务端','核心约两千行，只有 4 个依赖','水彩狐猫立绘是完整的视觉资产']},
-  {t:'决策骰子', s:'手机浏览器里的 3D 决策骰盅 · three.js + cannon-es', u:'https://mingfeizhang1028.github.io/Dice-rolling/',
-   pos:'跑在手机浏览器里的 3D 骰子应用，解决的是日常决策 —— 今晚吃什么、谁洗碗、搬不搬家，不是跑团用的那种骰子。',
-   who:'需要快速把小事定下来、又想要一点仪式感的人。竖屏手机、中文界面。',
-   tech:['three.js 0.186','cannon-es 0.20 刚体物理','Vite 8','原生 JS 无框架','GitHub Actions'],
-   done:'已完成并上线。对决 / 选号 / 多数决 / 是否四种玩法，最多 12 颗骰，4 材质 × 4 主题，滑动 / 摇一摇 / 键盘三种输入，JSON 导出导入。',
-   hi:['程序化烘焙碰撞音，零音频文件','落定看门狗，防止骰子飞出屏幕','无头 Edge 驱动的 6 条端到端自测']},
-  {t:'AI 量化投研', s:'A 股 ETF 的本地优先 AI 投研平台 · Qlib + LightGBM', u:'',
-   pos:'local-first、report-first 的 A 股 ETF 研究平台，用来学习和实践 AI 辅助的量化投研。所有数据和处理都留在本地。',
-   who:'想认真学量化、但不想接实盘、也不想把研究数据传上云的个人研究者。',
-   tech:['Python 3.11 + uv','FastAPI + SQLite','Qlib','LightGBM / GARCH / Elastic Net','React 19 + TS','DuckDB + Parquet'],
-   done:'Phase 0–5 已实现，本地离线闭环跑通；Phase 6 的影子运行还在等。门禁全部通过：pytest 112、严格 mypy 覆盖 79 个源文件、Vitest 7、Vite build。',
-   hi:['不接实盘、不执行交易，这是硬边界','Bronze→Silver→Gold 分层 + 哈希可复现','模型有治理生命周期，不是训练完就直接用']},
-  {t:'关于我', s:'数量经济学硕士 · 国家奖学金 · 5 篇论文 · 求职方向 AI 产品经理', u:'',
+var ANGLES=[
+  {t:'收窄', kick:'SCOPE', claim:'把需求砍到只剩一条能验证的主线。', intro:'我做的每个产品，第一个决定都是「不做什么」。',
+   tags:['范围控制','伪需求识别','取舍成本'],
+   practices:['求职工作台：砍掉「帮人探索兴趣」，只留就业市场分析、简历改写、打招呼语。',
+              '决策骰子：收窄到低风险小事，不做交易与履约。',
+              '华飞家电小程序：不跟电商平台比功能，只做线下能验证的增量。'],
+   skills:['范围控制：先决定不做什么，再决定做什么','伪需求识别：找到与现成平台无差异的部分','取舍成本：为验证速度放弃功能完整'],
+   related:['job-workbench','dice','wechat-miniapp']},
+  {t:'验证', kick:'PROOF', claim:'方向不对时，改假设，而不是继续调参。', intro:'先问这个结论凭什么成立，再动手。',
+   tags:['假设重构','实证设计','贡献边界'],
+   practices:['灰色预测模型：引入时滞处理，只取部分时间，并在筛选协变量时计入时滞，准确率提升。',
+              'V2G：把线性假设改为综合内生性与非线性，再向导师论证。',
+              '毕业论文：把数字参与与收入效应两组维度织成一张网，计量与机器学习并用。',
+              '论文与署名：把「我主导的」与「我参与署名的」分开列。'],
+   skills:['假设重构：识别原假设方向错误并重做设定','实证设计：问卷、样本、稳健性成链','贡献边界：能说清哪部分由我主导'],
+   related:['grey-contest','v2g','thesis','papers']},
+  {t:'沉淀', kick:'SYSTEMIZE', claim:'把口头经验变成别人能复用的规则。', intro:'我不太相信「记住就好」，更相信写下来。',
+   tags:['流程建模','规则设计','知识沉淀'],
+   practices:['软通动力：把上级平时讲的内容整理成岗位知识库雏形，成为新人带教材料。',
+              '华飞家电：把积分与核销写成规则，什么活动加分、怎么核销、谁扫码。',
+              '校园废品回收：把「谁参与、为什么参与、各方做什么」画成一张机制图。'],
+   skills:['流程建模：把口头流程画成可执行结构','规则设计：把服务能力翻译成产品规则','知识沉淀：让后来者少走一遍'],
+   related:['softcom','wechat-miniapp','recycle']},
+  {t:'分工', kick:'DELEGATE', claim:'执行可以交出去，判断必须留在自己手里。', intro:'我用 AI 的第一条规矩，就是从这里来的。',
+   tags:['AI 协作','上下文管理','故障隔离'],
+   practices:['第一次用大模型：它能写我写不出的代码，但会忘记前文与已定判断，上下文要我自己重述。',
+              '求职工作台：经历由我逐条确认，生成前过证据门禁。',
+              '伪人读书：只基于已读段落回应，批注回到原句。',
+              '芽砚 Deskpet：动画渲染拆成独立进程，故障不影响核心功能。'],
+   skills:['AI 协作：把执行交给模型，把判断留给自己','上下文管理：在长任务里维持一致前提','故障隔离：非核心功能不拖垮主流程'],
+   related:['first-llm','job-workbench','fake-reader','deskpet']},
+  {t:'落地', kick:'GROUND', claim:'先摸清现场，再谈方案。', intro:'我在现场吃过亏，也因此学会先看真实流程。',
+   tags:['业务调研','现场校验','规则前置'],
+   practices:['华飞家电：我按自己理解做的库存与核销流程跟实际业务差太远，被整段砍掉，后用最小改动重排。',
+              '校园废品回收：方案想全了，赛制没研究，省赛入场券都没交。',
+              '软通动力：盯支付链路、判异常、联系二线止损，判据来自真实指标。'],
+   skills:['业务调研：先看真实流程再定方案','现场校验：自己试过才算数','规则前置：动手前先确认规则与门槛'],
+   related:['wechat-miniapp','recycle','softcom']},
+  {t:'交付', kick:'HANDOVER', claim:'交出去的标准，是别人接手时不碰壁。', intro:'我对「做完」的定义，是离开我也能跑。',
+   tags:['交接设计','验收编排','上线闭环'],
+   practices:['软通动力：离职前把工作拆开、定新组长、跟上司逐项过两遍才交。',
+              '华飞家电：做测试验收与问题编排，按业务域整理反馈给开发方。',
+              '决策骰子：两天从想法做到上线。'],
+   skills:['交接设计：以接手方不出现卡点为标准','验收编排：按业务域整理问题并推动修复','上线闭环：从想法走到可访问'],
+   related:['softcom','wechat-miniapp','dice']}
+];
+var ABOUT={t:'关于我', s:'数量经济学硕士 · 国家奖学金 · 主导论文 3 篇 · 求职方向 AI 产品经理', intro:'这是我的个人档案页，放着我做过的事，也放着我一路长出来的方法。', u:'',
    pos:'浙江财经大学数量经济学硕士（2023.09–2026.06，GPA 4.6/5，学院综测 1/43），本科青岛大学金融学。中间在软通动力做过近一年的支付宝渠道运维组长。',
    who:'求职方向：AI 产品经理（主），产品经理 / 数据分析 / 战略分析（备）。',
    tech:['Python','R（因果森林 / DML）','SQL','FastAPI','Next.js / React','因果推断','机器学习'],
-   done:'5 篇论文：SCI Q2 已发表 1 篇、SCI Q1 在投 1 篇、EI 会议 3 篇。竞赛：能源经济学术创意大赛国赛二等奖、挑战杯浙江省赛银奖、新苗人才计划立项、挑战杯校赛一等奖、统计建模大赛国赛三等奖。',
+   done:'论文：主导 SCI 一区在投 1 篇、EI 会议 2 篇；参与署名 EI 会议 1 篇、SCI 二区 1 篇。竞赛：能源经济学术创意大赛国赛二等奖、挑战杯浙江省赛银奖、新苗人才计划立项、挑战杯校赛一等奖、统计建模大赛国赛三等奖。',
    honors:['国家奖学金','一等学业奖学金','三好研究生','优秀研究生干部','校级优秀毕业论文'],
-   hi:['习惯「问题驱动 → 机制假设 → 模型验证 → 稳健性检验」闭环','聚焦任务编排、风险识别和最终验收，不绑定单一模型','对事实、规则、异常路径和最终结果负责']}
-];
+   hi:['习惯「问题驱动 → 机制假设 → 模型验证 → 稳健性检验」闭环','聚焦任务编排、风险识别和最终验收，不绑定单一模型','对事实、规则、异常路径和最终结果负责']};
 
-var dc={W:0,H:0,main:null,branch:null,buds:[],leafIdx:[3,8,14,20,26,32,38,44,47],
+var dc={W:0,H:0,main:null,branch:null,buds:[],leafIdx:[3,8,14,20,26,32,38,44,47],groundCache:null,
         die:null,state:'idle',revealStage:'idle',litBud:-1,cardEl:null,restTimer:0,fallT:0,P:{tense:.72,wind:.24,snd:true},
         target:null,phase:0,stateAt:0,revealToken:0,revealTimer:0,cardTimer:0,
         camera:{x:0,y:0,zoom:1,tilt:0,yaw:0,jolt:0}};
 
 var dcStage=$('dcStage'), dcWorld=$('dcWorld'), dcCanvas=$('dcCanvas'), dcCtx=dcCanvas.getContext('2d'), dcDpr=1;
+var dcRoadImg=new Image();
+dcRoadImg.src='assets/road.png';
+dcRoadImg.onload=function(){dc.groundCache=null;wakeFrame()};
 var dcSvg=$('dcSvg'), elDie=$('dcDie'), elHolder=$('holder'), elShadow=$('gshadow');
 var elVineA=$('vineA'), elVineB=$('vineB'), elBr=$('br');
 var elLeaves=[0,1,2,3,4,5].map(function(i){return $('lf'+i)});
@@ -787,6 +957,7 @@ function diceResize(){
   dcCanvas.width=Math.round(dc.W*dcDpr); dcCanvas.height=Math.round(dc.H*dcDpr);
   dcCanvas.style.width=dc.W+'px'; dcCanvas.style.height=dc.H+'px';
   dcCtx.setTransform(dcDpr,0,0,dcDpr,0,0);
+  dc.groundCache=null;
   var old=dcStage.querySelectorAll('.bud');
   for(var k=old.length-1;k>=0;k--) old[k].remove();
   /* 主藤蔓两个端点都留在页面上半部，骰子从上方落到藤蔓后再进入滚动。 */
@@ -806,8 +977,8 @@ function diceResize(){
     var depth=i/5;
     el.style.setProperty('--bud-s',(1.12-depth*.43).toFixed(2));
     el.style.setProperty('--depth-alpha',(1.0-depth*.5).toFixed(2));
-    el.setAttribute('data-project',PROJECTS[i].t);
-    el.setAttribute('aria-label',(i+1)+' 点：'+PROJECTS[i].t);
+    el.setAttribute('data-project',ANGLES[i].t);
+    el.setAttribute('aria-label',(i+1)+' 点：'+ANGLES[i].t);
     el.innerHTML='<span>'+(i+1)+'</span>';
     dcWorld.appendChild(el);
     /* 六个结果芽苞集中在画面上方的主藤蔓中段，给下垂枝条和纸笺留出稳定空间。 */
@@ -1016,6 +1187,21 @@ function drawPalmateLeaf(ctx,x,y,angle,scale,color){
 function drawCanvasScene(now){
   if(!dcCtx||!dc.main) return;
   var ctx=dcCtx; ctx.setTransform(dcDpr,0,0,dcDpr,0,0); ctx.clearRect(0,0,dc.W,dc.H);
+  var branchGrowing=dc.revealStage==='branch';
+  if(dc.groundCache){
+    ctx.drawImage(dc.groundCache,0,0,dc.W,dc.H);
+  }else{
+  if(dcRoadImg.complete&&dcRoadImg.naturalWidth){
+    /* road.png 自带透明天空与真实草路，按视口高度裁切，避免移动端只剩一条窄路。 */
+    var roadH=Math.max(dc.H*.62,520), roadY=dc.H-roadH-62;
+    var roadBase=ctx.createLinearGradient(0,dc.H*.73,0,dc.H);
+    roadBase.addColorStop(0,'#8aa564');roadBase.addColorStop(.24,'#6f8e4e');roadBase.addColorStop(1,'#3f6035');
+    ctx.fillStyle=roadBase;ctx.fillRect(0,dc.H*.73,dc.W,dc.H-dc.H*.73);
+    ctx.drawImage(dcRoadImg,-dc.W*.04,roadY,dc.W*1.08,roadH);
+    var roadShade=ctx.createLinearGradient(0,dc.H*.77,0,dc.H);
+    roadShade.addColorStop(0,'rgba(34,55,28,0)');roadShade.addColorStop(1,'rgba(24,40,22,.22)');
+    ctx.fillStyle=roadShade;ctx.fillRect(0,dc.H*.77,dc.W,dc.H*.23);
+  }else{
   /* 地面：一条泥土小径蜿蜒穿过草坡，通向远处被阳光照亮的沙土台。
      轮廓全部由确定性函数生成，每帧重绘不闪烁。物理地面仍是 y=dc.H*0.74。 */
   var gW=dc.W, gH=dc.H, gy=gH*0.74;
@@ -1107,13 +1293,47 @@ function drawCanvasScene(now){
     ctx.beginPath();ctx.ellipse(rx2,rc2.y+(vineR(rk*9)-0.5)*8,1.1+vineR(rk*2)*1.4,0.9+vineR(rk*4)*1,0,0,Math.PI*2);
     ctx.fillStyle=vineR(rk*6.3)>0.5?'rgba(214,198,166,.55)':'rgba(45,32,20,.4)';ctx.fill();
   }
-  drawRope(ctx,dc.main,true);
-  drawBarkBands(ctx,dc.main,[5,17,29,39,47]);
-  drawKnots(ctx,dc.main,[8,20,32,43]);
-  drawMoss(ctx,dc.main,[14,28,40]);
-  drawTwigs(ctx,dc.main,[7,15,25,34,43]);
-  drawTendrils(ctx,dc.main,[11,24,37,45]);
-  drawAerialRoots(ctx,dc.main,[18,31,42]);
+  /* 11) 前景草丛与土块：把“色块地面”压低成有近、中、远层次的真实坡地。 */
+  var fg=ctx.createLinearGradient(0,gH*.78,0,gH);
+  fg.addColorStop(0,'rgba(39,68,31,0)');fg.addColorStop(1,'rgba(26,48,24,.34)');
+  ctx.fillStyle=fg;ctx.fillRect(0,gH*.76,gW,gH*.24);
+  for(var ck=0;ck<24;ck++){
+    var cx2=gW*vineR(ck*8.7+4), cy2=gy+32+vineR(ck*3.4+1)*(gH-gy-22);
+    if(cx2>gW*.28&&cx2<gW*.72) continue;
+    var cw2=4+vineR(ck*2.1)*9, ch2=2+vineR(ck*5.2)*4;
+    ctx.beginPath();ctx.ellipse(cx2,cy2,cw2,ch2,(vineR(ck*1.7)-.5)*.5,0,Math.PI*2);
+    ctx.fillStyle=vineR(ck*6.1)>.5?'rgba(54,43,28,.34)':'rgba(167,143,96,.22)';ctx.fill();
+  }
+  for(var tk=0;tk<54;tk++){
+    var tx2=gW*vineR(tk*5.9+18), ty2=gy+10+vineR(tk*2.8+6)*(gH-gy-10);
+    if(tx2>gW*.27&&tx2<gW*.73) continue;
+    var lean=(vineR(tk*4.6)-.5)*10, h2=7+vineR(tk*3.2)*15;
+    ctx.beginPath();ctx.moveTo(tx2,ty2+4);ctx.quadraticCurveTo(tx2+lean*.3,ty2-h2*.5,tx2+lean,ty2-h2);
+    ctx.strokeStyle=vineR(tk*7.1)>.48?'rgba(167,197,112,.64)':'rgba(42,78,37,.66)';ctx.lineWidth=.8+vineR(tk)*.7;ctx.stroke();
+    if(tk%3===0){ctx.beginPath();ctx.moveTo(tx2+lean*.55,ty2-h2*.52);ctx.lineTo(tx2+lean*.55+(vineR(tk*2.2)-.5)*6,ty2-h2*.68);ctx.stroke();}
+  }
+  /* 少量低矮作物苗：成簇出现，避免规则网格感。 */
+  for(var sk2=0;sk2<12;sk2++){
+    var sx2=gW*(.08+vineR(sk2*9.2)*.82), sy2=gH*.84+vineR(sk2*4.4)*gH*.1;
+    if(sx2>gW*.3&&sx2<gW*.7) continue;
+    ctx.strokeStyle='rgba(54,91,42,.72)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(sx2,sy2+7);ctx.lineTo(sx2,sy2-5-vineR(sk2)*5);ctx.stroke();
+    ctx.save();ctx.translate(sx2,sy2-4);ctx.rotate(-.35);ctx.beginPath();ctx.ellipse(-4,0,5,2.1,0,0,Math.PI*2);ctx.ellipse(4,-2,5.5,2.2,.25,0,Math.PI*2);ctx.fillStyle=sk2%2?'rgba(83,127,56,.8)':'rgba(111,145,67,.78)';ctx.fill();ctx.restore();
+  }
+  }
+    dc.groundCache=document.createElement('canvas');
+    dc.groundCache.width=dcCanvas.width; dc.groundCache.height=dcCanvas.height;
+    dc.groundCache.getContext('2d').drawImage(dcCanvas,0,0);
+  }
+  /* 枝桠生长的短窗口优先保证连续帧；枝条完成后再恢复完整树皮细节。 */
+  drawRope(ctx,dc.main,!branchGrowing);
+  if(!branchGrowing){
+    drawBarkBands(ctx,dc.main,[5,17,29,39,47]);
+    drawKnots(ctx,dc.main,[8,20,32,43]);
+    drawMoss(ctx,dc.main,[14,28,40]);
+    drawTwigs(ctx,dc.main,[7,15,25,34,43]);
+    drawTendrils(ctx,dc.main,[11,24,37,45]);
+    drawAerialRoots(ctx,dc.main,[18,31,42]);
+  }
   if(dc.branch) drawRope(ctx,dc.branch,false);
   /* 叶片：掌状复叶为主，颜色含深绿/灰绿/黄绿/少量褐，角度大小由索引决定。 */
   var leafColors=['#2f5a2c','#3a6a33','#477a3c','#558a43','#6a7a3e','#5c6b38','#3d5a2e'];
@@ -1136,7 +1356,8 @@ function drawCanvasScene(now){
 var dcRaf=0, dcTimer=0;
 function scheduleFrame(){
   if(dcRaf||dcTimer) return;
-  if(dc.state==='falling'||dc.state==='rolling'||dc.revealStage==='bud'||dc.revealStage==='branch') dcRaf=requestAnimationFrame(frame);
+  var branchTransition=dc.branch&&dc.branch.straightPts&&dc.straightT<1;
+  if(dc.state==='falling'||dc.state==='rolling'||dc.revealStage==='bud'||dc.revealStage==='branch'||branchTransition) dcRaf=requestAnimationFrame(frame);
   else dcTimer=setTimeout(function(){dcTimer=0;dcRaf=requestAnimationFrame(frame)},90);
 }
 function wakeFrame(){
@@ -1174,6 +1395,7 @@ function updateCamera(now,dt){
   var ease=1-Math.pow(dc.state==='falling'||dc.state==='rolling'?.84:.9,dt);
   cam.x+=(gx-cam.x)*ease; cam.y+=(gy-cam.y)*ease; cam.zoom+=(gz-cam.zoom)*ease;
   cam.tilt+=(gt-cam.tilt)*ease; cam.yaw+=(gyaw-cam.yaw)*ease;
+  if(dc.cardEl) dc.cardEl.style.setProperty('--card-scale',(1/Math.max(.001,cam.zoom)).toFixed(4));
   dcWorld.style.setProperty('--cam-x',cam.x.toFixed(2)+'px');
   dcWorld.style.setProperty('--cam-y',cam.y.toFixed(2)+'px');
   dcWorld.style.transform='perspective(1100px) translate3d('+cam.x.toFixed(2)+'px,'+cam.y.toFixed(2)+'px,0) scale('+cam.zoom.toFixed(4)+') rotateY('+cam.yaw.toFixed(2)+'deg) rotateZ('+cam.tilt.toFixed(2)+'deg)';
@@ -1185,19 +1407,25 @@ function thud(v){
   if(!dc.P.snd) return;
   try{
     if(!actx) actx=new (window.AudioContext||window.webkitAudioContext)();
-    var t=actx.currentTime, amp=Math.min(0.3,0.02+v*0.022);
-    var o=actx.createOscillator(), g=actx.createGain();
-    o.type='triangle';
-    o.frequency.setValueAtTime(150+Math.random()*50,t);
-    o.frequency.exponentialRampToValueAtTime(58,t+0.13);
-    g.gain.setValueAtTime(amp,t);
-    g.gain.exponentialRampToValueAtTime(0.0008,t+0.2);
-    o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t+0.22);
-    var len=1400, b=actx.createBuffer(1,len,actx.sampleRate), dd=b.getChannelData(0);
-    for(var i=0;i<len;i++) dd[i]=(Math.random()*2-1)*Math.pow(1-i/len,4);
-    var s=actx.createBufferSource(); s.buffer=b;
-    var g2=actx.createGain(); g2.gain.value=amp*0.5;
-    s.connect(g2); g2.connect(actx.destination); s.start(t);
+    var t=actx.currentTime, amp=Math.min(0.22,0.035+v*0.016);
+    /* 石块落地：低频主体先重后闷，不再用高频三角波制造“塑料碰撞”的脆感。 */
+    var body=actx.createOscillator(), bodyGain=actx.createGain();
+    body.type='sine';
+    body.frequency.setValueAtTime(82+Math.min(18,v*2),t);
+    body.frequency.exponentialRampToValueAtTime(40,t+0.24);
+    bodyGain.gain.setValueAtTime(0.0001,t);
+    bodyGain.gain.linearRampToValueAtTime(amp,t+0.009);
+    bodyGain.gain.exponentialRampToValueAtTime(0.0001,t+0.32);
+    body.connect(bodyGain); bodyGain.connect(actx.destination); body.start(t); body.stop(t+0.34);
+
+    /* 粗粝的砂石摩擦尾音：白噪声先过低通，削掉刺耳的高频。 */
+    var len=Math.floor(actx.sampleRate*0.34), b=actx.createBuffer(1,len,actx.sampleRate), dd=b.getChannelData(0);
+    for(var i=0;i<len;i++) dd[i]=(Math.random()*2-1)*Math.pow(1-i/len,3.2);
+    var s=actx.createBufferSource(), gritGain=actx.createGain(), low=actx.createBiquadFilter();
+    s.buffer=b; low.type='lowpass'; low.frequency.setValueAtTime(720,t); low.Q.value=.55;
+    gritGain.gain.setValueAtTime(0.0001,t); gritGain.gain.linearRampToValueAtTime(amp*.62,t+.006);
+    gritGain.gain.exponentialRampToValueAtTime(0.0001,t+.30);
+    s.connect(low); low.connect(gritGain); gritGain.connect(actx.destination); s.start(t); s.stop(t+.35);
   }catch(e){}
 }
 
@@ -1274,10 +1502,10 @@ function frame(now){
   var m=dc.main, die=dc.die;
   if(!m){requestAnimationFrame(frame);return}
 
-  m.stiff=0.25+dc.P.tense*0.75;
-  m.seg=m.span*(1.002+(1-dc.P.tense)*0.025)/(VINE_N-1);
-  var wAmt=dc.P.wind*0.075;
-  if(dc.state==='falling'||dc.state==='rolling'||dc.revealStage==='bud'||dc.revealStage==='branch'){
+  m.stiff=0.35+dc.P.tense*1.15;
+  m.seg=m.span*(1.002+(1-dc.P.tense)*0.065)/(VINE_N-1);
+  var wAmt=dc.P.wind*0.16;
+  if(dc.state==='falling'||dc.state==='rolling'||dc.revealStage==='bud'){
     m.step(0.10,wAmt,0.986,dc.phase);
   }
 
@@ -1289,15 +1517,18 @@ function frame(now){
     if(b.straightPts&&b.curlPts){
       dc.straightT=Math.min(1,(dc.straightT||0)+dt*0.02);
       for(var si=0;si<b.pathPts.length;si++){
-        var cu=b.curlPts[si], sv=b.straightPts[si], tt=dc.straightT;
-        b.pathPts[si]={x:cu.x+(sv.x-cu.x)*tt, y:cu.y+(sv.y-cu.y)*tt};
+        var cu=b.curlPts[si], sv=b.straightPts[si], rawT=dc.straightT, tt=rawT*rawT*(3-2*rawT);
+        b.pathPts[si].x=cu.x+(sv.x-cu.x)*tt;
+        b.pathPts[si].y=cu.y+(sv.y-cu.y)*tt;
       }
     }
     var span=Math.max(1,b.segMax-b.segStart), progress=clamp((b.seg-b.segStart)/span,0,1);
-    var shiftX=m.p[b.host].x-b.pathPts[0].x, shiftY=m.p[b.host].y-b.pathPts[0].y;
+    /* 生长期间固定锚点：主藤停止物理微摆，枝桠只沿一条稳定曲线伸出。 */
+    var hostPoint=(dc.revealStage==='branch'&&b.hostPoint)?b.hostPoint:m.p[b.host];
+    var shiftX=hostPoint.x-b.pathPts[0].x, shiftY=hostPoint.y-b.pathPts[0].y;
     for(var bi=0;bi<b.p.length;bi++){
       var bt=bi/(b.p.length-1), u=Math.min(bt,progress);
-      var bp=b.pathPts[bi], sway=Math.sin(dc.phase*.9+bi*.27)*wAmt*2.2;
+      var bp=b.pathPts[bi], sway=dc.revealStage==='branch'?0:Math.sin(dc.phase*.9+bi*.27)*wAmt*0.65;
       b.p[bi].x=bp.x+shiftX+sway*(1-u); b.p[bi].y=bp.y+shiftY;
     }
     /* 卡片跟随枝头：枝条被抻直时卡片平滑下移，不突然跳位。 */
@@ -1322,7 +1553,7 @@ function frame(now){
       dc.physAcc-=STEP; guard++;
       var h=STEP;
       die.vy+=0.5*h;
-      die.vx*=Math.pow(0.995,h);
+      die.vx*=Math.pow(dc.state==='rolling' ? .94 : .995,h);
       die.x+=die.vx*h; die.y+=die.vy*h;
       /* 真滚动：转过的角度 = 滚过的距离 / 半径 */
       die.rz+=(die.vx/die.r)*57.2958*h;
@@ -1350,20 +1581,21 @@ function frame(now){
 
     var onGround=die.y+die.r>=gy-6;
     if(dc.passThrough>0) dc.passThrough--;
-    if(dc.state==='falling'&&dc.restTimer>26&&onGround){
-      /* 落在地面且停稳 → 进入滚动，靠残余动量咕噜噜滚一段 */
+    if(dc.state==='falling'&&onGround&&Math.abs(die.vy)<1.2){
+      /* 落地后直接承接剩余横向动量，不再先停住再凭空注入一段随机滑行。 */
       die.avx=0; die.avy=0;
-      die.vx=(Math.random()<0.5?-1:1)*(2.4+Math.random()*5.6);
+      die.vx*=.78;
       dc.state='rolling'; dc.restTimer=0; dc.rollT=0; dc.stateAt=now;
       $('dcVal').innerHTML='咕噜噜…';
-    }else if(dc.state==='rolling'&&dc.restTimer>22){
+    }else if(dc.state==='rolling'&&dc.restTimer>12){
       /* 滚停：rz 渐进吸附到位后才读数，不瞬间摆平 */
       die.rz+=(Math.round(die.rz/90)*90-die.rz)*Math.min(1,0.14*dt);
       if(Math.abs(die.rz-Math.round(die.rz/90)*90)<0.5){
         die.rz=Math.round(die.rz/90)*90;
         die.vx=0; die.vy=0; die.thrown=false; dc.state='done';
         dc.face=upFace(die.rx,die.ry,die.rz);
-        $('dcVal').innerHTML='点数 <b>'+dc.face+'</b> · '+PROJECTS[dc.face-1].t;
+        var picked=ANGLES[dc.face-1];
+        $('dcVal').innerHTML='角度 <b>'+dc.face+'</b> · '+picked.t+'<span class="dc-intro">'+picked.claim+'</span>';
         settle();
       }
     }
@@ -1405,11 +1637,12 @@ function settle(){
   var host=dc.buds[bi].idx, a=dc.main.p[host], len=Math.min(dc.H*0.44,dc.W*0.32);
   dc.branch=new Rope(11);
   dc.branch.host=host;
+  dc.branch.hostPoint={x:a.x,y:a.y};
   dc.branch.segMax=len/10;
   dc.branch.seg=dc.branch.segMax*0.06;
   dc.branch.segStart=dc.branch.seg;
-  /* 按真实帧间隔推进，约 700ms 完成，不因掉帧而出现一截一截的跳变。 */
-  dc.branch.grow=dc.branch.segMax/42;
+  /* 按真实帧间隔推进，约 500ms 完成；即使掉帧也不会拖成长时间的等待。 */
+  dc.branch.grow=dc.branch.segMax/30;
   dc.branch.growing=true;
   /* 新枝按重力自然卷曲下垂：三次贝塞尔，先垂再回收成钩状，像卷须被重力拉弯。 */
   var dir=(a.x<dc.die.x)?-1:1;
@@ -1439,17 +1672,17 @@ function settle(){
   dc.revealTimer=setTimeout(function(){
     if(token!==dc.revealToken||!dc.branch) return;
     dc.revealStage='branch'; dc.revealTimer=0; wakeFrame();
-  },360);
+  },280);
 }
 
 function enterCard(token){
   if(token!==dc.revealToken||!dc.branch||dc.cardEl) return;
   /* 卡片内容一律按「朝上的面」取，绝不按最近的花苞取 —— 否则会和宣告的点数打架 */
-  var pi=dc.face-1, pr=PROJECTS[pi];
+  var pi=dc.face-1, pr=ANGLES[pi];
   var el=document.createElement('div');
   el.className='card hot';
-  el.style.setProperty('--rot',(dc.branch.dir>0?'-1.4deg':'1.4deg'));
-  el.innerHTML='<b>'+pr.t+'</b><i>'+pr.s+'</i><br><span class="link" data-detail="'+pi+'">看详情 →</span>';
+  el.style.setProperty('--rot',(dc.branch.dir>0?'-0.45deg':'0.45deg'));
+  el.innerHTML='<b>'+pr.t+'</b><i>'+pr.claim+'</i><br><span class="link" data-detail="'+pi+'">看详情 →</span>';
   el.addEventListener('click',function(ev){
     if(ev.target.closest('[data-detail]')) return;   /* 链接自己处理 */
     openSheet(pi);
@@ -1481,28 +1714,63 @@ function enterCard(token){
   },40);
 }
 
-/* ---- 项目详情面板 ---- */
+/* ---- 角度详情面板 ---- */
+function jumpToTimeline(id){
+  closeSheet();
+  show('v-timeline');
+  var row=document.querySelector('#tlRows .row[data-id="'+id+'"]');
+  if(!row) return;
+  setTimeout(function(){
+    row.scrollIntoView({block:'center',behavior:'smooth'});
+    row.classList.add('hit');
+    setTimeout(function(){row.classList.remove('hit')},2400);
+  },140);
+}
 function openSheet(i){
-  var p=PROJECTS[i];
+  var p=ANGLES[i];
+  var practices=(p.practices||[]).map(function(t){return '<li>'+t+'</li>'}).join('');
+  var skills=(p.skills||[]).map(function(t){return '<li>'+t+'</li>'}).join('');
+  var rel=(p.related||[]).map(function(id){
+    var k=TL_IDS.indexOf(id); if(k<0) return '';
+    var r=TIMELINE[k]; if(!r) return '';
+    return '<button class="sh-rel" type="button" data-rel="'+id+'">'+r.l.t+' <span>'+r.y+'</span></button>';
+  }).join('');
+  $('sheetIn').innerHTML=
+     '<button class="sheet-x" id="sheetX">关闭</button>'
+    +'<div class="sh-kick">角度 '+('0'+(i+1)).slice(-2)+' / 06 · '+p.kick+'</div>'
+    +'<h3 class="sh-h">'+p.t+'</h3>'
+    +'<p class="sh-s">'+p.claim+'</p>'
+    +'<div class="sh-sec"><h5>我怎么看这件事</h5><p>'+p.intro+'</p></div>'
+    +'<div class="sh-sec"><h5>我做到的几次</h5><ul class="sh-hi">'+practices+'</ul></div>'
+    +'<div class="sh-sec"><h5>练到的能力</h5><ul class="sh-hi">'+skills+'</ul></div>'
+    +'<div class="sh-sec"><h5>相关经历</h5><div class="sh-rels">'+rel+'</div></div>';
+  $('sheet').classList.add('on');
+  $('sheetX').addEventListener('click',closeSheet);
+  $('sheetIn').querySelectorAll('[data-rel]').forEach(function(b){
+    b.addEventListener('click',function(){jumpToTimeline(b.getAttribute('data-rel'))});
+  });
+}
+function openAbout(){
+  var p=ABOUT;
   var tech=(p.tech||[]).map(function(t){return '<span>'+t+'</span>'}).join('');
   var honors=(p.honors||[]).map(function(t,i){return '<span'+(i===0?' class="top"':'')+'>'+t+'</span>'}).join('');
   var hi=(p.hi||[]).map(function(t){return '<li>'+t+'</li>'}).join('');
   $('sheetIn').innerHTML=
      '<button class="sheet-x" id="sheetX">关闭</button>'
-    +'<div class="sh-kick">项目 '+('0'+(i+1)).slice(-2)+' / 06</div>'
+    +'<div class="sh-kick">PROFILE / 关于我</div>'
     +'<h3 class="sh-h">'+p.t+'</h3>'
     +'<p class="sh-s">'+p.s+'</p>'
-    +'<div class="sh-sec"><h5>它是什么</h5><p>'+p.pos+'</p></div>'
-    +'<div class="sh-sec"><h5>面向谁</h5><p>'+p.who+'</p></div>'
-    +'<div class="sh-sec"><h5>技术栈</h5><div class="sh-tech">'+tech+'</div></div>'
-    +(p.honors?'<div class="sh-sec"><h5>荣誉</h5><div class="sh-honors">'+honors+'</div></div>':'')
-    +'<div class="sh-sec"><h5>做到哪了</h5><p>'+p.done+'</p></div>'
-    +'<div class="sh-sec"><h5>我做的关键判断</h5><ul class="sh-hi">'+hi+'</ul></div>'
-    +(p.u ? '<a class="sh-go" href="'+p.u+'" target="_blank" rel="noopener">打开线上版本 →</a>'
-          : '<div class="sh-src">这一版还没有公开的线上地址。源码在本地，需要的话我可以现场演示。</div>');
+    +'<div class="sh-sec"><h5>基本情况</h5><p>'+p.pos+'</p></div>'
+    +'<div class="sh-sec"><h5>求职方向</h5><p>'+p.who+'</p></div>'
+    +'<div class="sh-sec"><h5>工具与方法</h5><div class="sh-tech">'+tech+'</div></div>'
+    +'<div class="sh-sec"><h5>荣誉</h5><div class="sh-honors">'+honors+'</div></div>'
+    +'<div class="sh-sec"><h5>论文与竞赛</h5><p>'+p.done+'</p></div>'
+    +'<div class="sh-sec"><h5>我的工作方式</h5><ul class="sh-hi">'+hi+'</ul></div>';
   $('sheet').classList.add('on');
   $('sheetX').addEventListener('click',closeSheet);
 }
+var navAboutEl=$('navAbout');
+if(navAboutEl) navAboutEl.addEventListener('click',openAbout);
 function closeSheet(){ $('sheet').classList.remove('on'); }
 $('sheet').addEventListener('click',function(e){ if(e.target===$('sheet')) closeSheet(); });
 document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeSheet(); });
@@ -1552,8 +1820,8 @@ dcStage.addEventListener('click',function(e){       /* 点卡片/链接不要重
   if(e.target.closest&&e.target.closest('.card')) return;
   throwDie(e);
 });
-$('dcTense').addEventListener('input',function(){dc.P.tense=this.value/100});
-$('dcWind').addEventListener('input',function(){dc.P.wind=this.value/100});
+$('dcTense').addEventListener('input',function(){dc.P.tense=this.value/100;wakeFrame()});
+$('dcWind').addEventListener('input',function(){dc.P.wind=this.value/100;wakeFrame()});
 $('dcSnd').addEventListener('change',function(){dc.P.snd=this.checked});
 
 var rt=null;

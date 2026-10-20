@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>张明菲 · AI 产品经理作品集（冷光版）</title>
+<link rel="icon" href="data:,">
+<style>
+  /* ================= 基础变量 ================= */
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#0a1020;
+    --tx:#e9f0fc; --tx2:#9db1d0; --tx3:#64789a;
+    --line:rgba(150,182,238,.10);
+    --glass:rgba(255,255,255,.055);
+    --glass-hi:rgba(255,255,255,.16);
+    --gb:rgba(255,255,255,.14);
+    --blue:#4f8cff; --blue2:#5fc8ff; --blue-d:#16356f;
+    --blue-glow:rgba(79,140,255,.55);
+    --amber:#f6a93b; --amber2:#ffc978; --amber-d:#6e4410;
+    --amber-glow:rgba(246,169,59,.5);
+    --serif:"Songti SC","STSong","Source Han Serif SC","Noto Serif CJK SC","SimSun",Georgia,serif;
+    --sans:system-ui,-apple-system,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  }
+  html,body{height:100%}
+  body{background:#060a14;color:var(--tx);font-family:var(--sans);
+    -webkit-font-smoothing:antialiased;overflow:hidden}
+  ::selection{background:rgba(79,140,255,.35)}
+  /* 全局细网格 */
+  body::before{content:'';position:fixed;inset:0;z-index:1;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(150,182,238,.045) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(150,182,238,.045) 1px,transparent 1px);
+    background-size:64px 64px;
+    mask-image:radial-gradient(120% 100% at 50% 30%,#000 55%,transparent 100%);
+    -webkit-mask-image:radial-gradient(120% 100% at 50% 30%,#000 55%,transparent 100%)}
+  /* 暗角 */
+  body::after{content:'';position:fixed;inset:0;z-index:45;pointer-events:none;
+    background:radial-gradient(130% 105% at 50% 32%,transparent 52%,rgba(2,6,16,.55) 100%)}
+  .serif{font-family:var(--serif)}
+  button{font-family:inherit}
+
+  /* ================= 视图 ================= */
+  .view{position:fixed;inset:0;z-index:2;overflow-y:auto;overflow-x:hidden;
+    opacity:0;visibility:hidden;transition:opacity .5s ease,visibility .5s ease;
+    background:
+      radial-gradient(1050px 720px at 10% -12%,rgba(52,104,220,.20),transparent 60%),
+      radial-gradient(950px 700px at 96% 12%,rgba(246,159,59,.10),transparent 56%),
+      radial-gradient(900px 700px at 50% 118%,rgba(36,76,170,.16),transparent 62%),
+      linear-gradient(180deg,#0d1628 0%,#0a101f 62%,#080d1a 100%)}
+  .view.active{opacity:1;visibility:visible;z-index:3}
+  #v-dice{overflow:hidden}
+
+  .glass{background:linear-gradient(160deg,rgba(255,255,255,.09),rgba(255,255,255,.028));
+    border:1px solid var(--gb);
+    box-shadow:0 24px 60px rgba(2,8,20,.5),inset 0 1px 0 rgba(255,255,255,.18);
+    backdrop-filter:blur(20px) saturate(1.35);-webkit-backdrop-filter:blur(20px) saturate(1.35)}
+
+  /* ================= 顶部导航 ================= */
+  nav{position:fixed;top:0;left:0;right:0;z-index:40;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:17px clamp(20px,4vw,54px);
+    background:linear-gradient(180deg,rgba(7,11,22,.82),rgba(7,11,22,0));
+    transition:background .3s}
+  .brand b{font-family:var(--serif);font-size:20px;font-weight:600;letter-spacing:.12em}
+  .brand span{display:block;font-size:10.5px;letter-spacing:.22em;color:var(--tx3);margin-top:2px}
+  .navlinks{display:flex;gap:6px}
+  .navlinks button{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;letter-spacing:.06em;
+    color:var(--tx2);background:none;border:0;cursor:pointer;padding:9px 15px;border-radius:99px;
+    position:relative;transition:color .25s,background .25s}
+  .navlinks button svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+  .navlinks button:hover{color:var(--tx)}
+  .navlinks button.on{color:#fff;background:rgba(79,140,255,.12);
+    box-shadow:inset 0 0 0 1px rgba(79,140,255,.35),0 0 18px rgba(79,140,255,.18)}
+
+  /* ================= 通用按钮 ================= */
+  .btn{display:inline-flex;align-items:center;gap:10px;cursor:pointer;font-size:14px;font-weight:600;
+    letter-spacing:.06em;padding:14px 30px;border-radius:99px;transition:transform .25s,box-shadow .25s,background .25s,border-color .25s}
+  .btn:active{transform:translateY(1px)}
+  .btn-blue{color:#fff;border:1px solid rgba(125,170,255,.55);
+    background:linear-gradient(135deg,#2456b8,#142c61);
+    box-shadow:0 12px 32px rgba(40,90,220,.42),inset 0 1px 0 rgba(255,255,255,.28)}
+  .btn-blue:hover{transform:translateY(-2px);box-shadow:0 18px 44px rgba(40,90,220,.58),inset 0 1px 0 rgba(255,255,255,.32)}
+  .btn-ghost{color:var(--tx2);border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.03)}
+  .btn-ghost:hover{color:#fff;border-color:rgba(255,255,255,.45);transform:translateY(-2px)}
+  .btn-amber{color:#ffd9a3;border:1px solid rgba(246,169,59,.62);
+    background:linear-gradient(135deg,rgba(122,78,22,.5),rgba(74,44,12,.55));
+    box-shadow:0 10px 30px rgba(246,150,45,.22),inset 0 1px 0 rgba(255,220,170,.22)}
+  .btn-amber:hover{transform:translateY(-2px);color:#ffe7c2;box-shadow:0 16px 44px rgba(246,150,45,.4),inset 0 1px 0 rgba(255,220,170,.28)}
+  .btn .arr{transition:transform .3s}.btn:hover .arr{transform:translateX(4px)}
+
+  /* ================= 冰晶骰子（3D） ================= */
+  .die{--s:168px;--h:84px;width:var(--s);height:var(--s);position:relative;transform-style:preserve-3d}
+  .f{position:absolute;inset:0;border-radius:15%;backface-visibility:hidden;display:grid;place-items:center;
+    color:#22344f;
+    background:linear-gradient(150deg,rgba(255,255,255,.40),rgba(206,226,255,.10) 52%,rgba(255,255,255,.20));
+    border:1px solid rgba(255,255,255,.55);
+    box-shadow:inset 0 0 26px rgba(255,255,255,.22),inset 0 3px 7px rgba(255,255,255,.7),
+      inset 0 -10px 20px rgba(84,124,196,.20)}
+  .f::after{content:'';position:absolute;inset:0;border-radius:15%;pointer-events:none;
+    background:linear-gradient(118deg,rgba(255,255,255,.55),transparent 42%)}
+  .f1{transform:translateZ(var(--h))}
+  .f2{transform:rotateY(180deg) translateZ(var(--h))}
+  .f3{transform:rotateY(90deg) translateZ(var(--h))}
+  .f4{transform:rotateY(-90deg) translateZ(var(--h))}
+  .f5{transform:rotateX(90deg) translateZ(var(--h))}
+  .f6{transform:rotateX(-90deg) translateZ(var(--h))}
+  .pips{width:60%;aspect-ratio:1;background-repeat:no-repeat;background-size:33.34% 33.34%;position:relative;z-index:2}
+  .pipdot{background:radial-gradient(circle at 38% 34%,rgba(255,255,255,.28),rgba(36,54,84,.9) 46%,rgba(12,22,42,.95) 78%)}
+  .p1{background-image:radial-gradient(circle at 38% 34%,rgba(255,255,255,.28),rgba(36,54,84,.9) 46%,rgba(12,22,42,.95) 78%);background-position:50% 50%;background-size:56% 56%}
+  .p2{background-image:radial-gradient(circle at 38% 34%,rgba(255,255,255,.25),rgba(36,54,84,.88) 46%,rgba(12,22,42,.94)),radial-gradient(circle at 38% 34%,rgba(255,255,255,.25),rgba(36,54,84,.88) 46%,rgba(12,22,42,.94));background-position:12% 12%,88% 88%;background-size:46% 46%}
+  .p3{background-image:radial-gradient(circle at 38% 34%,rgba(255,255,255,.25),rgba(36,54,84,.88) 46%,rgba(12,22,42,.94)),radial-gradient(circle at 38% 34%,rgba(255,255,255,.25),rgba(36,54,84,.88) 46%,rgba(12,22,42,.94)),radial-gradient(circle at 38% 34%,rgba(255,255,255,.25),rgba(36,54,84,.88) 46%,rgba(12,22,42,.94));background-position:10% 10%,50% 50%,90% 90%;background-size:42% 42%}
+  .p4{background-image:radial-gradient(circle at 38% 34%,rgba(255,255,255,.25),rgba(36,54,84,.88) 46%,rgba(12,22,42,.94)),radial-gradient(circle at 38% 34%,rgba(255,255,255,.25),rgba(36,54,84,.88) 46%,rgba(12,22,42,.94)),radial-gradient(circle at 38% 34%,rgba(255,255,255,.25),rgba(36,54,84,.88) 46%,rgba(12,22,42,.94)),radial-gradient(circle at 38% 34%,rgba(255,255,255,.25),rgba(36,54,84,.88) 46%,rgba(12,22,42,.94));background-position:10% 10%,90% 10%,10% 90%,90% 90%;background-size:42% 42%}
+  .p5{background-image:radial-gradient(circle at 38% 34%,rgba(255,255,255,.25),rgba(36,54,84,.88) 46%,rgba(12,22,42,.94)),radial-gradient(circle at 38% 34%,rgba(255,255,255,.25),rgba(36,54,84,.88) 46%,rgba(12,22,42,.94)),radial-gradient(circle at 38% 34%,rgba(255,255,255,.25),rgba(36,54,84,.88) 46%,rgba(12,22,42,.94)),radial-gradient(circle at 38% 34%,rgba(255,255,255,.25),rgba(36,54,84,.88) 46%,rgba(12,22,42,.94)),radial-gradient(circle at 38% 34%,rgba(255,255,255,.25),rgba(36,54,84,.88) 46%,rgba(12,22,42,.94));background-position:10% 10%,90% 10%,50% 50%,10% 90%,90% 90%;background-size:40% 40%}
+  .p6{background-image:radial-gradient(circle at 38% 34%,rgba(255,255,255,.25),rgba(36,54,84,.88) 46%,rgba(12,22,42,.94)),radial-gradient(circle at 38% 34%,rgba(255,255,255,.25),rgba(36,54,84,.88) 46%,rgba(12,22,42,.94)),radial-gradient(circle at 38% 34%,rgba(255,255,255,.25),rgba(36,54,84,.88) 46%,rgba(12,22,42,.94)),radial-gradient(circle at 38% 34%,rgba(255,255,255,.25),rgba(36,54,84,.88) 46%,rgba(12,22,42,.94)),radial-gradient(circle at 38% 34%,rgba(255,255,255,.25),rgba(36,54,84,.88) 46%,rgba(12,22,42,.94)),radial-gradient(circle at 38% 34%,rgba(255,255,255,.25),rgba(36,54,84,.88) 46%,rgba(12,22,42,.94));background-position:12% 8%,88% 8%,12% 50%,88% 50%,12% 92%,88% 92%;background-size:40% 40%}
+
+  /* 浮动微尘 */
+  .motes{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:1}
+  .motes i{position:absolute;width:3px;height:3px;border-radius:50%;background:#9cc4ff;
+    box-shadow:0 0 8px #7fb0ff;opacity:0;
+    animation:mote calc(9s / var(--wind-spd,1)) linear infinite}
+  .motes i.a{background:#ffc978;box-shadow:0 0 8px var(--amber-glow)}
+  @keyframes mote{0%{transform:translate3d(0,26px,0);opacity:0}12%{opacity:.65}80%{opacity:.4}100%{transform:translate3d(14px,-60px,0);opacity:0}}
+
+  /* ================= 首页 ================= */
+  #v-home{display:flex;flex-direction:column;justify-content:center}
+  .home-in{width:min(1240px,100%);margin:0 auto;padding:110px clamp(24px,6vw,96px) 24px;
+    display:grid;grid-template-columns:minmax(380px,1.02fr) minmax(420px,.98fr);
+    align-items:center;gap:clamp(30px,5vw,70px)}
+  .kick{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--blue2);margin-bottom:20px;
+    display:inline-flex;align-items:center;gap:10px}
+  .kick::before{content:'';width:26px;height:1px;background:linear-gradient(90deg,var(--blue2),transparent)}
+  .hero-copy h1{font-family:var(--serif);font-size:clamp(58px,6.2vw,88px);font-weight:600;line-height:1.06;
+    letter-spacing:.1em;margin-bottom:8px}
+  .hero-copy h1 .ac{color:transparent;background:linear-gradient(120deg,#7fb4ff,#5fc8ff 60%,#a8dcff);
+    -webkit-background-clip:text;background-clip:text;
+    text-shadow:0 0 42px rgba(95,200,255,.25)}
+  .hero-sub{font-size:17px;color:var(--tx2);line-height:1.9;margin:18px 0 6px;max-width:520px}
+  .hero-sub b{color:#cfe0ff;font-weight:600}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 18px}
+  .chip{font-size:12px;letter-spacing:.04em;color:#c6d8f5;padding:8px 15px;border-radius:99px;
+    background:rgba(79,140,255,.08);border:1px solid rgba(79,140,255,.28);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.1)}
+  .chip.amber{color:#ffd9a3;background:rgba(246,169,59,.08);border-color:rgba(246,169,59,.3)}
+  /* 三段式能力药丸行（对齐参考图） */
+  .caps{display:inline-flex;align-items:center;gap:0;flex-wrap:wrap;
+    background:linear-gradient(165deg,rgba(238,243,251,.97),rgba(214,225,243,.97));
+    border:1px solid rgba(255,255,255,.9);border-radius:14px;padding:5px;
+    box-shadow:0 18px 44px rgba(3,10,26,.45),inset 0 1px 0 #fff;margin-bottom:34px}
+  .caps span{position:relative;font-size:13px;font-weight:600;letter-spacing:.05em;color:#22344f;
+    padding:10px 20px;white-space:nowrap}
+  .caps span+span::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);
+    width:1px;height:15px;background:rgba(34,52,79,.22)}
+  .hero-cta{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+  .hero-cta .or{font-size:12.5px;color:var(--tx3);letter-spacing:.05em}
+  .textlink{font-size:13px;color:var(--tx2);background:none;border:0;cursor:pointer;letter-spacing:.05em;
+    border-bottom:1px solid rgba(255,255,255,.25);padding:4px 0}
+  .textlink:hover{color:#fff;border-color:var(--blue2)}
+
+  .hero-visual{position:relative;height:clamp(380px,52vw,540px)}
+  .hero-visual .orb{position:absolute;border-radius:50%;filter:blur(12px);pointer-events:none}
+  .hero-visual .orb.b{width:360px;height:360px;left:6%;top:12%;
+    background:radial-gradient(circle,rgba(79,140,255,.28),transparent 68%)}
+  .hero-visual .orb.a{width:300px;height:300px;right:0;bottom:6%;
+    background:radial-gradient(circle,rgba(246,169,59,.20),transparent 68%)}
+  .hero-map{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+  .hero-map .r-blue{fill:none;stroke:rgba(95,170,255,.55);stroke-width:1.4;stroke-dasharray:2 7;stroke-linecap:round}
+  .hero-map .r-amber{fill:none;stroke:rgba(246,169,59,.5);stroke-width:1.6;stroke-linecap:round}
+  .hero-map .nd{fill:#0e1c38;stroke:#7fb0ff;stroke-width:1.5}
+  .hero-map .nd.lit{fill:#8fc2ff;stroke:#cfe6ff;filter:drop-shadow(0 0 8px rgba(95,170,255,.9))}
+  .hero-map .nd.a{stroke:var(--amber2)}
+  .hero-map .nd.a.lit{fill:#ffc978;stroke:#ffe7c2;filter:drop-shadow(0 0 8px rgba(246,169,59,.9))}
+  /* 双平台发光地图（对齐参考图）：上=时间线，下=掷骰 */
+  .plat{position:absolute;display:flex;flex-direction:column;align-items:center;gap:10px;z-index:3;
+    animation:platFloat 7s ease-in-out infinite}
+  .plat.a{right:4%;bottom:14%;animation-delay:-3.2s}
+  .plat.b{left:8%;top:6%}
+  @keyframes platFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+  .plat .pstage{position:relative;display:grid;place-items:center}
+  .plat .pobj{position:relative;z-index:2;filter:drop-shadow(0 18px 30px rgba(3,10,26,.55))}
+  .plat .tl-ico{width:104px;height:104px;display:block}
+  /* 平台圆盘：位于物件正下方 */
+  .plat .pdisc{position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);z-index:1;
+    width:190px;height:64px;border-radius:50%;pointer-events:none}
+  .plat.b .pdisc{background:radial-gradient(ellipse,rgba(79,140,255,.5),rgba(79,140,255,.14) 55%,transparent 76%);
+    box-shadow:0 0 44px rgba(79,140,255,.45)}
+  .plat.a .pdisc{width:230px;height:76px;bottom:20px;
+    background:radial-gradient(ellipse,rgba(246,169,59,.5),rgba(246,169,59,.14) 55%,transparent 76%);
+    box-shadow:0 0 50px rgba(246,169,59,.42)}
+  .plat .plab{font-family:var(--serif);font-size:17px;font-weight:600;letter-spacing:.22em;z-index:4}
+  .plat.b .plab{color:#dceaff;text-shadow:0 0 18px rgba(95,170,255,.7)}
+  .plat.a .plab{color:#ffe9c8;text-shadow:0 0 18px rgba(246,169,59,.7)}
+  .hero-diepos{position:relative;width:230px;height:230px;display:grid;place-items:center}
+  .hero-diepos .die{--s:132px;--h:66px;animation:heroFloat 6s ease-in-out infinite}
+  @keyframes heroFloat{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-14px) rotate(2deg)}}
+
+  /* 底部两张路径预览卡（对齐参考图） */
+  .path-preview{width:min(1240px,100%);margin:0 auto;
+    padding:14px clamp(24px,6vw,96px) 46px;
+    display:grid;grid-template-columns:1fr 1fr;gap:clamp(18px,3vw,34px)}
+  .pp{display:flex;align-items:center;justify-content:space-between;gap:16px;text-align:left;
+    cursor:pointer;font-family:inherit;border-radius:18px;padding:20px 26px;
+    transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
+  .pp:hover{transform:translateY(-5px)}
+  .pp .pp-txt b{display:block;font-family:var(--serif);font-size:19px;font-weight:600;
+    letter-spacing:.06em;margin-bottom:5px}
+  .pp .pp-txt span{font-size:12.5px;letter-spacing:.05em;opacity:.8}
+  .pp .arr{font-size:19px;transition:transform .3s}
+  .pp:hover .arr{transform:translateX(5px)}
+  .pp.b{background:linear-gradient(165deg,rgba(238,243,251,.97),rgba(214,225,243,.97));
+    border:1px solid rgba(255,255,255,.9);
+    box-shadow:0 24px 60px rgba(3,10,26,.5),inset 0 1px 0 #fff}
+  .pp.b .pp-txt b{color:#152a4a}.pp.b .pp-txt span{color:#4d5d7c}.pp.b .arr{color:#2c5fc7}
+  .pp.b:hover{box-shadow:0 32px 76px rgba(6,30,90,.55),0 0 0 1px rgba(150,190,255,.6)}
+  .pp.a{background:linear-gradient(165deg,rgba(30,27,24,.9),rgba(15,13,12,.95));
+    border:1px solid rgba(246,169,59,.35);
+    box-shadow:0 24px 60px rgba(24,12,0,.55),inset 0 1px 0 rgba(255,235,200,.14)}
+  .pp.a .pp-txt b{color:#fff}.pp.a .pp-txt span{color:#c9bda9}.pp.a .arr{color:#f6a93b}
+  .pp.a:hover{border-color:rgba(246,169,59,.6);box-shadow:0 32px 76px rgba(160,90,10,.5)}
+
+  /* ================= 路线选择 ================= */
+  #v-route{display:flex;flex-direction:column;justify-content:center}
+  .route-in{width:100%;max-width:1120px;margin:0 auto;padding:120px 24px 60px;text-align:center}
+  .route-in h2{font-family:var(--serif);font-size:clamp(28px,3.4vw,42px);font-weight:600;letter-spacing:.06em;margin-bottom:12px}
+  .route-in .rsub{font-size:14px;color:var(--tx2);letter-spacing:.04em}
+  .rcards{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,48px);margin:54px 0 36px}
+  /* 两卡中缝的四芒光星（对齐参考图） */
+  .rcards::after{content:'';position:absolute;left:50%;top:47%;transform:translate(-50%,-50%);
+    width:300px;height:130px;pointer-events:none;z-index:6;
+    background:
+      radial-gradient(ellipse 42px 42px at 50% 50%,rgba(255,255,255,.95),rgba(255,228,175,.42) 32%,transparent 66%),
+      radial-gradient(ellipse 140px 2px at 50% 50%,rgba(255,236,205,.85),transparent 72%),
+      radial-gradient(ellipse 2px 58px at 50% 50%,rgba(205,228,255,.8),transparent 72%)}
+  .rcard{position:relative;overflow:hidden;cursor:pointer;border-radius:22px;padding:38px 36px 34px;
+    min-height:412px;display:flex;flex-direction:column;align-items:center;text-align:center;
+    transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s,border-color .4s}
+  .rcard:hover{transform:translateY(-8px)}
+  .rcard::before{content:'';position:absolute;width:340px;height:340px;border-radius:50%;right:-120px;top:-120px;pointer-events:none}
+  /* 左卡：霜白浅底（参考图左卡） */
+  .rcard.b{background:linear-gradient(165deg,#eef3fb 0%,#d7e2f3 100%);border:1px solid rgba(255,255,255,.9);
+    box-shadow:0 30px 70px rgba(3,10,26,.45),inset 0 1px 0 rgba(255,255,255,.95)}
+  .rcard.b:hover{box-shadow:0 40px 90px rgba(6,30,90,.5),0 0 0 1px rgba(150,190,255,.6)}
+  .rcard.b::before{background:radial-gradient(circle,rgba(79,140,255,.22),transparent 66%)}
+  /* 右卡：暗底琥珀光（参考图右卡） */
+  .rcard.a{background:linear-gradient(165deg,rgba(30,27,24,.88),rgba(15,13,12,.94));
+    border:1px solid rgba(246,169,59,.35);
+    box-shadow:0 30px 70px rgba(24,12,0,.5),inset 0 1px 0 rgba(255,235,200,.14)}
+  .rcard.a:hover{border-color:rgba(246,169,59,.6);box-shadow:0 40px 90px rgba(160,90,10,.42)}
+  .rcard.a::before{background:radial-gradient(circle,rgba(246,169,59,.3),transparent 66%)}
+  .rcard.b h3,.rcard.a h3{font-family:var(--serif);font-size:25px;font-weight:600;letter-spacing:.04em;
+    margin-bottom:9px;position:relative;z-index:2}
+  .rcard.b h3{color:#152a4a}
+  .rcard.a h3{color:#fff}
+  .rcard p{font-size:13.5px;line-height:1.7;letter-spacing:.05em;position:relative;z-index:2}
+  .rcard.b p{color:#4d5d7c}
+  .rcard.a p{color:#c9bda9}
+  .rcard .ricon{width:100%;display:grid;place-items:center;margin:20px 0 8px;position:relative;z-index:2}
+  .rcard .go{margin-top:auto;padding-top:26px;position:relative;z-index:2}
+  /* 左卡插画：迷你能力地图 */
+  .mini-tl{width:min(300px,100%);height:auto;overflow:visible}
+  .mini-tl .tlbl{font-size:11px;letter-spacing:.04em;fill:#22344f;font-family:var(--sans)}
+  /* 右卡插画：放射光线 + 冰晶骰子 */
+  .die-scene{position:relative;width:min(340px,100%);height:210px;display:grid;place-items:center}
+  .die-scene .rays{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+  .die-scene .rays line{stroke:rgba(246,169,59,.5);stroke-width:1.3;stroke-linecap:round}
+  .die-scene .rays circle{fill:#ffd79a;filter:drop-shadow(0 0 6px rgba(255,200,110,.95))}
+  .dnote{position:absolute;top:2px;font-size:11.5px;letter-spacing:.08em;z-index:3;white-space:nowrap}
+  .dnote.nl{left:0;color:#f2d3a4}
+  .dnote.nr{right:0;color:#f2d3a4}
+  .mini-die-wrap{position:relative;width:150px;height:150px;display:grid;place-items:center;z-index:2}
+  .mini-die-wrap::before{content:'';position:absolute;inset:-14px;border-radius:50%;
+    background:radial-gradient(circle,rgba(246,169,59,.38),transparent 66%);filter:blur(8px)}
+  .mini-die-wrap .die{--s:104px;--h:52px;transform:rotateX(-24deg) rotateY(-28deg);
+    animation:miniBob 4.5s ease-in-out infinite}
+  @keyframes miniBob{0%,100%{transform:rotateX(-24deg) rotateY(-28deg) translateY(0)}50%{transform:rotateX(-18deg) rotateY(-20deg) translateY(-7px)}}
+  .mini-spark{position:absolute;width:7px;height:7px;border-radius:50%;background:#ffd79a;z-index:3;
+    box-shadow:0 0 10px 2px rgba(246,169,59,.8);animation:spark 2.6s ease-in-out infinite}
+  .mini-spark.s1{top:6%;left:18%;animation-delay:-.4s}.mini-spark.s2{top:0;right:22%;animation-delay:-1.1s}
+  .mini-spark.s3{bottom:14%;right:4%;animation-delay:-1.8s}.mini-spark.s4{bottom:4%;left:14%;animation-delay:-2.2s}
+  @keyframes spark{0%,100%{opacity:.25;transform:scale(.8)}50%{opacity:1;transform:scale(1.25)}}
+  /* 两种路线按钮：左深藏蓝实心 / 右琥珀描边 */
+  .btn-navy{color:#fff;border:1px solid rgba(125,165,250,.5);
+    background:linear-gradient(135deg,#1d3f8e,#102452);
+    box-shadow:0 12px 30px rgba(25,60,160,.42),inset 0 1px 0 rgba(255,255,255,.25)}
+  .btn-navy:hover{transform:translateY(-2px);box-shadow:0 18px 44px rgba(25,60,160,.6)}
+  .btn-oline{color:#ffd9a3;border:1.5px solid rgba(246,169,59,.75);background:rgba(246,169,59,.06)}
+  .btn-oline:hover{transform:translateY(-2px);color:#ffe7c2;background:rgba(246,169,59,.15);
+    box-shadow:0 14px 36px rgba(246,150,45,.3)}
+  .legend{display:flex;justify-content:flex-end;gap:30px;font-size:12px;color:var(--tx3);letter-spacing:.05em}
+  .legend i{font-style:normal;display:inline-flex;align-items:center;gap:8px}
+  .legend i::before{content:'';width:9px;height:9px;border-radius:50%}
+  .legend .lb::before{background:var(--blue);box-shadow:0 0 8px var(--blue-glow)}
+  .legend .la::before{background:var(--amber);box-shadow:0 0 8px var(--amber-glow)}
+
+  /* ================= 极光青紫轨道时间线 ================= */
+  #v-time.orbit-view{padding:0;overflow:hidden;background:#080d16}
+  .orbit-frame{display:block;width:100%;height:100%;border:0;background:#080d16}
+  .orbit-list-trigger{position:absolute;z-index:4;right:clamp(28px,5vw,74px);bottom:clamp(30px,5vh,56px);padding:8px 12px;border:1px solid rgba(154,197,246,.28);background:rgba(10,18,31,.7);color:#9cb5d1;font-size:10px;letter-spacing:.12em;cursor:pointer}
+  .orbit-list-trigger:hover,.orbit-list-trigger:focus-visible{color:#edf3ff;border-color:#8cd9e6}
+  .tl-scrim{position:fixed;inset:0;z-index:49;background:rgba(2,6,16,.62);backdrop-filter:blur(5px);opacity:0;pointer-events:none;transition:opacity .35s}
+  .tl-scrim.on{opacity:1;pointer-events:auto}
+  .tl-drawer{position:fixed;top:0;right:0;bottom:0;z-index:50;width:min(470px,92vw);padding:34px 32px;overflow-y:auto;color:var(--tx);background:linear-gradient(155deg,#182b42,#0b1426 72%);border-left:1px solid rgba(109,190,255,.4);box-shadow:-30px 0 90px rgba(1,5,15,.6);transform:translateX(102%);transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+  .tl-drawer.on{transform:none}
+  .tl-drawer .d-close{float:right;background:none;border:1px solid rgba(255,255,255,.25);border-radius:99px;padding:6px 12px;color:var(--tx2);cursor:pointer}
+  .tl-drawer .d-date{font-size:12px;letter-spacing:.12em;color:#55e5bc;margin:2px 0 12px}
+  .tl-drawer h3{font-family:var(--serif);font-size:25px;line-height:1.45;margin-bottom:22px}
+  .tl-drawer h4{font-size:11px;letter-spacing:.16em;color:#6dbeff;margin:20px 0 7px}
+  .tl-drawer h4.amber{color:#bc8ff5}
+  .tl-drawer p{font-size:14px;line-height:1.85;color:var(--tx2)}
+  .tl-drawer .d-list{list-style:none;margin:0 0 4px;padding:0}
+  .tl-drawer .d-list li{position:relative;font-size:14px;line-height:1.8;color:var(--tx2);padding-left:15px;margin-bottom:7px}
+  .tl-drawer .d-list li::before{content:'';position:absolute;left:0;top:.72em;width:5px;height:5px;border-radius:99px;background:#6dbeff;opacity:.8}
+  .tl-drawer .d-list.amber li::before{background:#bc8ff5}
+  .tl-drawer .d-tags{margin-top:18px;display:flex;gap:7px;flex-wrap:wrap}
+  .tl-drawer .d-tags span{font-size:11px;color:#cfe0ff;border:1px solid rgba(135,180,255,.28);padding:4px 9px;border-radius:99px}
+  .sh-rels{display:flex;flex-wrap:wrap;gap:8px}
+  .sh-rel{display:inline-flex;align-items:center;gap:6px;padding:7px 11px;border:1px solid rgba(154,197,246,.28);background:rgba(10,18,31,.5);color:#cfe0ff;font-size:12.5px;cursor:pointer}
+  .sh-rel:hover{border-color:#8cd9e6;color:#edf3ff}
+  .sh-rel span{color:#7f95b4;font-size:10.5px;letter-spacing:.06em}
+  .tl-index-group{margin:22px 0}
+  .tl-index-group h4{margin-bottom:8px}
+  .tl-index-item{display:block;width:100%;padding:11px 2px;border:0;border-bottom:1px solid rgba(135,180,255,.16);background:none;color:#dce9fa;text-align:left;cursor:pointer}
+  .tl-index-item:hover,.tl-index-item:focus-visible{color:#fff;background:rgba(109,190,255,.08)}
+  .tl-index-item small{display:block;margin-top:4px;color:var(--tx3);font-size:10px}
+  /* ================= 掷骰探索 ================= */
+  /* 内容区圆角细边框（对齐参考图） */
+  .board{position:absolute;inset:88px clamp(14px,2.6vw,30px) 24px;
+    border:1px solid rgba(255,255,255,.13);border-radius:26px;
+    background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012) 42%,transparent)}
+  /* 骰子区（放大 + 冰晶加厚） */
+  .diepos{position:absolute;left:19%;top:26%;transform:translate(-50%,-50%);
+    width:290px;height:290px;display:grid;place-items:center;z-index:6}
+  .diepos .hopper{width:100%;height:100%;display:grid;place-items:center;animation:bob 5.5s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-11px)}}
+  .diepos.throw .hopper{animation:none}
+  .diepos .sway{transform-style:preserve-3d;animation:sway 8s ease-in-out infinite alternate}
+  @keyframes sway{from{transform:rotateX(-21deg) rotateY(-22deg)}to{transform:rotateX(-17deg) rotateY(-10deg)}}
+  /* 首次掷骰后锁定到固定 3/4 俯视角，让结果顶面稳定可读（与参考图一致） */
+  .diepos.locked .sway{animation:none;transform:rotateX(-26deg) rotateY(-16deg)}
+  .diepos .dieglow{position:absolute;width:380px;height:380px;border-radius:50%;z-index:-1;
+    background:radial-gradient(circle,rgba(79,140,255,.36),transparent 66%);filter:blur(10px);
+    opacity:calc(.12 + var(--glow-amt,.6)*.88);transition:opacity .3s}
+  .diepos .pool{position:absolute;bottom:15px;width:300px;height:80px;border-radius:50%;
+    background:radial-gradient(ellipse,rgba(246,169,59,.42),rgba(246,169,59,.1) 55%,transparent 76%);filter:blur(7px);
+    opacity:calc(.3 + var(--glow-amt,.6)*.7);transition:opacity .3s}
+  .diepos .die{--s:250px;--h:125px;cursor:pointer;transition:filter .3s}
+  /* 冰晶质感加厚：更厚的晶壁与内折光 */
+  .diepos .die .f{border-width:2px;border-color:rgba(255,255,255,.78);
+    box-shadow:inset 0 0 34px rgba(255,255,255,.3),inset 0 4px 9px rgba(255,255,255,.85),
+      inset 0 -14px 28px rgba(84,124,196,.3)}
+  .diepos .die:hover{filter:brightness(1.08)}
+  .die-badge{position:absolute;top:-6px;left:64%;white-space:nowrap;z-index:8;
+    font-size:12px;letter-spacing:.08em;color:#cfe0ff;padding:8px 15px;border-radius:11px;
+    background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    box-shadow:0 10px 26px rgba(3,8,22,.5),inset 0 1px 0 rgba(255,255,255,.14);
+    backdrop-filter:blur(14px)}
+  .die-badge b{color:#8fc2ff;font-variant-numeric:tabular-nums}
+  .die-tap{position:absolute;bottom:-4px;left:50%;transform:translateX(-50%);white-space:nowrap;
+    font-size:11px;letter-spacing:.1em;color:var(--tx3)}
+  .diepos.throw .die-tap{display:none}
+
+  /* 六节点路径 */
+  .nodes{position:absolute;left:clamp(24px,7vw,110px);right:clamp(24px,7vw,110px);top:50%;z-index:5}
+  .nline{position:absolute;left:4%;right:4%;top:7px;height:2px;border-radius:2px;
+    background:rgba(130,165,225,.18)}
+  .nfill{position:absolute;left:0;top:0;height:100%;width:0;border-radius:2px;
+    background:linear-gradient(90deg,var(--blue),var(--blue2));box-shadow:0 0 10px var(--blue-glow);
+    transform-origin:left;transition:width .7s cubic-bezier(.2,.8,.2,1)}
+  .nrow{position:relative;display:flex}
+  .node{flex:1;display:flex;flex-direction:column;align-items:center;gap:13px;cursor:default;
+    background:none;border:0;color:var(--tx3);font-family:inherit;position:relative}
+  .dot{width:15px;height:15px;border-radius:50%;background:#1a2945;border:1.5px solid rgba(180,205,250,.4);
+    box-shadow:0 0 0 6px rgba(12,20,40,.72);transition:all .35s}
+  .lab{font-size:12.5px;letter-spacing:.04em;transition:color .3s;text-align:center;line-height:1.5}
+  .node.done .dot{background:var(--blue);border-color:#b9d6ff;
+    box-shadow:0 0 0 6px rgba(79,140,255,.14),0 0 16px var(--blue-glow)}
+  .node.done .lab{color:#b9cdec}
+  .node.cur .dot{position:relative;width:72px;height:72px;margin-top:-28px;border-radius:50%;
+    background:radial-gradient(circle,rgba(79,140,255,.2),rgba(79,140,255,.05) 62%,transparent 76%);
+    border:2px solid rgba(165,205,255,.92);
+    box-shadow:0 0 0 7px rgba(79,140,255,.16),0 0 40px rgba(95,170,255,.95);
+    animation:dotPulse 1.8s ease-in-out infinite}
+  .node.cur .lab{position:absolute;top:8px;left:50%;transform:translate(-50%,-50%);width:92px;
+    color:#fff;font-weight:600;text-shadow:0 0 14px rgba(95,170,255,.95)}
+  @keyframes dotPulse{0%,100%{box-shadow:0 0 0 7px rgba(79,140,255,.16),0 0 30px rgba(95,170,255,.85)}
+    50%{box-shadow:0 0 0 15px rgba(79,140,255,.06),0 0 52px rgba(95,170,255,1)}}
+
+  /* 白色玻璃信息卡（对齐参考图） */
+  .pop{--ax:50%;position:absolute;z-index:9;width:298px;padding:21px 22px 19px;border-radius:17px;pointer-events:none;
+    background:linear-gradient(168deg,#ffffff 0%,#edf3fc 100%);color:#1d2940;
+    box-shadow:0 34px 80px rgba(3,9,24,.65),0 0 0 1px rgba(255,255,255,.65),0 0 48px rgba(79,140,255,.28);
+    opacity:0;transform:translate(-50%,-10px) scale(.96);transition:opacity .45s ease,transform .5s cubic-bezier(.2,.9,.25,1),left .55s cubic-bezier(.2,.9,.25,1),top .55s cubic-bezier(.2,.9,.25,1)}
+  .pop.on{opacity:1;transform:translate(-50%,0) scale(1);pointer-events:auto}
+  .pop::before{content:'';position:absolute;top:-7px;left:var(--ax);transform:translateX(-50%) rotate(45deg);
+    width:14px;height:14px;background:#fff;border-left:1px solid rgba(180,200,230,.6);border-top:1px solid rgba(180,200,230,.6)}
+  /* 卡片位于节点上方时，箭头翻到底部指向节点 */
+  .pop.up::before{top:auto;bottom:-7px;border-left:0;border-top:0;
+    border-right:1px solid rgba(180,200,230,.6);border-bottom:1px solid rgba(180,200,230,.6)}
+  .pop h3{font-family:var(--serif);font-size:19px;font-weight:600;color:#16243c}
+  .pop .ptags{display:flex;flex-wrap:wrap;gap:7px;margin:11px 0 13px}
+  .pop .ptags span{font-size:10.5px;padding:4px 10px;border-radius:7px;font-weight:600;letter-spacing:.02em}
+  .pop .ptags .t1{background:rgba(79,140,255,.12);color:#2a5fc0}
+  .pop .ptags .t2{background:rgba(246,150,45,.14);color:#b06d12}
+  .pop .ptags .t3{background:rgba(120,140,175,.14);color:#48577a}
+  .pop p{font-size:12.5px;line-height:1.75;color:#51607d}
+  .pop .pbtns{display:flex;gap:10px;margin-top:16px}
+  .pop .pbtns button{flex:1;cursor:pointer;font-size:12.5px;font-weight:600;padding:10px 0;border-radius:99px;letter-spacing:.04em}
+  .pop .pdetail{color:#fff;border:1px solid #2b55ad;background:linear-gradient(135deg,#2c5fc7,#173a7d);
+    box-shadow:0 8px 18px rgba(44,95,199,.35)}
+  .pop .pmore{color:#2a4880;border:1.5px solid rgba(43,85,173,.5);background:#fff;
+    box-shadow:0 4px 12px rgba(30,60,140,.12)}
+  .pop .pmore:hover{background:#f2f7ff;border-color:rgba(43,85,173,.75)}
+
+  /* 底部左：浅色横条 + 独立进度行（对齐参考图） */
+  .dock{position:absolute;z-index:10;left:clamp(16px,4vw,44px);bottom:26px;
+    display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+  .dockbar{display:flex;align-items:center;gap:16px;
+    padding:11px 16px;border-radius:14px;
+    background:linear-gradient(165deg,rgba(238,243,251,.97),rgba(214,225,243,.97));
+    border:1px solid rgba(255,255,255,.9);
+    box-shadow:0 20px 50px rgba(3,10,26,.5),inset 0 1px 0 #fff;
+    backdrop-filter:blur(16px) saturate(1.2)}
+  .throwbtn{display:inline-flex;align-items:center;gap:9px;cursor:pointer;font-size:13px;font-weight:600;
+    letter-spacing:.05em;color:#eaf2ff;padding:11px 20px;border-radius:11px;border:1px solid rgba(120,170,255,.45);
+    background:linear-gradient(135deg,rgba(44,95,199,.85),rgba(20,44,96,.9));
+    box-shadow:0 8px 22px rgba(40,90,220,.38),inset 0 1px 0 rgba(255,255,255,.22);transition:transform .2s,box-shadow .2s}
+  .throwbtn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(40,90,220,.55)}
+  .throwbtn:disabled{opacity:.55;cursor:wait;transform:none}
+  .throwbtn .sp{color:var(--amber2)}
+  .prog-wrap{display:flex;align-items:center;gap:11px;
+    padding:9px 15px;border-radius:99px;
+    background:linear-gradient(165deg,rgba(238,243,251,.95),rgba(214,225,243,.95));
+    border:1px solid rgba(255,255,255,.9);
+    box-shadow:0 16px 40px rgba(3,10,26,.45),inset 0 1px 0 #fff;
+    backdrop-filter:blur(14px)}
+  .prog{position:relative;width:170px;height:6px;border-radius:4px;background:rgba(30,50,90,.16)}
+  .prog i{display:block;height:100%;width:0;border-radius:4px;position:relative;
+    background:linear-gradient(90deg,#2fd07e,#7fffb8);box-shadow:0 0 10px rgba(55,224,140,.55);transition:width .6s ease}
+  /* 进度手柄：跟随已填充末端的圆点 */
+  .prog i::after{content:'';position:absolute;right:-7px;top:50%;transform:translateY(-50%);
+    width:14px;height:14px;border-radius:50%;background:#f4fffa;border:2.5px solid #2fd07e;
+    box-shadow:0 0 10px rgba(55,224,140,.9)}
+  #found{font-size:12px;color:#41506e;white-space:nowrap}
+  #found b{color:#0f9e5e;font-variant-numeric:tabular-nums}
+
+  /* 底部右：三张独立浅色控制卡（对齐参考图） */
+  .ctrls{position:absolute;z-index:10;right:clamp(16px,4vw,44px);bottom:26px;display:flex;gap:12px;
+    background:none;border:0;box-shadow:none;padding:0;backdrop-filter:none}
+  .ctrl{width:112px;padding:11px 14px 10px;border-radius:14px;
+    background:linear-gradient(165deg,rgba(238,243,251,.97),rgba(214,225,243,.97));
+    border:1px solid rgba(255,255,255,.9);
+    box-shadow:0 20px 50px rgba(3,10,26,.5),inset 0 1px 0 #fff;
+    backdrop-filter:blur(16px) saturate(1.2)}
+  .ctrl label{display:flex;align-items:center;gap:6px;font-size:11.5px;color:#33415e;margin-bottom:9px;letter-spacing:.04em}
+  .ctrl label svg{width:12px;height:12px;stroke:#5b7bb5;fill:none;stroke-width:1.7;stroke-linecap:round}
+  .ctrl input[type=range]{width:100%;height:4px;border-radius:4px;appearance:none;-webkit-appearance:none;
+    background:rgba(30,50,90,.18);outline:none;margin:0}
+  .ctrl input[type=range]::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:13px;height:13px;border-radius:50%;
+    background:#fff;border:2px solid var(--blue);box-shadow:0 0 8px var(--blue-glow);cursor:pointer}
+  .ctrl input[type=range]::-moz-range-thumb{width:11px;height:11px;border-radius:50%;background:#fff;
+    border:2px solid var(--blue);box-shadow:0 0 8px var(--blue-glow);cursor:pointer}
+  .ctrl#soundCtrl input{accent-color:var(--amber)}
+  .cstate{display:flex;align-items:center;gap:6px;margin-top:8px;font-size:11px;color:#5b6b8a}
+  .cstate i{width:8px;height:8px;border-radius:50%;background:var(--amber);box-shadow:0 0 7px var(--amber-glow);font-style:normal}
+  .cstate i.g{background:#2fd07e;box-shadow:0 0 7px rgba(55,224,140,.7)}
+
+  /* ================= 项目详情面板 ================= */
+  .sheet{position:fixed;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;padding:30px 22px;
+    background:rgba(4,9,20,.62);backdrop-filter:blur(8px);
+    opacity:0;visibility:hidden;transition:opacity .35s,visibility .35s}
+  .sheet.on{opacity:1;visibility:visible}
+  .sheet-in{position:relative;width:100%;max-width:680px;max-height:100%;overflow-y:auto;padding:42px 42px 34px;border-radius:22px;
+    background:linear-gradient(165deg,rgba(23,36,64,.92),rgba(12,20,38,.95));
+    border:1px solid rgba(130,170,240,.25);
+    box-shadow:0 40px 90px rgba(1,5,15,.75),inset 0 1px 0 rgba(255,255,255,.16);
+    transform:translateY(16px) scale(.97);transition:transform .4s cubic-bezier(.2,1,.3,1)}
+  .sheet.on .sheet-in{transform:none}
+  .sheet-x{position:absolute;top:16px;right:18px;cursor:pointer;font-size:12px;padding:8px 15px;border-radius:99px;
+    color:var(--tx2);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16)}
+  .sheet-x:hover{color:#fff;border-color:rgba(255,255,255,.4)}
+  .sh-kick{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--blue2);margin-bottom:10px}
+  .sh-h{font-family:var(--serif);font-size:30px;font-weight:600;letter-spacing:.04em;margin-bottom:9px;padding-right:60px}
+  .sh-s{font-size:13.5px;line-height:1.75;color:var(--tx2);margin-bottom:24px}
+  .sh-sec{margin-bottom:20px}
+  .sh-sec h5{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--tx3);margin-bottom:8px}
+  .sh-sec p{font-size:13px;line-height:1.9;color:#c2d2ec}
+  .sh-tech{display:flex;flex-wrap:wrap;gap:8px}
+  .sh-tech span{font-size:11px;padding:6px 13px;border-radius:99px;color:#c6dafb;
+    background:rgba(79,140,255,.1);border:1px solid rgba(79,140,255,.26)}
+  .sh-honors{display:flex;flex-wrap:nowrap;gap:8px;overflow-x:auto;padding-bottom:7px;scrollbar-width:none}
+  .sh-honors::-webkit-scrollbar{display:none}
+  .sh-honors span{flex:0 0 auto;white-space:nowrap;font-size:11.5px;font-family:var(--serif);font-weight:600;
+    padding:7px 13px;border-radius:99px;color:#ffdcb0;background:rgba(246,169,59,.1);border:1px solid rgba(246,169,59,.3)}
+  .sh-honors span.top{color:#eef5ff;background:linear-gradient(135deg,#2f6fd6,#1b4a9e);border:0;
+    box-shadow:0 4px 14px rgba(47,111,214,.45)}
+  .sh-hi{list-style:none}
+  .sh-hi li{font-size:12.5px;line-height:1.75;color:#c2d2ec;padding-left:19px;position:relative;margin-bottom:8px}
+  .sh-hi li::before{content:'';position:absolute;left:2px;top:9px;width:7px;height:7px;border-radius:50%;
+    background:var(--blue2);box-shadow:0 0 8px var(--blue-glow)}
+  .sh-go{display:inline-block;margin-top:4px;font-size:13px;font-weight:600;text-decoration:none;color:#fff;
+    padding:12px 26px;border-radius:99px;border:1px solid rgba(125,170,255,.55);
+    background:linear-gradient(135deg,#2456b8,#142c61);box-shadow:0 10px 28px rgba(40,90,220,.42)}
+  .sh-src{margin-top:6px;font-size:11.5px;color:var(--tx3);line-height:1.7}
+
+  /* ================= 响应式 ================= */
+  @media(max-width:960px){
+    .home-in{grid-template-columns:1fr;padding-top:104px}
+    .hero-copy{text-align:center}
+    .kick{justify-content:center}
+    .hero-sub{margin-left:auto;margin-right:auto}
+    .chips,.hero-cta{justify-content:center}
+    .caps{margin-left:auto;margin-right:auto}
+    .hero-visual{height:380px;order:-1}
+    .plat{animation:none;transform:scale(.86)}
+    .path-preview{grid-template-columns:1fr;gap:14px}
+    .rcards{grid-template-columns:1fr;margin-top:36px}
+    .rcard{min-height:0}
+  }
+  @media(max-width:760px){
+    nav{padding:13px 16px}
+    .brand span{font-size:9px;letter-spacing:.16em}
+    .brand b{font-size:17px}
+    .navlinks{gap:2px}
+    .navlinks button{padding:8px 9px;font-size:12px}
+    .navlinks button svg{display:none}
+    #v-time.orbit-view{padding:0}
+    .orbit-list-trigger{top:auto;right:20px;bottom:192px}
+    .tl-drawer{top:auto;left:0;right:0;bottom:0;width:100%;max-height:82vh;padding:26px 22px 30px;border-left:0;border-top:1px solid rgba(109,190,255,.4);border-radius:22px 22px 0 0;transform:translateY(102%)}
+    .tl-drawer.on{transform:none}
+
+    .board{top:74px;left:8px;right:8px;bottom:8px;border-radius:18px}
+    .diepos{left:50%;top:24%;width:168px;height:168px}
+    .diepos .die{--s:124px;--h:62px}
+    .diepos .dieglow{width:220px;height:220px}
+    .diepos .pool{width:180px}
+    .die-badge{left:auto;right:-14px;top:-12px}
+    .nodes{left:14px;right:14px;top:52%}
+    .node{gap:9px}
+    .dot{width:12px;height:12px;box-shadow:0 0 0 4px rgba(12,20,40,.72)}
+    .node.cur .dot{width:52px;height:52px;margin-top:-20px}
+    .node.cur .lab{width:64px;font-size:10px;top:6px}
+    .lab{font-size:10px;max-width:56px;line-height:1.35}
+    .pop{position:fixed;left:12px;right:12px;bottom:200px;width:auto;top:auto;z-index:30;
+      transform:translateY(14px) scale(.98)}
+    .pop.on{transform:translateY(0) scale(1)}
+    .pop::before{display:none}
+    .dock{left:12px;right:12px;bottom:84px;align-items:center;gap:8px}
+    .dockbar{padding:9px 12px}
+    .prog{width:110px}
+    .prog-wrap{padding:7px 13px}
+    .ctrls{left:12px;right:12px;bottom:12px;justify-content:space-between;gap:8px;padding:0}
+    .ctrl{width:28%;flex:1;padding:9px 11px 8px}
+    .sheet{padding:16px 10px}
+    .sheet-in{padding:34px 24px 28px}
+    .sh-h{font-size:25px}
+    .tl-drawer h3{font-size:22px}
+
+    .home-in{padding-top:92px}
+    .caps{padding:4px;margin-bottom:26px}
+    .caps span{font-size:11.5px;padding:8px 12px}
+    .hero-visual{height:330px}
+    .plat{transform:scale(.68)}
+    .plat.b{left:0;top:2%}
+    .plat.a{right:-4%;bottom:12%}
+    .path-preview{gap:12px;margin-top:8px}
+    .pp{padding:16px 18px}
+    .pp .pp-txt b{font-size:15px}
+  }
+  @media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;
+      transition-duration:.01ms!important;scroll-behavior:auto!important}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= 导航 ================= -->
+<nav>
+  <div class="brand"><b>张明菲</b><span>AI 产品经理 · 求职作品集</span></div>
+  <div class="navlinks">
+    <button data-to="v-home">
+      <svg viewBox="0 0 24 24"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10.5V20h13v-9.5"/></svg>首页</button>
+    <button data-to="v-route">
+      <svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.4"/><circle cx="6" cy="18" r="2.4"/><circle cx="18" cy="12" r="2.4"/><path d="M8 7.5c4 1 4 3.5 8 4.5M8 16.5c4-1 4-3.5 8-4.5"/></svg>路线</button>
+    <button data-to="v-time">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.2"/><path d="M12 7.5V12l3 2"/></svg>时间线</button>
+    <button data-to="v-dice">
+      <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3.4"/><path d="M8.4 8.4h.01M15.6 8.4h.01M12 12h.01M8.4 15.6h.01M15.6 15.6h.01"/></svg>掷骰探索</button>
+    <button id="navAbout">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="8.2" r="3.4"/><path d="M4.8 20c.8-3.6 3.7-5.4 7.2-5.4s6.4 1.8 7.2 5.4"/></svg>关于我</button>
+  </div>
+</nav>
+
+<!-- ================= 首页 ================= -->
+<section class="view active" id="v-home">
+  <div class="motes">
+    <i style="left:14%;top:72%;animation-delay:-1s"></i>
+    <i class="a" style="left:32%;top:60%;animation-delay:-4s"></i>
+    <i style="left:52%;top:80%;animation-delay:-6s"></i>
+    <i style="left:70%;top:64%;animation-delay:-2.5s"></i>
+    <i class="a" style="left:86%;top:76%;animation-delay:-7s"></i>
+    <i style="left:24%;top:86%;animation-delay:-3.5s"></i>
+  </div>
+  <div class="home-in">
+    <div class="hero-copy">
+      <div class="kick">Portfolio · AI Product</div>
+      <h1>张明菲 <span class="ac">AI 产品经理</span></h1>
+      <p class="hero-sub">把模糊问题拆成可验证的路径</p>
+      <div class="chips">
+        <span class="chip">数量经济学硕士</span>
+        <span class="chip">问题拆解</span>
+        <span class="chip">产品验证</span>
+      </div>
+      <div class="caps">
+        <span>从 0 到 1 定义产品</span>
+        <span>用实验验证判断</span>
+        <span>让复杂路径可执行</span>
+      </div>
+      <div class="hero-cta">
+        <button class="btn btn-blue" data-to="v-route">沿光出发 <span class="arr">→</span></button>
+        <span class="or">或</span>
+        <button class="textlink" data-to="v-dice">直接掷一次骰，让偶然带路 →</button>
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="orb b"></div><div class="orb a"></div>
+      <svg class="hero-map" viewBox="0 0 600 540" preserveAspectRatio="xMidYMid meet">
+        <path class="r-blue" d="M30 420 C170 300 230 430 330 300 S470 150 570 210"/>
+        <path class="r-amber" d="M30 470 C150 430 250 490 360 380 S500 300 570 320"/>
+        <circle class="nd" cx="30" cy="420" r="5"/>
+        <circle class="nd lit" cx="180" cy="356" r="6"/>
+        <circle class="nd" cx="330" cy="300" r="5"/>
+        <circle class="nd lit" cx="450" cy="206" r="6"/>
+        <circle class="nd" cx="570" cy="210" r="5"/>
+        <circle class="nd a" cx="150" cy="452" r="5"/>
+        <circle class="nd a lit" cx="360" cy="380" r="6"/>
+        <circle class="nd a" cx="570" cy="320" r="5"/>
+      </svg>
+      <div class="plat b">
+        <div class="pstage">
+          <div class="pdisc"></div>
+          <div class="pobj">
+            <svg class="tl-ico" viewBox="0 0 96 96">
+              <rect x="12" y="18" width="72" height="62" rx="11" fill="#f2f6fd" stroke="#c9d9f2" stroke-width="1.5"/>
+              <path d="M12 29a11 11 0 0 1 11-11h50a11 11 0 0 1 11 11v9H12z" fill="#2c5fc7"/>
+              <rect x="26" y="13" width="6" height="12" rx="3" fill="#1d3f8e"/>
+              <rect x="64" y="13" width="6" height="12" rx="3" fill="#1d3f8e"/>
+              <rect x="27" y="52" width="9" height="18" rx="3.5" fill="#4f8cff"/>
+              <rect x="44" y="44" width="9" height="26" rx="3.5" fill="#f6a93b"/>
+              <rect x="61" y="58" width="9" height="12" rx="3.5" fill="#8fc2ff"/>
+            </svg>
+          </div>
+        </div>
+        <span class="plab">时间线</span>
+      </div>
+      <div class="plat a">
+        <div class="pstage">
+          <div class="pdisc"></div>
+          <div class="pobj hero-diepos">
+            <div class="die">
+              <div class="f f1"><i class="pips p1"></i></div>
+              <div class="f f2"><i class="pips p6"></i></div>
+              <div class="f f3"><i class="pips p3"></i></div>
+              <div class="f f4"><i class="pips p4"></i></div>
+              <div class="f f5"><i class="pips p5"></i></div>
+              <div class="f f6"><i class="pips p2"></i></div>
+            </div>
+          </div>
+        </div>
+        <span class="plab">掷骰</span>
+      </div>
+    </div>
+  </div>
+  <div class="path-preview">
+    <button class="pp b" data-to="v-time">
+      <div class="pp-txt"><b>循迹 · 能力地图</b><span>教育、实践与 AI 实验室</span></div>
+      <span class="arr">→</span>
+    </button>
+    <button class="pp a" data-to="v-dice">
+      <div class="pp-txt"><b>掷骰 · 项目探险</b><span>随机发现一个作品切面</span></div>
+      <span class="arr">→</span>
+    </button>
+  </div>
+</section>
+
+<!-- ================= 路线选择 ================= -->
+<section class="view" id="v-route">
+  <div class="motes">
+    <i style="left:12%;top:80%;animation-delay:-2s"></i>
+    <i style="left:60%;top:86%;animation-delay:-5s"></i>
+    <i class="a" style="left:82%;top:78%;animation-delay:-3s"></i>
+  </div>
+  <div class="route-in">
+    <h2>选择一条进入张明菲作品的路径</h2>
+    <p class="rsub">先决定阅读方式，再决定看到什么</p>
+    <div class="rcards">
+      <div class="rcard b" data-to="v-time" role="button" tabindex="0">
+        <div class="ricon">
+          <svg class="mini-tl" viewBox="0 0 300 118" aria-hidden="true">
+            <text class="tlbl" x="8" y="26">事实</text>
+            <text class="tlbl" x="8" y="102">判断</text>
+            <line x1="56" y1="40" x2="286" y2="40" stroke="rgba(79,140,255,.5)" stroke-width="2"/>
+            <line x1="56" y1="84" x2="286" y2="84" stroke="rgba(246,169,59,.55)" stroke-width="2"/>
+            <line x1="140" y1="40" x2="196" y2="84" stroke="rgba(60,90,150,.5)" stroke-width="1.4" stroke-dasharray="4 5"/>
+            <circle cx="86" cy="40" r="5" fill="#4f8cff"/>
+            <circle cx="140" cy="40" r="6.5" fill="#8fc2ff" stroke="#fff" stroke-width="2"/>
+            <circle cx="196" cy="40" r="5" fill="#4f8cff"/>
+            <circle cx="252" cy="40" r="5" fill="#4f8cff" opacity=".55"/>
+            <circle cx="86" cy="84" r="5" fill="#f6a93b" opacity=".55"/>
+            <circle cx="140" cy="84" r="5" fill="#f6a93b"/>
+            <circle cx="196" cy="84" r="6.5" fill="#ffd08a" stroke="#fff" stroke-width="2"/>
+            <circle cx="252" cy="84" r="5" fill="#f6a93b"/>
+          </svg>
+        </div>
+        <h3>循迹 · 能力地图</h3>
+        <p>从经历到判断，按顺序展开</p>
+        <div class="go"><span class="btn btn-navy" style="padding:11px 26px">进入时间线</span></div>
+      </div>
+      <div class="rcard a" data-to="v-dice" role="button" tabindex="0">
+        <div class="ricon">
+          <div class="die-scene">
+            <svg class="rays" viewBox="0 0 340 210" aria-hidden="true">
+              <line x1="170" y1="41" x2="170" y2="8"/>
+              <line x1="170" y1="169" x2="170" y2="202"/>
+              <line x1="106" y1="105" x2="12" y2="105"/>
+              <line x1="234" y1="105" x2="328" y2="105"/>
+              <line x1="124.7" y1="59.7" x2="66" y2="17"/>
+              <line x1="215.3" y1="59.7" x2="274" y2="17"/>
+              <line x1="124.7" y1="150.3" x2="66" y2="193"/>
+              <line x1="215.3" y1="150.3" x2="274" y2="193"/>
+              <circle cx="38" cy="58" r="2.2"/>
+              <circle cx="302" cy="50" r="2.6"/>
+              <circle cx="50" cy="168" r="2"/>
+              <circle cx="296" cy="164" r="2.3"/>
+            </svg>
+            <span class="dnote nl">六个结果</span>
+            <span class="dnote nr">一次掷骰决定阅读顺序</span>
+            <div class="mini-die-wrap">
+              <i class="mini-spark s1"></i><i class="mini-spark s2"></i><i class="mini-spark s3"></i><i class="mini-spark s4"></i>
+              <div class="die">
+                <div class="f f1"><i class="pips p1"></i></div>
+                <div class="f f2"><i class="pips p6"></i></div>
+                <div class="f f3"><i class="pips p3"></i></div>
+                <div class="f f4"><i class="pips p4"></i></div>
+                <div class="f f5"><i class="pips p5"></i></div>
+                <div class="f f6"><i class="pips p2"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h3>掷骰 · 项目探险</h3>
+        <p>随机抽取一个作品入口</p>
+        <div class="go"><span class="btn btn-oline" style="padding:11px 26px">开始掷骰</span></div>
+      </div>
+    </div>
+    <div class="legend"><i class="lb">蓝色 = 分析路径</i><i class="la">橙色 = 探索路径</i></div>
+  </div>
+</section>
+
+<!-- ================= 环形网状时间线 ================= -->
+<section class="view orbit-view" id="v-time">
+  <iframe class="orbit-frame" id="orbitFrame" src="assets/cold/orbit-v8-embedded.html" title="极光青紫三维轨道时间线"></iframe>
+  <button class="orbit-list-trigger" id="orbitListTrigger" type="button">全部项目 · 18</button>
+  <div class="tl-scrim" id="tlScrim"></div>
+  <aside class="tl-drawer" id="tlDrawer" aria-hidden="true">
+    <button class="d-close" id="tlDrawerClose" type="button">关闭</button>
+    <div id="tlDrawerBody"></div>
+  </aside>
+</section>
+
+<!-- ================= 掷骰探索 ================= -->
+<section class="view" id="v-dice">
+  <div class="motes" id="dcMotes">
+    <i style="left:16%;top:40%;animation-delay:-1s"></i>
+    <i class="a" style="left:30%;top:28%;animation-delay:-4.5s"></i>
+    <i style="left:46%;top:46%;animation-delay:-6.5s"></i>
+    <i class="a" style="left:63%;top:32%;animation-delay:-2s"></i>
+    <i style="left:78%;top:48%;animation-delay:-5s"></i>
+    <i style="left:90%;top:30%;animation-delay:-7.5s"></i>
+    <i class="a" style="left:38%;top:66%;animation-delay:-3s"></i>
+    <i style="left:72%;top:70%;animation-delay:-8s"></i>
+  </div>
+
+  <div class="board">
+    <div class="diepos" id="diePos">
+      <div class="dieglow"></div>
+      <div class="pool"></div>
+      <div class="die-badge" id="dieBadge">六面 · 六个角度</div>
+      <div class="hopper" id="hopper">
+        <div class="sway">
+          <div class="die" id="dcDie">
+            <div class="f f1"><i class="pips p1"></i></div>
+            <div class="f f2"><i class="pips p6"></i></div>
+            <div class="f f3"><i class="pips p3"></i></div>
+            <div class="f f4"><i class="pips p4"></i></div>
+            <div class="f f5"><i class="pips p5"></i></div>
+            <div class="f f6"><i class="pips p2"></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="die-tap">点骰子，决定下一段路径</div>
+    </div>
+
+    <div class="nodes" id="nodes">
+      <div class="nline"><div class="nfill" id="nfill"></div></div>
+      <div class="nrow" id="nrow"></div>
+    </div>
+
+    <div class="pop" id="pop"></div>
+  </div>
+
+  <div class="dock">
+    <div class="dockbar">
+      <button class="throwbtn" id="throwBtn"><span class="sp">✦</span> 掷骰决定下一段探索路径</button>
+    </div>
+    <div class="prog-wrap">
+      <div class="prog"><i id="progFill"></i></div>
+      <span id="found">已发现 <b>0</b> / 6</span>
+    </div>
+  </div>
+
+  <div class="ctrls">
+    <div class="ctrl">
+      <label><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M5 19l1.5-1.5M17.5 6.5 19 5"/></svg>辉光</label>
+      <input type="range" id="cGlow" min="30" max="100" value="72">
+      <div class="cstate"><i></i><span id="sGlow">辉光 72%</span></div>
+    </div>
+    <div class="ctrl">
+      <label><svg viewBox="0 0 24 24"><path d="M3 9h11a3 3 0 1 0-3-3M3 14h15a3 3 0 1 1-3 3"/></svg>风</label>
+      <input type="range" id="cWind" min="0" max="100" value="24">
+      <div class="cstate"><i class="g"></i><span id="sWind">低</span></div>
+    </div>
+    <div class="ctrl" id="soundCtrl">
+      <label><svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 8.5a5 5 0 0 1 0 7"/></svg>音效</label>
+      <input type="range" id="cSnd" min="0" max="1" value="1" step="1">
+      <div class="cstate"><i></i><span id="sSnd">开启</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 项目详情 ================= -->
+<div class="sheet" id="sheet"><div class="sheet-in" id="sheetIn"></div></div>
+
+<script>
+function $(id){return document.getElementById(id)}
+
+/* ============ 视图切换 ============ */
+function show(id){
+  document.querySelectorAll('.view').forEach(function(v){v.classList.toggle('active',v.id===id)});
+  document.querySelectorAll('.navlinks button').forEach(function(b){
+    b.classList.toggle('on',b.getAttribute('data-to')===id)});
+  $('sheet').classList.remove('on');
+  if(id==='v-dice') positionPop();
+}
+document.addEventListener('click',function(e){
+  var t=e.target.closest&&e.target.closest('[data-to]');
+  if(t) show(t.getAttribute('data-to'));
+});
+document.addEventListener('keydown',function(e){
+  if(e.key==='Enter'&&e.target.getAttribute&&e.target.getAttribute('role')==='button'){
+    var to=e.target.getAttribute('data-to'); if(to) show(to);
+  }
+});
+show('v-home');
+
+/* ============ 环形网状时间线数据 ============ */
+var RINGS={
+  research:{label:'教育与研究',className:'research',start:'2016.09',spin:'96s',rx:50,ry:50},
+  work:{label:'工作与社会实践',className:'work',start:'2018.04',spin:'96s',rx:50,ry:50},
+  ai:{label:'AI 产品实验室',className:'ai',start:'2024',spin:'96s',rx:50,ry:50}
+};
+var TIMELINE=[
+  /* 一 · 还没搞清要做什么 */
+  {id:'edu-undergrad',ring:'research',start:'2016.09',end:'2020.06',title:'青岛大学 · 金融学本科',summary:'金融学本科。课程训练以经济学与金融学基础为主，期间完成一次基于 MATLAB 的 GDP 预测课程作业。',tasks:['完成金融学本科课程训练','在一门使用 MATLAB 的课程里读懂示例代码，动手完成一次 GDP 预测','毕业论文阶段复用该工具能力，读懂并使用师姐的 MATLAB 代码'],skills:['工具上手：能从示例代码迁移到自己的问题','跨阶段复用：把课上零散学到的技能在后续研究里接回来'],status:'public',aiLevel:'pre-ai'},
+  {id:'recycle',ring:'work',start:'2018.04',end:'2019.06',title:'校园废品回收平台 · 策划书与原型',summary:'创业比赛项目。提出「废品网购」的回收模式并成为项目主线，完成机制设计与产品原型；最终交付策划书与 APP 原型，未落地。',tasks:['提出「废品网购」方向并被定为项目主线','调研政策鼓励、同类项目、各类废品定价与本地推广条件','绘制参与方机制图，写明谁参与、为什么参与、各方职责','输出策划书与 APP 原型'],skills:['机制设计：把一个设想拆成参与动机、激励与流程','桌面调研：政策、竞品、定价三类信息的收集与整理','规则前置：此后所有事项的第一步都是先确认规则与晋级条件'],status:'delivery',aiLevel:'pre-ai'},
+  {id:'try-and-work',ring:'work',start:'2020.06',end:'2021.05',title:'毕业后的一年：先去看现实',summary:'本科前后两次研究生入学考试未录取；转向求职，入职一个外包岗位。',tasks:['两次参加研究生入学考试','判断状态不适合再备考后启动求职','自行赴上海面试多家公司','入职外包岗位'],skills:['状态判断：识别当前条件下不可能的结果并及时换路','求职流程：从投递到面试完整走一遍'],status:'delivery',aiLevel:'pre-ai'},
+  {id:'softcom',ring:'work',start:'2021.05',end:'2022.04',title:'软通动力 · 支付宝渠道运维组长',summary:'外包岗，业务运维。负责支付宝与银行、其他业务方之间数据链路的日常监控与异常处置；从组内第一个人做到组长，团队最终 5 人。',tasks:['监控链路贯通与成功率指标，判定异常后联系二线止损','把上级日常讲的内容整理成岗位知识库雏形，作为后续新人带教材料','承担组内业务分工，按成员情况分配职责','收集组员反馈，向系统侧提交更新意见','离职前完成工作拆分、确定新组长并逐项交接'],skills:['异常归因：在支付、转账、退款链路中定位问题环节并留痕','流程沉淀：把口头经验变成可复用的知识库与分工规则','交接设计：以接手方不出现卡点为标准完成拆分与人员匹配'],status:'delivery',aiLevel:'pre-ai'},
+  /* 二 · 境况停滞，认知在扩 */
+  {id:'edu-master',ring:'research',start:'2023.09',end:'2026.06',title:'浙江财经大学 · 数量经济学硕士',summary:'数量经济学硕士。第一志愿未录取后按专业方向调剂入学；跟随导师进入灰色预测模型方向，一年多无进展后接手其已放弃的课题。',tasks:['按专业方向与院校排名逐校比对并完成调剂','系统学习因果推断与机器学习相关课程','跟随导师做灰色预测模型方向研究','接手导师放弃的课题并改造'],skills:['方向筛选：用明确标准（专业方向、导师响应度）做决策','模型工程：从推导、代码到结果验证走完整流程'],status:'public',aiLevel:'level-1'},
+  {id:'first-llm',ring:'ai',start:'2024',end:'2024',title:'第一次用大模型写论文',summary:'AI 工具进入研究流程的起点。从生成代码扩展到论文正文，形成第一条稳定的使用规则。',tasks:['用 AI 生成自己写不出的代码','用 AI 处理论文正文的表述','反复补充上下文，纠正它对前文与已定判断的遗忘'],skills:['AI 协作分工：把执行交给模型、把判断留在自己手里','上下文管理：在长任务里维持一致的前提'],status:'self',aiLevel:'level-1'},
+  {id:'grey-contest',ring:'research',start:'2025.01',end:'2026.05',title:'灰色预测模型的改造 · 能源经济学术创意大赛国赛二等奖',summary:'一篇灰色预测模型论文的改造，以及用它参赛的结果。论文投 SCI 一区（在审），参赛获能源经济学术创意大赛国赛二等奖。',tasks:['排查模型准确率偏低的推导与代码流程','引入时滞处理，只取部分时间并在筛选协变量时计入时滞','完成模型改造与验证','向导师逐条论证后推动落地','用该论文参赛并完成答辩'],skills:['假设重构：从调参转向修订模型对时间的假设','AI 协作：用 AI 承担自己写不出的代码','论证与说服：用数据与机制说服导师','竞赛答辩：在评审追问下解释研究设计'],status:'public',aiLevel:'level-2'},
+  {id:'papers',ring:'research',start:'2025.01',end:'2026.05',title:'论文与署名',summary:'论文产出与署名情况。主导 1 篇 SCI 一区在审论文与 2 篇会议论文，参与署名 2 篇，另有 2 篇未发表课程论文。',tasks:['主导灰色预测模型论文一篇（SCI 一区在审）','主导宏观经济预测会议论文两篇：先机器学习预测，再取平均','参与署名 EI 会议二作一篇（V2G）','参与署名 SCI 二区三/四作一篇（同门互挂）','完成田野调查、知行浙江课题论文各一篇'],skills:['方法选择：在不同建模路径之间做取舍','贡献边界意识：能分清主导与参与','学术写作：把复杂模型写成可评审的文本'],status:'public',aiLevel:'level-2'},
+  {id:'v2g',ring:'research',start:'2025.05',end:'2025.05',title:'挑战杯省赛银奖 · 接手 V2G 项目',summary:'导师横向课题转成的竞赛项目。原负责人转备考后由我接手，负责统筹与推进；获挑战杯省赛银奖，个人排名第二。',tasks:['组织会议、对接导师与专家、汇总评审意见','重做实验设计与模型设定，把线性关系改为综合内生性与非线性','扩大样本，补充调研材料与照片','重绘路线图与流程图、完成封面与版式','参加省赛答辩'],skills:['研究设计判断：识别原假设方向错误并重构设定','多方协同：在没有正式授权的情况下推进跨方协作','说服与论证：用数据与机制而不是偏好说服导师'],status:'public',aiLevel:'level-2'},
+  {id:'xinmiao',ring:'research',start:'2025.06',end:'2025.06',title:'挑战杯校赛一等奖 · 新苗人才计划立项',summary:'挑战杯校赛一等奖项目（第一负责人），未获推优；转投省级新苗人才计划，立项成功。',tasks:['自设问卷并在平台投放','用结构方程模型梳理新能源汽车购买与使用意愿的影响链条','把各省意愿与碳排放数据做关联','作为第一负责人推动转投新苗人才计划并完成立项'],skills:['实证流程：从问卷设计、投放到分析','多口径申报：把同一份成果适配不同评价体系'],status:'public',aiLevel:'level-2'},
+  {id:'thesis',ring:'research',start:'2025.07',end:'2026.05',title:'毕业论文 · 数字经济背景下居民数字参与的收入效应研究',summary:'硕士学位论文，使用 CFPS 微观数据研究数字参与的收入效应；获校级优秀毕业论文。',tasks:['梳理数字参与的多维度（数字接入、数字使用等）与收入效应维度（收入水平、收入不平等）','以计量方法与机器学习（双重机器学习、因果森林、条件推断树）构建分析框架','多轮修改研究设计以处理内生性与稳健性','完成写作与答辩'],skills:['研究框架搭建：把多维变量组织成可验证的结构','方法组合：在同一问题上并用计量与机器学习','重点取舍：在体量过大时决定呈现什么'],status:'public',aiLevel:'level-3'},
+  {id:'honors',ring:'research',start:'2025.09',end:'2025.09',title:'学业荣誉',summary:'学业评价结果。研三综测排名 1/43，两次一等学业奖学金，国家奖学金，三好研究生，优秀研究生干部。',tasks:['按评价口径整理学业与科研材料','维护成绩与综合测评记录'],skills:['材料整理：把零散成果整理成可评审的材料'],status:'public',aiLevel:'level-3'},
+  /* 三 · 把认知变成产品 */
+  {id:'job-workbench',ring:'ai',start:'2026.05',end:'至今',title:'求职工作台',summary:'本地优先的求职工作台。判断求职者付费意愿低、目标人群不稳定后收窄范围，保留就业市场分析、简历改写、打招呼语改写三项。',tasks:['调研同类产品并判断市场与付费结构','搭建本地优先的单体工作台，打通职业探索、岗位分析、简历版本与联系记录','建立证据门禁与经历事实确认机制','砍掉依赖规模验证的兴趣探索模块'],skills:['需求裁剪：按付费结构与验证成本砍功能','证据约束：要求生成内容回到已确认的事实'],status:'self',aiLevel:'level-3'},
+  {id:'fake-reader',ring:'ai',start:'2026.07',end:'至今',title:'伪人读书',summary:'面向经典阅读的 AI 模拟读者产品。先完成静态阅读，现推进动态共读。',tasks:['定义产品形态：多个不同人设的 AI 读者对同一本书留下批注','实现静态阅读：上传书籍、共同扫描、随机挑句评论','推进动态共读：定期巡检与 @ 指定读者','搭建 Next.js + FastAPI 链路'],skills:['从自身需求抽象成产品假设','多读者与人设建模','前后端链路搭建'],status:'self',aiLevel:'level-3'},
+  {id:'deskpet',ring:'ai',start:'2026.07',end:'至今（中间有间断）',title:'芽砚 Deskpet',summary:'Windows 桌面陪伴产品。动画方案从逐帧生成改为视频抽帧后成立。',tasks:['定义产品形态：流式聊天、专注陪伴、任务记录','先尝试逐帧生成动作图片，失败后改为先生成视频再抽帧','把动画渲染拆成独立进程以隔离故障','完成美术设想并交由 AI 生成'],skills:['技术路径切换：及时放弃走不通的方案','架构隔离：把非核心功能从主流程里拆出去'],status:'self',aiLevel:'level-3'},
+  {id:'wechat-miniapp',ring:'work',start:'2026.08',end:'至今',title:'华飞家电微信小程序',summary:'家族家电企业的零售小程序项目。负责需求定义与验收，开发由外部团队完成；尚未上线。',tasks:['判断产品定位，放弃「展示店内商品」，转向线下可验证的增量','定义积分体系：购买、打卡、分享获取积分，兑换礼品与服务权益，员工扫码核销','设计活动链路：线上报名、到店打卡、门店码与员工码','输出原型与教程初稿，做测试验收与问题编排','与开发商多轮迭代'],skills:['业务判断：识别与电商平台无差异的伪需求','规则设计：把线下服务能力翻译成产品规则','取舍成本：自设计的库存与核销流程因脱离业务被砍后，用最小改动重排'],status:'delivery',aiLevel:'level-3'},
+  {id:'dice',ring:'ai',start:'2026.09',end:'已完成',title:'决策骰子',summary:'移动端 3D 决策骰子，四种玩法；近两天完成并上线。',tasks:['定义玩法与交互：对决、选号、多数决、是否','完成移动端 3D 渲染与物理','上线并维护'],skills:['从想法到上线的完整闭环','移动端 3D 与物理实现'],status:'self',aiLevel:'level-3'},
+  {id:'quant-lab',ring:'ai',start:'2026.09',end:'至今',title:'AI 量化投研',summary:'本地优先的 A 股 ETF 行情监控与学习工作台。不接实盘、不下单，保留影子运行台账。',tasks:['搭建分层数据、模型治理与自动报告流程','冻结 ETF 池并按交易日自动运行','设定不接实盘、不下单的边界并记录影子运行台账'],skills:['数据与模型治理','风险边界设定：明确不做什么，并把验证与执行分开'],status:'self',aiLevel:'level-3'}
+];
+var tlItems={}; TIMELINE.forEach(function(item){tlItems[item.id]=item});
+function openTimelineDrawer(item){
+  var ring=RINGS[item.ring];
+  var statusLabel={public:'公开成果',delivery:'交付与实践',self:'自用尝试'}[item.status]||item.status;
+  var aiLabel={"pre-ai":'AI 介入前',"level-1":'开始协作',"level-2":'持续协作',"level-3":'深度协作'}[item.aiLevel]||item.aiLevel;
+  var tasks=(item.tasks||[]).map(function(t){return '<li>'+t+'</li>'}).join('');
+  var skills=(item.skills||[]).map(function(s){return '<li>'+s+'</li>'}).join('');
+  $('tlDrawerBody').innerHTML='<div class="d-date">'+ring.label+' · '+item.start+' — '+item.end+'</div><h3>'+item.title+'</h3><h4>总结</h4><p>'+item.summary+'</p><h4>我做的事</h4><ul class="d-list">'+tasks+'</ul><h4 class="amber">练到的能力</h4><ul class="d-list amber">'+skills+'</ul><div class="d-tags"><span>'+statusLabel+'</span><span>'+aiLabel+'</span></div>';
+  $('tlDrawer').classList.add('on'); $('tlScrim').classList.add('on'); $('tlDrawer').setAttribute('aria-hidden','false');
+}
+function openTimelineIndex(){
+  var body=$('tlDrawerBody');
+  body.innerHTML='<div class="d-date">ORBIT INDEX / 18 PROJECTS</div><h3>全部项目</h3>';
+  Object.keys(RINGS).forEach(function(key){
+    var group=document.createElement('div'); group.className='tl-index-group';
+    var heading=document.createElement('h4'); heading.textContent=RINGS[key].label; group.appendChild(heading);
+    TIMELINE.filter(function(item){return item.ring===key}).forEach(function(item){
+      var button=document.createElement('button');button.type='button';button.className='tl-index-item';button.dataset.timelineId=item.id;
+      button.textContent=item.title;
+      var date=document.createElement('small');date.textContent=item.start+' — '+item.end;button.appendChild(date);
+      group.appendChild(button);
+    });
+    body.appendChild(group);
+  });
+  $('tlDrawer').classList.add('on'); $('tlScrim').classList.add('on'); $('tlDrawer').setAttribute('aria-hidden','false');
+}
+function closeTimelineDrawer(){
+  $('tlDrawer').classList.remove('on'); $('tlScrim').classList.remove('on'); $('tlDrawer').setAttribute('aria-hidden','true');
+  var frame=$('orbitFrame');
+  if(frame.contentWindow) frame.contentWindow.postMessage({type:'orbit-close'},'*');
+}
+$('orbitListTrigger').addEventListener('click',openTimelineIndex);
+$('tlDrawerBody').addEventListener('click',function(e){
+  var button=e.target.closest&&e.target.closest('[data-timeline-id]');
+  if(button&&tlItems[button.dataset.timelineId])openTimelineDrawer(tlItems[button.dataset.timelineId]);
+});
+window.addEventListener('message',function(e){
+  if(e.source!==$('orbitFrame').contentWindow||!e.data)return;
+  if(e.data.type==='orbit-project'&&tlItems[e.data.id])openTimelineDrawer(tlItems[e.data.id]);
+  if(e.data.type==='orbit-unsupported')openTimelineIndex();
+  if(e.data.type==='orbit-request-close'&&$('tlDrawer').classList.contains('on'))closeTimelineDrawer();
+});
+$('tlDrawerClose').addEventListener('click',closeTimelineDrawer);
+$('tlScrim').addEventListener('click',closeTimelineDrawer);
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&$('tlDrawer').classList.contains('on'))closeTimelineDrawer()});
+
+/* ============ 六个角度（与主版本一致） ============ */
+var ANGLES=[
+  {t:'收窄', kick:'SCOPE', claim:'把需求砍到只剩一条能验证的主线。', intro:'我做的每个产品，第一个决定都是「不做什么」。',
+   tags:['范围控制','伪需求识别','取舍成本'],
+   practices:['求职工作台：砍掉「帮人探索兴趣」，只留就业市场分析、简历改写、打招呼语。',
+              '决策骰子：收窄到低风险小事，不做交易与履约。',
+              'AI 量化投研：数据、模型、报告都能自动跑，不接实盘、不下单。',
+              '华飞家电小程序：不跟电商平台比功能，只做线下能验证的增量。'],
+   skills:['范围控制：先决定不做什么，再决定做什么','伪需求识别：找到与现成平台无差异的部分','取舍成本：为验证速度放弃功能完整'],
+   related:['job-workbench','dice','quant-lab','wechat-miniapp']},
+  {t:'验证', kick:'PROOF', claim:'方向不对时，改假设，而不是继续调参。', intro:'先问这个结论凭什么成立，再动手。',
+   tags:['假设重构','实证设计','贡献边界'],
+   practices:['灰色预测模型：引入时滞处理，只取部分时间，并在筛选协变量时计入时滞，准确率提升。',
+              'V2G：把线性假设改为综合内生性与非线性，再向导师论证。',
+              '毕业论文：把数字参与与收入效应两组维度织成一张网，计量与机器学习并用。',
+              '论文与署名：把「我主导的」与「我参与署名的」分开列。'],
+   skills:['假设重构：识别原假设方向错误并重做设定','实证设计：问卷、样本、稳健性成链','贡献边界：能说清哪部分由我主导'],
+   related:['grey-contest','v2g','thesis','papers']},
+  {t:'沉淀', kick:'SYSTEMIZE', claim:'把口头经验变成别人能复用的规则。', intro:'我不相信「记住就好」，更相信写下来。',
+   tags:['流程建模','规则设计','知识沉淀'],
+   practices:['软通动力：把上级平时讲的内容整理成岗位知识库雏形，成为新人带教材料。',
+              '华飞家电：把积分与核销写成规则，什么活动加分、怎么核销、谁扫码。',
+              '校园废品回收：把「谁参与、为什么参与、各方做什么」画成一张机制图。'],
+   skills:['流程建模：把口头流程画成可执行结构','规则设计：把服务能力翻译成产品规则','知识沉淀：让后来者少走一遍'],
+   related:['softcom','wechat-miniapp','recycle']},
+  {t:'分工', kick:'DELEGATE', claim:'执行可以交出去，判断必须留在自己手里。', intro:'我用 AI 的第一条规矩，就是从这里来的。',
+   tags:['AI 协作','上下文管理','故障隔离'],
+   practices:['第一次用大模型：它能写我写不出的代码，但会忘记前文与已定判断，上下文要我自己重述。',
+              '求职工作台：经历由我逐条确认，生成前过证据门禁。',
+              '伪人读书：只基于已读段落回应，批注回到原句。',
+              '芽砚 Deskpet：动画渲染拆成独立进程，故障不影响核心功能。'],
+   skills:['AI 协作：把执行交给模型，把判断留给自己','上下文管理：在长任务里维持一致前提','故障隔离：非核心功能不拖垮主流程'],
+   related:['first-llm','job-workbench','fake-reader','deskpet']},
+  {t:'落地', kick:'GROUND', claim:'先摸清现场，再谈方案。', intro:'我在现场吃过亏，也因此学会先看真实流程。',
+   tags:['业务调研','现场校验','规则前置'],
+   practices:['华飞家电：我按自己理解做的库存与核销流程跟实际业务差太远，被整段砍掉，后用最小改动重排。',
+              '校园废品回收：方案想全了，赛制没研究，省赛入场券都没交。',
+              '软通动力：盯支付链路、判异常、联系二线止损，判据来自真实指标。'],
+   skills:['业务调研：先看真实流程再定方案','现场校验：自己试过才算数','规则前置：动手前先确认规则与门槛'],
+   related:['wechat-miniapp','recycle','softcom']},
+  {t:'交付', kick:'HANDOVER', claim:'交出去的标准，是别人接手时不碰壁。', intro:'我对「做完」的定义，是离开我也能跑。',
+   tags:['交接设计','验收编排','上线闭环'],
+   practices:['软通动力：离职前把工作拆开、定新组长、跟上司逐项过两遍才交。',
+              '华飞家电：做测试验收与问题编排，按业务域整理反馈给开发方。',
+              '决策骰子：两天从想法做到上线。'],
+   skills:['交接设计：以接手方不出现卡点为标准','验收编排：按业务域整理问题并推动修复','上线闭环：从想法走到可访问'],
+   related:['softcom','wechat-miniapp','dice']}
+];
+var ABOUT={t:'关于我', s:'数量经济学硕士 · 国家奖学金 · 主导论文 3 篇 · 求职方向 AI 产品经理', intro:'我的个人档案页，放着我做过的事，也放着我一路长出来的方法。',
+   tags:['数量经济学硕士','国家奖学金','AI 产品经理'], u:'',
+   pos:'浙江财经大学数量经济学硕士（2023.09–2026.06，GPA 4.6/5，学院综测 1/43），本科青岛大学金融学。中间在软通动力做过近一年的支付宝渠道运维组长。',
+   who:'求职方向：AI 产品经理（主），产品经理 / 数据分析 / 战略分析（备）。',
+   tech:['Python','R（因果森林 / DML）','SQL','FastAPI','Next.js / React','因果推断','机器学习'],
+   done:'论文：主导 SCI 一区在投 1 篇、EI 会议 2 篇；参与署名 EI 会议 1 篇、SCI 二区 1 篇。竞赛：能源经济学术创意大赛国赛二等奖、挑战杯浙江省赛银奖、新苗人才计划立项、挑战杯校赛一等奖、统计建模大赛国赛三等奖。',
+   honors:['国家奖学金','一等学业奖学金','三好研究生','优秀研究生干部','校级优秀毕业论文'],
+   hi:['习惯「问题驱动 → 机制假设 → 模型验证 → 稳健性检验」闭环','聚焦任务编排、风险识别和最终验收，不绑定单一模型','对事实、规则、异常路径和最终结果负责']};
+
+/* ============ 六节点路径 ============ */
+var nodeEls=[];
+(function renderNodes(){
+  var html='';
+  ANGLES.forEach(function(p,i){
+    html+='<button class="node" data-i="'+i+'"><span class="dot"></span><span class="lab">'+p.t+'</span></button>';
+  });
+  $('nrow').innerHTML=html;
+  nodeEls=Array.prototype.slice.call(document.querySelectorAll('.node'));
+  nodeEls.forEach(function(n){
+    n.addEventListener('click',function(){
+      var i=Number(n.getAttribute('data-i'));
+      if(found.indexOf(i)>=0) openPop(i,false);
+    });
+  });
+})();
+function positionPop(){
+  if(cur<0||!nodeEls[cur]) return;
+  var pop=$('pop');
+  /* 窄屏交给 CSS 的底部浮层，不写内联坐标 */
+  if(window.innerWidth<=760){pop.style.left='';pop.style.top='';pop.classList.remove('up');return;}
+  var board=pop.offsetParent||document.querySelector('.board');
+  var br=board.getBoundingClientRect();
+  var row=$('nrow').getBoundingClientRect();
+  var dot=nodeEls[cur].querySelector('.dot').getBoundingClientRect();
+  var dock=document.querySelector('.dock').getBoundingClientRect();
+  var ctr=document.querySelector('.ctrls').getBoundingClientRect();
+  var popW=pop.offsetWidth||298, popH=pop.offsetHeight||200;
+  /* 水平：尽量让卡片中线对准节点，靠边则夹回，箭头单独对准节点 */
+  var cx=dot.left+dot.width/2-br.left;
+  var x=Math.max(popW/2+8,Math.min(br.width-popW/2-8,cx));
+  var ax=Math.max(22,Math.min(popW-22,cx-(x-popW/2)));
+  pop.style.setProperty('--ax',ax+'px');
+  pop.style.left=x+'px';
+  /* 垂直：底部为两个控制条预留空间；先尝试放在节点行下方，放不下再放上方 */
+  var bandBottom=Math.min(dock.top,ctr.top)-br.top-12;
+  var belowTop=row.bottom-br.top+12;
+  var aboveTop=dot.top-br.top-14-popH;
+  var top;
+  if(belowTop+popH<=bandBottom){ top=belowTop; pop.classList.remove('up'); }
+  else if(aboveTop>=10){ top=aboveTop; pop.classList.add('up'); }
+  else{
+    var belowGap=Math.max(0,bandBottom-belowTop);
+    var aboveGap=Math.max(0,dot.top-br.top-10);
+    if(aboveGap>belowGap){ top=10; pop.classList.add('up'); }
+    else { top=Math.max(10,bandBottom-popH); pop.classList.remove('up'); }
+  }
+  pop.style.top=top+'px';
+}
+
+/* ============ 角度详情 ============ */
+function jumpToTimeline(id){
+  closeSheet();
+  show('v-time');
+  if(tlItems[id]) setTimeout(function(){openTimelineDrawer(tlItems[id])},80);
+}
+function openSheet(i){
+  var p=ANGLES[i];
+  var practices=(p.practices||[]).map(function(t){return '<li>'+t+'</li>'}).join('');
+  var skills=(p.skills||[]).map(function(t){return '<li>'+t+'</li>'}).join('');
+  var rel=(p.related||[]).map(function(id){
+    var it=tlItems[id]; if(!it) return '';
+    return '<button class="sh-rel" type="button" data-rel="'+id+'">'+it.title+' <span>'+it.start+'</span></button>';
+  }).join('');
+  $('sheetIn').innerHTML=
+    '<button class="sheet-x" id="sheetX">关闭</button>'
+    +'<div class="sh-kick">角度 '+('0'+(i+1)).slice(-2)+' / 06 · '+p.kick+'</div>'
+    +'<h3 class="sh-h">'+p.t+'</h3>'
+    +'<p class="sh-s">'+p.claim+'</p>'
+    +'<div class="sh-sec"><h5>我怎么看这件事</h5><p>'+p.intro+'</p></div>'
+    +'<div class="sh-sec"><h5>我做到的几次</h5><ul class="sh-hi">'+practices+'</ul></div>'
+    +'<div class="sh-sec"><h5>练到的能力</h5><ul class="sh-hi">'+skills+'</ul></div>'
+    +'<div class="sh-sec"><h5>相关经历</h5><div class="sh-rels">'+rel+'</div></div>';
+  $('sheet').classList.add('on');
+  $('sheetX').addEventListener('click',closeSheet);
+  $('sheetIn').querySelectorAll('[data-rel]').forEach(function(b){
+    b.addEventListener('click',function(){jumpToTimeline(b.getAttribute('data-rel'))});
+  });
+}
+function openAbout(){
+  var p=ABOUT;
+  var tech=(p.tech||[]).map(function(t){return '<span>'+t+'</span>'}).join('');
+  var honors=(p.honors||[]).map(function(t,k){return '<span'+(k===0?' class="top"':'')+'>'+t+'</span>'}).join('');
+  var hi=(p.hi||[]).map(function(t){return '<li>'+t+'</li>'}).join('');
+  $('sheetIn').innerHTML=
+    '<button class="sheet-x" id="sheetX">关闭</button>'
+    +'<div class="sh-kick">PROFILE / 关于我</div>'
+    +'<h3 class="sh-h">'+p.t+'</h3>'
+    +'<p class="sh-s">'+p.s+'</p>'
+    +'<div class="sh-sec"><h5>基本情况</h5><p>'+p.pos+'</p></div>'
+    +'<div class="sh-sec"><h5>求职方向</h5><p>'+p.who+'</p></div>'
+    +'<div class="sh-sec"><h5>工具与方法</h5><div class="sh-tech">'+tech+'</div></div>'
+    +'<div class="sh-sec"><h5>荣誉</h5><div class="sh-honors">'+honors+'</div></div>'
+    +'<div class="sh-sec"><h5>论文与竞赛</h5><p>'+p.done+'</p></div>'
+    +'<div class="sh-sec"><h5>我的工作方式</h5><ul class="sh-hi">'+hi+'</ul></div>';
+  $('sheet').classList.add('on');
+  $('sheetX').addEventListener('click',closeSheet);
+}
+$('navAbout').addEventListener('click',openAbout);
+function closeSheet(){$('sheet').classList.remove('on')}
+$('sheet').addEventListener('click',function(e){if(e.target===$('sheet'))closeSheet()});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSheet()});
+
+/* ============ 掷骰 ============ */
+/* 各结果面转到世界正上方(+Y)时骰子自身的欧拉角；父层另有固定俯视倾角 */
+var FACE_ROT={1:[-90,0,0],2:[90,0,0],3:[0,0,90],4:[0,0,-90],5:[180,0,0],6:[0,0,0]};
+var dieEl=$('dcDie'), diePos=$('diePos'), hopper=$('hopper'), popEl=$('pop');
+var cur=-1, throwing=false;
+var rot={rx:0,ry:0,rz:0};
+var glow=.72, wind=.24, sound=true;
+var found=[];
+try{ found=JSON.parse(localStorage.getItem('cold-found')||'[]').filter(function(n){return n>=0&&n<6}); }catch(e){found=[]}
+
+function refreshFound(){
+  $('found').innerHTML='已发现 <b>'+found.length+'</b> / 6';
+  $('progFill').style.width=(found.length/6*100)+'%';
+}
+function setBadge(html){$('dieBadge').innerHTML=html}
+
+function openPop(i,showing){
+  var p=ANGLES[i];
+  popEl.innerHTML='<h3>'+p.t+'</h3>'
+    +'<div class="ptags">'
+      +'<span class="t1">'+p.tags[0]+'</span><span class="t2">'+p.tags[1]+'</span><span class="t3">'+p.tags[2]+'</span>'
+    +'</div>'
+    +'<p>'+p.claim+'</p>'
+    +'<div class="pbtns"><button class="pdetail">查看详情</button><button class="pmore">继续探索</button></div>';
+  popEl.querySelector('.pdetail').addEventListener('click',function(){openSheet(i)});
+  popEl.querySelector('.pmore').addEventListener('click',function(){throwDie()});
+  positionPop();
+  requestAnimationFrame(function(){popEl.classList.add('on')});
+}
+
+function markNodes(){
+  nodeEls.forEach(function(n,i){
+    n.classList.toggle('cur',i===cur);
+    n.classList.toggle('done',i!==cur&&found.indexOf(i)>=0);
+  });
+  $('nfill').style.width=cur>=0?((cur)/(5)*92+4)+'%':'0%';
+}
+
+/* 极简落地音：程序化合成，无音频文件 */
+var actx=null;
+function thud(v){
+  if(!sound) return;
+  try{
+    if(!actx) actx=new (window.AudioContext||window.webkitAudioContext)();
+    var t=actx.currentTime, amp=Math.min(.2,.05+v*.012);
+    var osc=actx.createOscillator(), g=actx.createGain();
+    osc.type='sine';
+    osc.frequency.setValueAtTime(90,t);
+    osc.frequency.exponentialRampToValueAtTime(42,t+.22);
+    g.gain.setValueAtTime(.0001,t);
+    g.gain.linearRampToValueAtTime(amp,t+.01);
+    g.gain.exponentialRampToValueAtTime(.0001,t+.3);
+    osc.connect(g);g.connect(actx.destination);osc.start(t);osc.stop(t+.32);
+    var len=Math.floor(actx.sampleRate*.25), buf=actx.createBuffer(1,len,actx.sampleRate), d=buf.getChannelData(0);
+    for(var i=0;i<len;i++) d[i]=(Math.random()*2-1)*Math.pow(1-i/len,3);
+    var src=actx.createBufferSource(), gg=actx.createGain(), lp=actx.createBiquadFilter();
+    src.buffer=buf;lp.type='lowpass';lp.frequency.value=680;
+    gg.gain.setValueAtTime(amp*.5,t);gg.gain.exponentialRampToValueAtTime(.0001,t+.22);
+    src.connect(lp);lp.connect(gg);gg.connect(actx.destination);src.start(t);
+  }catch(e){}
+}
+
+function easeOutQuint(x){return 1-Math.pow(1-x,4)}
+function throwDie(){
+  if(throwing) return;
+  if(actx) actx.resume();
+  closeSheet();
+  var target;
+  do{ target=1+Math.floor(Math.random()*6); }while(target-1===cur && found.length<6);
+  var face=target-1;
+  throwing=true; diePos.classList.add('throw'); diePos.classList.add('locked');
+  $('throwBtn').disabled=true;
+  popEl.classList.remove('on');
+  setBadge('掷骰中…');
+
+  var fr=FACE_ROT[target];
+  var sr=rot;
+  var turnsX=2+Math.floor(Math.random()*2), turnsZ=1+Math.floor(Math.random()*2);
+  var end={
+    rx:fr[0]+(Math.random()<.5?-1:1)*360*turnsX,
+    ry:sr.ry+360*(3+Math.floor(Math.random()*2)),
+    rz:fr[2]+(fr[2]===0?(Math.random()<.5?-1:1)*360:(fr[2]>0?1:-1)*360*turnsZ)
+  };
+  /* 翻滚时长固定；风只给一点横向漂移 */
+  var dur=2000;
+  var drift=(wind-.24)*36;
+  var t0=performance.now();
+  function step(now){
+    var k=Math.min(1,(now-t0)/dur), e=easeOutQuint(k);
+    rot.rx=sr.rx+(end.rx-sr.rx)*e;
+    rot.ry=sr.ry+(end.ry-sr.ry)*e;
+    rot.rz=sr.rz+(end.rz-sr.rz)*e;
+    dieEl.style.transform='rotateX('+rot.rx.toFixed(2)+'deg) rotateY('+rot.ry.toFixed(2)+'deg) rotateZ('+rot.rz.toFixed(2)+'deg)';
+    var hops=4, hop=Math.abs(Math.sin(k*hops*Math.PI))*Math.pow(1-k,1.15)*(120+wind*50);
+    hopper.style.transform='translate('+((1-e)*drift).toFixed(1)+'px,-'+hop.toFixed(1)+'px)';
+    if(k<1){requestAnimationFrame(step);return}
+    /* 落定 */
+    rot={rx:fr[0],ry:Math.round(rot.ry/360)*360,rz:fr[2]};
+    dieEl.style.transform='rotateX('+rot.rx+'deg) rotateY('+rot.ry+'deg) rotateZ('+rot.rz+'deg)';
+    hopper.style.transform='translate(0,0)';
+    diePos.classList.remove('throw');
+    throwing=false; $('throwBtn').disabled=false;
+    thud(.9);
+    cur=face;
+    var isNew=found.indexOf(face)<0;
+    if(isNew) found.push(face);
+    try{localStorage.setItem('cold-found',JSON.stringify(found))}catch(e){}
+    refreshFound(); markNodes();
+    setBadge('角度 <b>'+target+'</b> / 6');
+    setTimeout(function(){openPop(face,isNew)},260);
+  }
+  requestAnimationFrame(step);
+}
+$('throwBtn').addEventListener('click',throwDie);
+dieEl.addEventListener('click',throwDie);
+
+/* 氛围控制 */
+$('cGlow').addEventListener('input',function(){
+  glow=this.value/100; $('sGlow').textContent='辉光 '+this.value+'%';
+  document.documentElement.style.setProperty('--glow-amt',glow.toFixed(2));
+});
+$('cWind').addEventListener('input',function(){
+  wind=this.value/100;
+  $('sWind').textContent=this.value<34?'低':this.value<68?'中':'高';
+  document.documentElement.style.setProperty('--wind-spd',(0.6+wind*1.4).toFixed(2));
+});
+$('cSnd').addEventListener('input',function(){
+  sound=this.value==='1';
+  $('sSnd').textContent=sound?'开启':'关闭';
+  var dot=this.closest('.ctrl').querySelector('.cstate i');
+  dot.classList.toggle('g',false);
+});
+document.documentElement.style.setProperty('--wind-spd',(0.6+wind*1.4).toFixed(2));
+document.documentElement.style.setProperty('--glow-amt',glow.toFixed(2));
+
+window.addEventListener('resize',function(){positionPop()});
+refreshFound();
+</script>
+</body>
+</html>

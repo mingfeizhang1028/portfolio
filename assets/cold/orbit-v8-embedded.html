@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Orbital Atlas · 极光青紫与侧上方光源</title>
+<style>
+  :root{--bg:#060a14;--white:#edf3ff;--muted:#9aaecb;--dim:#617391;--stroke:rgba(151,182,230,.19);--blue:#6da7ff;--cyan:#7ccedb;--amber:#dfad6a}
+  *{box-sizing:border-box}html,body{margin:0;min-height:100%;background:var(--bg);color:var(--white);font-family:Inter,system-ui,-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif}button{font:inherit}
+  .page{position:relative;height:100svh;min-height:680px;overflow:hidden;isolation:isolate;background:radial-gradient(ellipse 51% 62% at 88% 8%,rgba(172,227,236,.18),rgba(76,145,194,.065) 43%,transparent 80%),radial-gradient(ellipse 56% 70% at 57% 48%,rgba(52,75,109,.18),transparent 73%),radial-gradient(ellipse 65% 90% at 50% 110%,rgba(13,31,60,.2),transparent 72%),linear-gradient(120deg,#080d16 0%,#0c1624 52%,#060b13 100%)}
+  .page:before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background-image:radial-gradient(rgba(173,206,255,.35) .55px,transparent .75px);background-size:117px 109px;background-position:24px 39px;mask-image:radial-gradient(ellipse 65% 75% at 56% 47%,#000 10%,transparent 86%);opacity:.25}
+  .page:after{content:"";position:absolute;inset:0;z-index:4;pointer-events:none;box-shadow:inset 0 0 135px 35px rgba(2,5,11,.33)}
+  #space{display:block;position:absolute;inset:0;width:100%;height:100%;z-index:1;touch-action:none}
+  .mast{position:absolute;z-index:5;left:clamp(26px,5vw,74px);top:clamp(26px,5vh,54px);pointer-events:none}
+  .brand{display:flex;align-items:center;gap:12px;color:#adc2de;font-size:11px;letter-spacing:.24em}.brand i{display:block;width:20px;height:1px;background:#719acb}.eyebrow{margin-top:86px;color:#67809f;font-size:11px;letter-spacing:.25em;text-transform:uppercase}
+  h1{font-family:Georgia,"Songti SC",serif;font-weight:400;font-size:clamp(33px,3.5vw,52px);line-height:1.28;letter-spacing:.08em;margin:17px 0 0;text-shadow:0 5px 28px rgba(0,0,0,.3)}h1 em{font-style:normal;color:#bedbfa}.lede{font-size:12px;color:#8b9db8;line-height:1.9;margin-top:20px;letter-spacing:.04em}
+  .index{position:absolute;z-index:5;left:clamp(26px,5vw,74px);bottom:clamp(30px,5vh,56px);width:min(420px,34vw)}.index-head{font-size:10px;color:#607795;letter-spacing:.23em;margin-bottom:17px}.track-list{display:grid;gap:0;border-top:1px solid var(--stroke)}.track{display:grid;grid-template-columns:33px 1fr auto;align-items:center;gap:10px;padding:13px 0;background:none;border:0;border-bottom:1px solid var(--stroke);color:#9babbe;text-align:left;cursor:pointer;transition:color .25s}.track:hover,.track.active{color:#f2f6ff}.track-num{font-family:Georgia,serif;color:#627b9a;font-size:13px}.track-name{font-size:12px;letter-spacing:.09em}.track-years{font-size:10px;color:#6d819d;letter-spacing:.06em}.track.active .track-num{color:var(--accent)}.track.active .track-name{text-shadow:0 0 18px var(--accent)}
+  .bottom-right{position:absolute;right:clamp(28px,5vw,74px);bottom:clamp(30px,5vh,56px);z-index:5;text-align:right;color:#657d9d;font-size:10px;letter-spacing:.18em;line-height:1.9;pointer-events:none}
+  .core-label{position:absolute;z-index:3;left:50%;top:50%;transform:translate(-50%,80px);pointer-events:none;text-align:center;transition:opacity .4s}.core-label b{display:block;font-family:Georgia,"Songti SC",serif;font-size:12px;font-weight:400;letter-spacing:.18em;white-space:nowrap;text-shadow:0 0 18px #0b1830}.core-label small{display:block;margin-top:6px;font-size:8px;letter-spacing:.28em;color:#748cad}.page.focus .core-label{opacity:.42}
+  .project-node{position:absolute;z-index:6;width:44px;height:44px;padding:0;border:0;background:none;transform:translate(-50%,-50%);cursor:pointer}.project-node:before{content:"";position:absolute;left:50%;top:50%;width:22px;height:3px;border-radius:3px;background:linear-gradient(90deg,transparent,var(--node) 13% 87%,transparent);box-shadow:0 0 7px color-mix(in srgb,var(--node) 58%,transparent);transform:translate(-50%,-50%) rotate(var(--node-angle,0rad));transition:width .22s,height .22s,box-shadow .22s}.project-node:after{content:"";position:absolute;left:50%;top:50%;width:4px;height:2px;background:rgba(246,250,255,.9);transform:translate(-50%,-50%) rotate(var(--node-angle,0rad));pointer-events:none}.project-node:hover:before,.project-node:focus-visible:before,.project-node.active:before{width:29px;height:4px;box-shadow:0 0 14px color-mix(in srgb,var(--node) 82%,transparent)}.project-node:focus-visible{outline:1px solid var(--node);outline-offset:-6px}.project-node[hidden]{display:none}
+  .node-tip{position:absolute;z-index:7;left:0;top:0;min-width:100px;max-width:190px;white-space:nowrap;transform:translate(15px,-44px);background:rgba(9,16,29,.87);backdrop-filter:blur(15px);border:1px solid rgba(161,191,231,.24);padding:9px 12px;pointer-events:none;opacity:0;transition:opacity .2s;color:#eaf2ff;font-size:11px;box-shadow:0 12px 30px rgba(0,0,0,.25)}.node-tip.show{opacity:1}.node-tip span{display:block;color:#7f95b4;font-size:9px;margin-top:4px;letter-spacing:.08em}
+  .focus-title{position:absolute;z-index:5;right:clamp(26px,5vw,74px);top:clamp(30px,5vh,55px);text-align:right;opacity:0;transform:translateY(-8px);transition:opacity .4s,transform .4s;pointer-events:none}.page.focus .focus-title{opacity:1;transform:translateY(0)}.focus-title .count{font-size:10px;color:#738aa7;letter-spacing:.23em}.focus-title h2{font-family:Georgia,"Songti SC",serif;font-size:23px;font-weight:400;letter-spacing:.12em;margin:10px 0 4px}.focus-title p{font-size:10px;color:#7e92af;letter-spacing:.08em;margin:0}
+  .return{position:absolute;z-index:8;right:clamp(26px,5vw,74px);top:132px;border:1px solid rgba(153,187,234,.28);background:rgba(11,21,39,.54);color:#b6cae3;padding:9px 13px;letter-spacing:.12em;font-size:10px;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s,border-color .3s}.page.focus .return{opacity:1;pointer-events:auto}.return:hover{border-color:#9ac5f6}
+  .card{position:absolute;z-index:10;right:clamp(28px,5vw,74px);top:50%;width:min(330px,28vw);transform:translate(22px,-50%);padding:27px 27px 25px;background:linear-gradient(145deg,rgba(21,34,54,.88),rgba(8,15,27,.94));border:1px solid rgba(172,203,244,.22);box-shadow:0 32px 80px rgba(0,0,0,.43),inset 0 1px rgba(255,255,255,.06);backdrop-filter:blur(22px);opacity:0;pointer-events:none;transition:opacity .4s,transform .4s}.card.open{opacity:1;pointer-events:auto;transform:translate(0,-50%)}.card:before{content:"";position:absolute;top:-1px;left:26px;width:56px;height:2px;background:var(--card-accent,#7ccedb);box-shadow:0 0 15px var(--card-accent,#7ccedb)}.card-close{position:absolute;right:20px;top:17px;background:none;border:0;color:#7e92ae;font-size:21px;line-height:1;cursor:pointer}.card-close:hover{color:#e9f0fc}.card-index{font-size:9px;letter-spacing:.22em;color:#7189a9}.card h3{font-family:Georgia,"Songti SC",serif;font-size:23px;font-weight:400;line-height:1.4;letter-spacing:.05em;margin:18px 0 8px}.card-date{color:var(--card-accent,#7ccedb);font-size:10px;letter-spacing:.11em}.card p{font-size:12px;color:#a4b3c9;line-height:1.9;margin:18px 0 0}.card-foot{border-top:1px solid rgba(150,180,223,.17);padding-top:16px;margin-top:19px;font-size:9px;letter-spacing:.1em;color:#7186a3}
+  .palette{position:absolute;z-index:9;right:clamp(26px,5vw,74px);bottom:clamp(26px,5vh,56px);width:274px}.palette-head{font-size:9px;letter-spacing:.22em;color:#6e8099;margin-bottom:10px}.palette-options{display:grid;gap:6px}.palette-option{display:grid;grid-template-columns:54px 1fr auto;gap:10px;align-items:center;width:100%;min-height:37px;padding:7px 9px;background:rgba(10,18,30,.43);border:1px solid rgba(135,165,199,.16);color:#9caec4;text-align:left;cursor:pointer;transition:background .2s,border-color .2s,color .2s}.palette-option:hover,.palette-option.active{background:rgba(24,38,57,.7);border-color:rgba(181,207,232,.42);color:#f3f6f9}.palette-option b{font-weight:500;font-size:11px;letter-spacing:.07em}.palette-option small{font-size:9px;color:#7188a3}.swatches{display:flex;gap:2px}.swatches i{display:block;width:15px;height:10px;background:var(--swatch);border:1px solid rgba(255,255,255,.15);box-shadow:inset 0 1px rgba(255,255,255,.3)}
+  .fallback{position:absolute;z-index:4;left:50%;top:47%;width:min(420px,80vw);transform:translate(-50%,-50%);display:none;text-align:center;padding:24px;background:rgba(10,18,33,.83);border:1px solid var(--stroke)}.fallback.show{display:block}.fallback p{color:#9fb4d0;line-height:1.8}
+  @media(max-width:850px){.page{height:auto;min-height:100svh}.mast{top:22px}.eyebrow{margin-top:26px}h1{font-size:30px}.lede{display:none}.index{bottom:20px;width:calc(100% - 44px);left:22px}.bottom-right{display:none}.track{padding:11px 0}.palette{top:146px;bottom:auto;right:22px;width:194px}.palette-head{font-size:8px}.palette-option{grid-template-columns:47px 1fr;min-height:32px;padding:4px 6px}.palette-option small{display:none}.swatches i{width:13px;height:8px}.focus-title{top:27px;right:22px}.focus-title h2{font-size:17px}.focus-title p{display:none}.return{top:90px;right:22px}.card{right:20px;left:20px;top:auto;bottom:202px;width:auto;transform:translateY(18px);padding:20px}.card.open{transform:translateY(0)}.core-label{display:none}}
+  @media(prefers-reduced-motion:reduce){.node-tip,.card,.focus-title,.return,.core-label{transition:none}}
+
+  .embedded .brand,.embedded .palette,.embedded .bottom-right,.embedded .card{display:none}
+  .embedded .mast{top:clamp(94px,13vh,130px)}
+  .embedded .eyebrow{margin-top:0}
+  .embedded .focus-title{top:clamp(94px,13vh,130px)}
+  .embedded .return{top:clamp(162px,22vh,205px)}
+  @media(max-width:850px){
+    .embedded .mast{top:94px}
+    .embedded .focus-title{top:132px}
+    .embedded .return{top:181px}
+  }
+</style>
+</head>
+<body class="embedded">
+<main class="page" id="page">
+  <canvas id="space" aria-label="三维轨道作品集"></canvas>
+  <div class="mast"><div class="brand"><i></i> ZHANG MINGFEI / PORTFOLIO</div><div class="eyebrow">Orbital atlas · 2026</div><h1>从真实问题出发，<br><em>让想法进入现实。</em></h1><div class="lede">研究、实践与 AI 产品探索，汇聚于同一个坐标。</div></div>
+  <nav class="index" aria-label="轨道分类"><div class="index-head">EXPLORE THE ORBITS</div><div class="track-list"><button class="track" data-track="research" style="--accent:#7ccedb"><span class="track-num">01</span><span class="track-name">教育与研究</span><span class="track-years">2016 — 2026</span></button><button class="track" data-track="work" style="--accent:#6da7ff"><span class="track-num">02</span><span class="track-name">工作与社会实践</span><span class="track-years">2018 — 至今</span></button><button class="track" data-track="ai" style="--accent:#dfad6a"><span class="track-num">03</span><span class="track-name">AI 产品实验室</span><span class="track-years">2026 — 至今</span></button></div></nav>
+  <div class="core-label"><b>AI 产品实验室</b><small>IDEAS INTO PRODUCTS</small></div>
+  <div class="focus-title" id="focusTitle"><div class="count">SELECTED ORBIT / 01</div><h2>教育与研究</h2><p>点击星点查看项目</p></div>
+  <button class="return" id="return">返回全景 ↗</button>
+  <div class="palette" aria-label="亮色轨道对比"><div class="palette-head">MATERIAL / 右上方侧光</div><div class="palette-options"><button class="palette-option" data-palette="spectrum" aria-pressed="false"><span class="swatches"><i style="--swatch:#5ae2de"></i><i style="--swatch:#6aa9ff"></i><i style="--swatch:#c29dff"></i></span><b>冷光光谱</b><small>明亮 · 平衡</small></button><button class="palette-option" data-palette="glacier" aria-pressed="false"><span class="swatches"><i style="--swatch:#7fe8ee"></i><i style="--swatch:#67b8ff"></i><i style="--swatch:#959bff"></i></span><b>冰河蓝</b><small>清透 · 同色系</small></button><button class="palette-option active" data-palette="aurora" aria-pressed="true"><span class="swatches"><i style="--swatch:#55e5bc"></i><i style="--swatch:#6dbeff"></i><i style="--swatch:#bc8ff5"></i></span><b>极光青紫</b><small>你的选择</small></button></div></div>
+  <div class="node-tip" id="nodeTip"></div>
+  <aside class="card" id="card" aria-live="polite"><button class="card-close" id="cardClose" aria-label="关闭卡片">×</button><div class="card-index" id="cardIndex"></div><h3 id="cardTitle"></h3><div class="card-date" id="cardDate"></div><p id="cardBody"></p><div class="card-foot">PROJECT DOSSIER / 点击其他节点切换</div></aside>
+  <div class="fallback" id="fallback"><p>当前浏览器无法显示三维预览。请使用支持 WebGL 2 的浏览器查看，或返回现有作品集。</p><a href="../../cold.html" style="color:#9cc6f5">打开现有作品集</a></div>
+</main>
+<script>
+(()=>{
+  const page=document.getElementById('page'),canvas=document.getElementById('space'),fallback=document.getElementById('fallback');
+  const gl=canvas.getContext('webgl2',{alpha:true,antialias:true,powerPreference:'high-performance'});
+  if(!gl){fallback.classList.add('show');if(window.parent!==window)window.parent.postMessage({type:'orbit-unsupported'},'*');return}
+  const VERT=`#version 300 es
+    precision highp float;layout(location=0)in vec3 aPos;layout(location=1)in vec3 aNormal;
+    uniform mat4 uModel,uVP;out vec3 vPos,vNorm,vLocal;
+    void main(){vec4 p=uModel*vec4(aPos,1.0);vPos=p.xyz;vNorm=normalize(mat3(uModel)*aNormal);vLocal=aPos;gl_Position=uVP*p;}`;
+  const FRAG=`#version 300 es
+    precision highp float;in vec3 vPos,vNorm,vLocal;out vec4 outColor;
+    uniform vec3 uColor,uEye,uEdgeColor;uniform float uDim,uCore,uAccent,uRadius,uWidth,uRough;
+    const float PI=3.14159265359;
+    vec3 fresnel(float cosTheta,vec3 f0){return f0+(1.0-f0)*pow(1.0-cosTheta,5.0);}
+    float distributionGGX(float nh,float rough){float a=rough*rough,a2=a*a,d=nh*nh*(a2-1.0)+1.0;return a2/max(PI*d*d,.0001);}
+    float geometrySchlick(float nv,float rough){float k=(rough+1.0)*(rough+1.0)/8.0;return nv/(nv*(1.0-k)+k);}
+    vec3 softbox(vec3 r){
+      vec3 sky=mix(vec3(.018,.027,.040),vec3(.074,.106,.139),smoothstep(-.9,.85,r.y));
+      float broad=pow(max(dot(r,normalize(vec3(-.55,.75,.58))),0.0),15.0);
+      float narrow=pow(max(dot(r,normalize(vec3(.67,.36,.71))),0.0),85.0);
+      float strip=exp(-pow((r.x+.24)*7.0,2.0))*smoothstep(-.62,.05,r.y)*(1.0-smoothstep(.42,.95,r.y));
+      float lower=pow(max(dot(r,normalize(vec3(.18,-.8,.45))),0.0),30.0);
+      float upperRight=pow(max(dot(r,normalize(vec3(.78,.72,.52))),0.0),11.0);
+      return sky+vec3(.70,.80,.86)*broad*.98+vec3(.62,.78,.88)*narrow*1.45+vec3(.38,.48,.58)*strip*.62+vec3(.13,.18,.24)*lower*.32+vec3(.56,.75,.81)*upperRight*.75;
+    }
+    vec3 lightSpec(vec3 n,vec3 v,vec3 l,vec3 f0,float rough,vec3 radiance){
+      vec3 h=normalize(v+l);float nl=max(dot(n,l),0.0),nv=max(dot(n,v),.001),nh=max(dot(n,h),0.0),hv=max(dot(h,v),0.0);
+      float d=distributionGGX(nh,rough),g=geometrySchlick(nv,rough)*geometrySchlick(nl,rough);
+      return (d*g*fresnel(hv,f0)/max(4.0*nv*nl,.001))*radiance*nl;
+    }
+    void main(){
+      vec3 n=normalize(vNorm),v=normalize(uEye-vPos),r=reflect(-v,n);
+      float nv=max(dot(n,v),.001),edge=0.0;
+      if(uRadius>0.1){edge=smoothstep(.67,.97,abs(length(vLocal.xy)-uRadius)/max(uWidth,.001));}
+      float rough=mix(uRough,max(.12,uRough*.53),edge);
+      vec3 f0=uCore>.5?vec3(.045,.07,.095):uColor;
+      vec3 reflected=softbox(r)*fresnel(nv,f0)*(1.0-rough*.32);
+      vec3 direct=lightSpec(n,v,normalize(vec3(-.65,.72,1.1)),f0,rough,vec3(1.28,1.44,1.58));
+      direct+=lightSpec(n,v,normalize(vec3(.82,.65,.72)),f0,rough,vec3(.72,.94,1.05));
+      vec3 base;
+      float alpha=1.0;
+      if(uCore>.5){
+        float rim=pow(1.0-nv,2.7);
+        base=vec3(.012,.024,.041)+reflected*.84+direct*.83+vec3(.13,.21,.29)*rim;
+        alpha=.66+.24*rim;
+      }else{
+        float grain=sin(length(vLocal.xy)*460.0)*.014+sin(length(vLocal.xy)*930.0)*.006;
+        base=reflected+direct+uColor*(.015+.018*max(n.y,0.0)+grain);
+        base+=uEdgeColor*(.072+.24*pow(1.0-nv,1.8)+.52*edge);
+        base+=uColor*uAccent*.024;
+      }
+      base=mix(base,vec3(.003,.006,.011),uDim);
+      base=base/(base+vec3(.75));
+      outColor=vec4(pow(max(base,vec3(0.0)),vec3(1.0/2.2)),alpha);
+    }`;
+  function shader(type,source){const s=gl.createShader(type);gl.shaderSource(s,source);gl.compileShader(s);if(!gl.getShaderParameter(s,gl.COMPILE_STATUS))throw Error(gl.getShaderInfoLog(s));return s}
+  let program;try{program=gl.createProgram();gl.attachShader(program,shader(gl.VERTEX_SHADER,VERT));gl.attachShader(program,shader(gl.FRAGMENT_SHADER,FRAG));gl.linkProgram(program);if(!gl.getProgramParameter(program,gl.LINK_STATUS))throw Error(gl.getProgramInfoLog(program));}catch(e){console.error(e);fallback.classList.add('show');return}
+  gl.useProgram(program);gl.enable(gl.DEPTH_TEST);gl.enable(gl.CULL_FACE);gl.cullFace(gl.BACK);gl.clearColor(0,0,0,0);
+  const loc={model:gl.getUniformLocation(program,'uModel'),vp:gl.getUniformLocation(program,'uVP'),color:gl.getUniformLocation(program,'uColor'),eye:gl.getUniformLocation(program,'uEye'),edge:gl.getUniformLocation(program,'uEdgeColor'),dim:gl.getUniformLocation(program,'uDim'),core:gl.getUniformLocation(program,'uCore'),accent:gl.getUniformLocation(program,'uAccent'),radius:gl.getUniformLocation(program,'uRadius'),width:gl.getUniformLocation(program,'uWidth'),rough:gl.getUniformLocation(program,'uRough')};
+  const tracks={
+    research:{name:'教育与研究',color:[.66,.71,.75],rough:.29,accent:'#7ccedb',radius:3.64,width:.095,height:.055,rotation:[1.20,.25,-.22],items:[['edu-undergrad','青岛大学 · 金融学本科','2016.09 — 2020.06','金融学本科。一门使用 MATLAB 的课程里读懂示例代码并完成一次 GDP 预测，该工具能力在毕业论文阶段复用。'],['edu-master','浙江财经大学 · 数量经济学硕士','2023.09 — 2026.06','第一志愿未录取后按专业方向调剂入学；跟随导师做灰色预测模型，一年多无进展后接手其放弃的课题。'],['grey-contest','灰色预测模型的改造 · 能源经济大赛国赛二等奖','2025.01 — 2026.05','以时滞处理重构模型假设，准确率提升；论文投 SCI 一区（在审），参赛获国赛二等奖。'],['papers','论文与署名','2025.01 — 2026.05','主导 SCI 一区在审论文 1 篇、会议论文 2 篇；参与署名 EI 二作、SCI 二区三/四作各 1 篇。'],['v2g','挑战杯省赛银奖 · 接手 V2G 项目','2025.05','接手横向课题转成的竞赛项目并重做实验设计；获省赛银奖，个人排名第二。'],['xinmiao','挑战杯校赛一等奖 · 新苗人才计划立项','2025.06','自设问卷并用结构方程模型完成实证；未获推优后转投省级新苗计划，立项成功。'],['thesis','毕业论文 · 数字经济背景下居民数字参与的收入效应研究','2025.07 — 2026.05','以 CFPS 微观数据研究数字参与的收入效应，计量与机器学习并用；校级优秀毕业论文。'],['honors','学业荣誉','2025.09','研三综测 1/43；两次一等学业奖学金、国家奖学金、三好研究生、优秀研究生干部。']]},
+    work:{name:'工作与社会实践',color:[.59,.65,.72],rough:.32,accent:'#6da7ff',radius:3.0,width:.13,height:.065,rotation:[.38,1.02,.46],items:[['recycle','校园废品回收平台 · 策划书与原型','2018.04 — 2019.06','提出「废品网购」模式并绘制参与方机制图；交付策划书与 APP 原型，未落地。'],['try-and-work','毕业后的一年：先去看现实','2020.06 — 2021.05','两次研究生入学考试未录取；转向求职并入职外包岗位。'],['softcom','软通动力 · 支付宝渠道运维组长','2021.05 — 2022.04','监控支付链路并处置异常；整理岗位知识库，从第一个人做到组长，团队 5 人。'],['wechat-miniapp','华飞家电微信小程序','2026.08 — 至今','负责需求定义与验收，定义积分体系与活动链路，开发由外部团队完成；尚未上线。']]},
+    ai:{name:'AI 产品实验室',color:[.69,.64,.57],rough:.25,accent:'#dfad6a',radius:2.34,width:.15,height:.077,rotation:[.93,-.7,-.42],items:[['first-llm','第一次用大模型写论文','2024','从生成代码扩展到论文正文，形成第一条稳定的使用规则。'],['job-workbench','求职工作台','2026.05 — 至今','判断付费结构后收窄范围，保留就业市场分析、简历改写、打招呼语改写。'],['fake-reader','伪人读书','2026.07 — 至今','多个不同人设的 AI 读者共读同一本书；静态阅读已完成，现推进动态共读。'],['deskpet','芽砚 Deskpet','2026.07 — 至今','桌面陪伴产品；动画方案由逐帧生成改为视频抽帧，渲染拆成独立进程。'],['dice','决策骰子','2026.09 · 已完成','移动端 3D 决策骰子，四种玩法，近两天完成并上线。'],['quant-lab','AI 量化投研','2026.09 — 至今','本地优先的行情监控与学习工作台；不接实盘、不下单。']]}
+  };
+  const order=['research','work','ai'],itemMap={};let selected=null,openItem=null,hoverTrack=null,hoverItem=null,dragging=false,dragX=0,dragY=0,startX=0,startY=0,viewYaw=0,viewPitch=0,angleOffset=0,paused=false,last=performance.now();
+  const palettes={
+    spectrum:{research:{color:[.35,.73,.72],accent:'#5ae2de'},work:{color:[.36,.54,.84],accent:'#6aa9ff'},ai:{color:[.67,.44,.79],accent:'#c29dff'}},
+    glacier:{research:{color:[.50,.79,.83],accent:'#7fe8ee'},work:{color:[.38,.63,.84],accent:'#67b8ff'},ai:{color:[.49,.49,.85],accent:'#959bff'}},
+    aurora:{research:{color:[.28,.78,.56],accent:'#55e5bc'},work:{color:[.42,.67,.86],accent:'#6dbeff'},ai:{color:[.63,.40,.77],accent:'#bc8ff5'}}
+  };
+  const mat=()=>new Float32Array(16);function ident(){let o=mat();o[0]=o[5]=o[10]=o[15]=1;return o}function mul(a,b){let o=mat();for(let c=0;c<4;c++)for(let r=0;r<4;r++)o[c*4+r]=a[r]*b[c*4]+a[4+r]*b[c*4+1]+a[8+r]*b[c*4+2]+a[12+r]*b[c*4+3];return o}function rx(a){let m=ident(),c=Math.cos(a),s=Math.sin(a);m[5]=c;m[6]=s;m[9]=-s;m[10]=c;return m}function ry(a){let m=ident(),c=Math.cos(a),s=Math.sin(a);m[0]=c;m[2]=-s;m[8]=s;m[10]=c;return m}function rz(a){let m=ident(),c=Math.cos(a),s=Math.sin(a);m[0]=c;m[1]=s;m[4]=-s;m[5]=c;return m}function tr(x,y,z){let m=ident();m[12]=x;m[13]=y;m[14]=z;return m}function sc(s){let m=ident();m[0]=m[5]=m[10]=s;return m}function perspective(fov,aspect,near,far){let m=mat(),f=1/Math.tan(fov/2);m[0]=f/aspect;m[5]=f;m[10]=(far+near)/(near-far);m[11]=-1;m[14]=2*far*near/(near-far);return m}function point(m,p){let x=p[0],y=p[1],z=p[2],w=m[3]*x+m[7]*y+m[11]*z+m[15];return [(m[0]*x+m[4]*y+m[8]*z+m[12])/w,(m[1]*x+m[5]*y+m[9]*z+m[13])/w,(m[2]*x+m[6]*y+m[10]*z+m[14])/w]}
+  function mesh(vertices,normals,indices){let vao=gl.createVertexArray();gl.bindVertexArray(vao);let b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(vertices),gl.STATIC_DRAW);gl.vertexAttribPointer(0,3,gl.FLOAT,false,0,0);gl.enableVertexAttribArray(0);b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(normals),gl.STATIC_DRAW);gl.vertexAttribPointer(1,3,gl.FLOAT,false,0,0);gl.enableVertexAttribArray(1);b=gl.createBuffer();gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,b);gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,new Uint16Array(indices),gl.STATIC_DRAW);gl.bindVertexArray(null);return{vao,count:indices.length}}
+  function torus(R,w,h){let v=[],n=[],idx=[],A=240,B=16;for(let i=0;i<=A;i++){let a=i/A*Math.PI*2,ca=Math.cos(a),sa=Math.sin(a);for(let j=0;j<=B;j++){let q=j/B*Math.PI*2,cq=Math.cos(q),sq=Math.sin(q);v.push((R+w*cq)*ca,(R+w*cq)*sa,h*sq);let nx=cq*ca/w,ny=cq*sa/w,nz=sq/h,len=Math.hypot(nx,ny,nz);n.push(nx/len,ny/len,nz/len)}}for(let i=0;i<A;i++)for(let j=0;j<B;j++){let a=i*(B+1)+j,b=a+B+1;idx.push(a,b,a+1,b,b+1,a+1)}return mesh(v,n,idx)}
+  function sphere(R){let v=[],n=[],idx=[],A=48,B=24;for(let i=0;i<=B;i++){let t=i/B*Math.PI;for(let j=0;j<=A;j++){let a=j/A*Math.PI*2,x=Math.sin(t)*Math.cos(a),y=Math.sin(t)*Math.sin(a),z=Math.cos(t);v.push(R*x,R*y,R*z);n.push(x,y,z)}}for(let i=0;i<B;i++)for(let j=0;j<A;j++){let a=i*(A+1)+j,b=a+A+1;idx.push(a,b,a+1,a+1,b,b+1)}return mesh(v,n,idx)}
+  const meshes={research:torus(tracks.research.radius,tracks.research.width,tracks.research.height),work:torus(tracks.work.radius,tracks.work.width,tracks.work.height),ai:torus(tracks.ai.radius,tracks.ai.width,tracks.ai.height),core:sphere(.43)};
+  for(const key of order){const t=tracks[key];t.model=mul(rz(t.rotation[2]),mul(ry(t.rotation[1]),rx(t.rotation[0])));t.nodes=[];t.items.forEach((item,i)=>{itemMap[item[0]]={track:key,data:item,index:i};let btn=document.createElement('button');btn.className='project-node';btn.type='button';btn.setAttribute('aria-label',item[1]);btn.style.setProperty('--node',t.accent);btn.dataset.id=item[0];btn.addEventListener('mouseenter',()=>{hoverItem=item[0];paused=true;showTip(btn,item)});btn.addEventListener('mouseleave',()=>{hoverItem=null;paused=!!openItem;hideTip()});btn.addEventListener('focus',()=>{hoverItem=item[0];paused=true;showTip(btn,item)});btn.addEventListener('blur',()=>{hoverItem=null;paused=!!openItem;hideTip()});btn.addEventListener('click',e=>{e.stopPropagation();focusTrack(key);showCard(item[0])});page.appendChild(btn);t.nodes.push(btn)})}
+  const tip=document.getElementById('nodeTip'),card=document.getElementById('card');function showTip(btn,item){const r=btn.getBoundingClientRect(),p=page.getBoundingClientRect();tip.style.left=(r.left-p.left+r.width/2)+'px';tip.style.top=(r.top-p.top)+'px';tip.innerHTML=item[1]+'<span>'+item[2]+'</span>';tip.classList.add('show')}function hideTip(){tip.classList.remove('show')}
+  function setPalette(name){const palette=palettes[name];for(const key of order){const t=tracks[key],p=palette[key];t.color=p.color;t.accent=p.accent;t.edge=[1,3,5].map(i=>parseInt(p.accent.slice(i,i+2),16)/255);t.nodes.forEach(btn=>btn.style.setProperty('--node',p.accent));document.querySelector('.track[data-track="'+key+'"]').style.setProperty('--accent',p.accent)}if(openItem)card.style.setProperty('--card-accent',tracks[itemMap[openItem].track].accent);document.querySelectorAll('.palette-option').forEach(btn=>{const active=btn.dataset.palette===name;btn.classList.toggle('active',active);btn.setAttribute('aria-pressed',String(active))})}
+  document.querySelectorAll('.palette-option').forEach(btn=>btn.addEventListener('click',()=>setPalette(btn.dataset.palette)));setPalette('aurora');
+  function clearActiveNodes(){document.querySelectorAll('.project-node.active').forEach(btn=>btn.classList.remove('active'))}
+  function focusTrack(key){selected=key;openItem=null;paused=false;clearActiveNodes();card.classList.remove('open');page.classList.add('focus');document.querySelectorAll('.track').forEach(b=>b.classList.toggle('active',b.dataset.track===key));const e=document.getElementById('focusTitle');e.innerHTML='<div class="count">SELECTED ORBIT / 0'+(order.indexOf(key)+1)+'</div><h2>'+tracks[key].name+'</h2><p>点击刻度查看项目</p>'}
+  function reset(){selected=null;openItem=null;paused=false;clearActiveNodes();card.classList.remove('open');page.classList.remove('focus');document.querySelectorAll('.track').forEach(b=>b.classList.remove('active'))}
+  function showCard(id){if(window.parent!==window){openItem=id;paused=true;clearActiveNodes();document.querySelector('.project-node[data-id="'+id+'"]').classList.add('active');window.parent.postMessage({type:'orbit-project',id:id},'*');return}const x=itemMap[id],d=x.data;openItem=id;paused=true;clearActiveNodes();document.querySelector('.project-node[data-id="'+id+'"]').classList.add('active');card.style.setProperty('--card-accent',tracks[x.track].accent);document.getElementById('cardIndex').textContent='PROJECT / '+String(x.index+1).padStart(2,'0')+' · '+tracks[x.track].name;document.getElementById('cardTitle').textContent=d[1];document.getElementById('cardDate').textContent=d[2];document.getElementById('cardBody').textContent=d[3];card.classList.add('open')}
+  document.getElementById('cardClose').onclick=()=>{openItem=null;paused=false;clearActiveNodes();card.classList.remove('open')};document.getElementById('return').onclick=reset;document.querySelectorAll('.track').forEach(b=>b.onclick=()=>focusTrack(b.dataset.track));document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(openItem){openItem=null;paused=false;clearActiveNodes();card.classList.remove('open')}else reset()}});
+  window.addEventListener('message',e=>{if(e.source!==window.parent||!e.data)return;if(e.data.type==='orbit-close'){openItem=null;paused=false;clearActiveNodes()}});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&window.parent!==window)window.parent.postMessage({type:'orbit-request-close'},'*')});
+  let vp=ident(),scene=ident(),eye=[0,0,10.3],width=1,height=1,dpr=1;function resize(){width=page.clientWidth;height=page.clientHeight;dpr=Math.min(window.devicePixelRatio||1,1.75);canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);gl.viewport(0,0,canvas.width,canvas.height);let fov=width<850?1.15:.75;let camZ=width<850?11.7:10.3;eye=[width<850?0:-.85,0,camZ];vp=mul(perspective(fov,width/height,.1,100),tr(width<850?0:.85,0,-camZ))}window.addEventListener('resize',resize);resize();
+  function project(p){const q=point(mul(vp,scene),p);return[(q[0]+1)*width/2,(1-q[1])*height/2,q[2]]}function draw(mesh,model,color,dim=0,core=0,accent=0,radius=0,bandWidth=1,rough=.3,edgeColor=[0,0,0]){gl.uniformMatrix4fv(loc.model,false,mul(scene,model));gl.uniform3fv(loc.color,color);gl.uniform3fv(loc.edge,edgeColor);gl.uniform1f(loc.dim,dim);gl.uniform1f(loc.core,core);gl.uniform1f(loc.accent,accent);gl.uniform1f(loc.radius,radius);gl.uniform1f(loc.width,bandWidth);gl.uniform1f(loc.rough,rough);gl.bindVertexArray(mesh.vao);gl.drawElements(gl.TRIANGLES,mesh.count,gl.UNSIGNED_SHORT,0)}
+  function curvePoint(t,a){return point(t.model,[t.radius*Math.cos(a),t.radius*Math.sin(a),0])}
+  function nearestRing(x,y){let best=null,bestD=23;for(const key of order){if(selected&&selected!==key)continue;const t=tracks[key];for(let i=0;i<150;i++){let a=i/150*Math.PI*2,p=project(curvePoint(t,a)),d=Math.hypot(p[0]-x,p[1]-y);if(d<bestD){bestD=d;best=key}}}return best}
+  canvas.addEventListener('pointerdown',e=>{dragging=true;dragX=startX=e.clientX;dragY=startY=e.clientY;canvas.setPointerCapture(e.pointerId)});canvas.addEventListener('pointermove',e=>{if(dragging){let dx=e.clientX-dragX,dy=e.clientY-dragY;viewYaw+=dx*.003;viewPitch=Math.max(-.25,Math.min(.25,viewPitch+dy*.002));dragX=e.clientX;dragY=e.clientY;canvas.style.cursor='grabbing'}else{hoverTrack=nearestRing(e.offsetX,e.offsetY);canvas.style.cursor=hoverTrack?'pointer':'grab'}});canvas.addEventListener('pointerup',e=>{let moved=Math.hypot(e.clientX-startX,e.clientY-startY);dragging=false;canvas.releasePointerCapture(e.pointerId);if(moved<7){let key=nearestRing(e.offsetX,e.offsetY);if(key)focusTrack(key);else if(selected&&Math.hypot(e.offsetX-width*.55,e.offsetY-height*.5)<45)reset()}});canvas.addEventListener('pointercancel',()=>{dragging=false;canvas.style.cursor='grab'});canvas.addEventListener('pointerleave',()=>{hoverTrack=null;if(!dragging)canvas.style.cursor='grab'});
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)'),coreLabel=document.querySelector('.core-label');function frame(now){let dt=Math.min(.04,(now-last)/1000);last=now;if(!paused&&!reduce.matches)angleOffset+=dt*Math.PI*2/96;scene=mul(ry(viewYaw),rx(viewPitch));gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);gl.useProgram(program);gl.uniformMatrix4fv(loc.vp,false,vp);gl.uniform3fv(loc.eye,eye);const coreScreen=project([0,0,0]);coreLabel.style.left=coreScreen[0]+'px';coreLabel.style.top=coreScreen[1]+'px';
+    for(const key of order){const t=tracks[key];draw(meshes[key],t.model,t.color,selected&&selected!==key?.94:0,0,selected===key?.16:hoverTrack===key?.06:0,t.radius,t.width,t.rough,t.edge)}
+    gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);gl.depthMask(false);
+    draw(meshes.core,ident(),[.17,.24,.32],0,1,0,0,1,.2);
+    gl.depthMask(true);gl.disable(gl.BLEND);
+    for(const key of order){const t=tracks[key],visible=!selected||selected===key;for(let i=0;i<t.items.length;i++){const btn=t.nodes[i];btn.hidden=!visible;if(!visible)continue;let a=(i/t.items.length)*Math.PI*2+angleOffset+(key==='work'?.48:key==='ai'?.92:0),p=curvePoint(t,a),q=project(p),before=project(curvePoint(t,a-.014)),after=project(curvePoint(t,a+.014));btn.style.left=q[0]+'px';btn.style.top=q[1]+'px';btn.style.setProperty('--node-angle',Math.atan2(after[1]-before[1],after[0]-before[0])+'rad');btn.style.opacity=q[2]<-.95?'0':'1'}}requestAnimationFrame(frame)}requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
