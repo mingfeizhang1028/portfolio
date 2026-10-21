@@ -344,8 +344,8 @@
   .diepos.throw .hopper{animation:none}
   .diepos .sway{transform-style:preserve-3d;animation:sway 8s ease-in-out infinite alternate}
   @keyframes sway{from{transform:rotateX(-21deg) rotateY(-22deg)}to{transform:rotateX(-17deg) rotateY(-10deg)}}
-  /* 首次掷骰后锁定到固定 3/4 俯视角，让结果顶面稳定可读（与参考图一致） */
-  .diepos.locked .sway{animation:none;transform:rotateX(-26deg) rotateY(-16deg)}
+  /* 首次掷骰后锁定视角：抬高俯角，让顶面（读数面）更完整地露出来 */
+  .diepos.locked .sway{animation:none;transform:rotateX(-38deg) rotateY(-14deg)}
   .diepos .dieglow{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
     width:146%;height:146%;border-radius:50%;z-index:-1;
     background:radial-gradient(circle,rgba(79,140,255,.36),transparent 66%);filter:blur(10px);
