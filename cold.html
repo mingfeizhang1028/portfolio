@@ -153,9 +153,11 @@
     width:1px;height:15px;background:rgba(34,52,79,.22)}
   .hero-cta{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
   .hero-cta .or{font-size:12.5px;color:var(--tx3);letter-spacing:.05em}
-  .textlink{font-size:13px;color:var(--tx2);background:none;border:0;cursor:pointer;letter-spacing:.05em;
-    border-bottom:1px solid rgba(255,255,255,.25);padding:4px 0}
+  .textlink{font-size:14px;font-weight:600;color:var(--tx2);background:none;border:0;cursor:pointer;
+    letter-spacing:.06em;border-bottom:1px solid rgba(255,255,255,.28);padding:6px 0 5px}
+  .textlink .arr{display:inline-block;margin-left:8px;transition:transform .3s}
   .textlink:hover{color:#fff;border-color:var(--blue2)}
+  .textlink:hover .arr{transform:translateX(4px)}
 
   .hero-visual{position:relative;height:clamp(380px,52vw,540px)}
   .hero-visual .orb{position:absolute;border-radius:50%;filter:blur(12px);pointer-events:none}
@@ -530,6 +532,9 @@
     .rcard{min-height:0}
   }
   @media(max-width:760px){
+    /* 首屏两个入口改为上下排列，避免「或」落单在上一行末尾 */
+    .hero-cta{flex-direction:column;align-items:center;gap:12px}
+    .hero-cta .or{display:none}
     nav{padding:13px 16px}
     .brand span{font-size:9px;letter-spacing:.16em}
     .brand b{font-size:17px}
@@ -659,7 +664,7 @@
       <div class="hero-cta">
         <button class="btn btn-blue" data-to="v-route">沿光出发 <span class="arr">→</span></button>
         <span class="or">或</span>
-        <button class="textlink" data-to="v-dice">直接掷一次骰，让偶然带路 →</button>
+        <button class="textlink" data-to="v-dice">直接掷一次骰，让偶然带路<span class="arr">→</span></button>
       </div>
     </div>
     <div class="hero-visual" aria-hidden="true">
