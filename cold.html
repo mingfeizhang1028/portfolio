@@ -1115,8 +1115,8 @@ $('sheet').addEventListener('click',function(e){if(e.target===$('sheet'))closeSh
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSheet()});
 
 /* ============ 掷骰 ============ */
-/* 各结果面转到世界正上方(+Y)时骰子自身的欧拉角；父层另有固定俯视倾角 */
-var FACE_ROT={1:[-90,0,0],2:[90,0,0],3:[0,0,90],4:[0,0,-90],5:[180,0,0],6:[0,0,0]};
+/* 每个点数对应的立方体朝向：落定点数 = 朝向镜头的骰面，1..6 依次对应六个角度 */
+var FACE_ROT={1:[0,0,0],2:[90,0,0],3:[0,-90,0],4:[0,90,0],5:[-90,0,0],6:[0,180,0]};
 var dieEl=$('dcDie'), diePos=$('diePos'), hopper=$('hopper'), popEl=$('pop');
 var cur=-1, throwing=false;
 var rot={rx:0,ry:0,rz:0};
@@ -1193,7 +1193,7 @@ function throwDie(){
   var turnsX=2+Math.floor(Math.random()*2), turnsZ=1+Math.floor(Math.random()*2);
   var end={
     rx:fr[0]+(Math.random()<.5?-1:1)*360*turnsX,
-    ry:sr.ry+360*(3+Math.floor(Math.random()*2)),
+    ry:fr[1]+360*(3+Math.floor(Math.random()*2)),
     rz:fr[2]+(fr[2]===0?(Math.random()<.5?-1:1)*360:(fr[2]>0?1:-1)*360*turnsZ)
   };
   /* 翻滚时长固定；风只给一点横向漂移 */
@@ -1210,7 +1210,7 @@ function throwDie(){
     hopper.style.transform='translate('+((1-e)*drift).toFixed(1)+'px,-'+hop.toFixed(1)+'px)';
     if(k<1){requestAnimationFrame(step);return}
     /* 落定 */
-    rot={rx:fr[0],ry:Math.round(rot.ry/360)*360,rz:fr[2]};
+    rot={rx:fr[0],ry:fr[1],rz:fr[2]};
     dieEl.style.transform='rotateX('+rot.rx+'deg) rotateY('+rot.ry+'deg) rotateZ('+rot.rz+'deg)';
     hopper.style.transform='translate(0,0)';
     diePos.classList.remove('throw');
