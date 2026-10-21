@@ -1115,8 +1115,8 @@ $('sheet').addEventListener('click',function(e){if(e.target===$('sheet'))closeSh
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeSheet()});
 
 /* ============ 掷骰 ============ */
-/* 每个点数对应的立方体朝向：落定点数 = 朝向镜头的骰面，1..6 依次对应六个角度 */
-var FACE_ROT={1:[0,0,0],2:[90,0,0],3:[0,-90,0],4:[0,90,0],5:[-90,0,0],6:[0,180,0]};
+/* 每个点数对应的立方体朝向：让 N 点朝上（骰子按顶面读数），1..6 依次对应六个角度 */
+var FACE_ROT={1:[90,0,0],2:[180,0,0],3:[0,0,-90],4:[0,0,90],5:[0,0,0],6:[-90,0,0]};
 var dieEl=$('dcDie'), diePos=$('diePos'), hopper=$('hopper'), popEl=$('pop');
 var cur=-1, throwing=false;
 var rot={rx:0,ry:0,rz:0};
