@@ -69,16 +69,20 @@
   .hero-in{position:relative;z-index:3;width:min(1240px,100%);min-height:min(720px,calc(100vh - 92px));
     display:grid;grid-template-columns:minmax(360px,.88fr) minmax(520px,1.12fr);align-items:center;gap:clamp(30px,5vw,88px)}
   .hero-copy{position:relative;z-index:5;text-align:left;padding-left:clamp(0px,2vw,28px)}
+  /* 左侧暖白渐层：只在文字背后垫一层光，不遮住山谷与藤蔓 */
+  .hero-copy::before{content:'';position:absolute;inset:-46px -90px -34px -46px;z-index:-1;pointer-events:none;
+    background:radial-gradient(118% 100% at 30% 50%,rgba(251,248,236,.88),rgba(251,248,236,.62) 50%,rgba(251,248,236,0) 76%);
+    filter:blur(7px)}
   .hero-kick{font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold2);margin-bottom:18px}
   .hero-in h1{font-family:var(--serif);font-size:clamp(62px,6.4vw,92px);font-weight:600;letter-spacing:.12em;
     line-height:1.02;margin-bottom:20px;text-shadow:0 2px 0 rgba(255,255,255,.75)}
-  .hero-rule{display:flex;align-items:center;gap:12px;width:min(310px,82%);margin:0 0 20px;color:var(--gold2);
-    font-family:var(--serif);font-size:12px;letter-spacing:.16em}
-  .hero-rule::before{content:'';height:1px;flex:1;background:linear-gradient(90deg,var(--gold2),rgba(185,138,78,.08))}
-  .hero-in .sub{font-size:15px;color:var(--ink2);line-height:1.9;max-width:520px;margin:0 0 8px}
-  .hero-in .sub b{color:var(--ink);font-weight:650}
-  .hero-in .tags{display:flex;align-items:center;gap:0;flex-wrap:wrap;margin:22px 0 34px}
-  .tag{font-size:11.5px;letter-spacing:.04em;color:#6b5a3e;padding:0 13px;position:relative}
+  .hero-rule{display:flex;align-items:center;gap:12px;width:min(310px,82%);margin:0 0 20px;color:#6f5731;
+    font-family:var(--serif);font-size:12.5px;letter-spacing:.16em}
+  .hero-rule::before{content:'';height:1px;flex:1;background:linear-gradient(90deg,#7d5f36,rgba(185,138,78,.08))}
+  .hero-in .sub{font-size:15px;color:#474130;line-height:1.85;max-width:520px;margin:0 0 8px;text-shadow:0 1px 0 rgba(255,255,255,.5)}
+  .hero-in .sub b{color:#2f2820;font-weight:650}
+  .hero-in .tags{display:flex;align-items:center;gap:0;flex-wrap:wrap;row-gap:6px;margin:22px 0 34px}
+  .tag{font-size:12px;letter-spacing:.04em;color:#57472f;padding:0 13px;position:relative;white-space:nowrap}
   .tag:first-child{padding-left:0}
   .tag:not(:last-child)::after{content:'·';position:absolute;right:-2px;color:var(--gold)}
   .enter{font:inherit;font-size:14px;font-weight:650;letter-spacing:.06em;color:#3b2f1e;cursor:pointer;
@@ -175,11 +179,12 @@
   .mini-vine circle{fill:#f6efe0;stroke:#a08a68;stroke-width:1.6}
   .mini-vine circle.on{fill:var(--gold);stroke:var(--gold2)}
   @media(max-width:760px){
-    #v-fork{padding:76px 24px 46px;justify-content:flex-start}
-    .fork-in::before,.forks::before,.forks::after{display:none}.fork-in .qsub{margin-bottom:28px}
-    .forks{grid-template-columns:1fr;gap:18px}.fork{min-height:0;padding:24px 26px}.fork .ico{height:88px}
-    .mini-vine{width:92px;height:92px}.fork:first-child,.fork:last-child{transform:none}
+    #v-fork{padding:64px 24px 20px;justify-content:flex-start}
+    .fork-in::before,.forks::before,.forks::after{display:none}.fork-in .qsub{margin-bottom:26px}
+    .forks{grid-template-columns:1fr;gap:16px}.fork{min-height:0;padding:20px 22px}.fork .ico{height:78px}
+    .mini-vine{width:86px;height:86px}.fork:first-child,.fork:last-child{transform:none}
     .fork:hover:first-child,.fork:hover:last-child{transform:translateY(-4px)}
+    .fork-cat{margin:14px 0 0}
   }
 
   .back{position:fixed;top:22px;left:24px;z-index:20;font:inherit;font-size:12.5px;cursor:pointer;
@@ -312,8 +317,8 @@
   .bud span{transform:rotate(-32deg);font-size:10.5px;font-weight:700;color:#4a3c22;opacity:.72}
   .bud::before{content:'';position:absolute;left:50%;top:10%;width:1.5px;height:68%;transform:translateX(-50%);background:rgba(65,53,28,.42);border-radius:1px;box-shadow:-3px 0 0 -0.5px rgba(65,53,28,.16),3px 0 0 -0.5px rgba(65,53,28,.16)}
   .bud::after{content:attr(data-project);position:absolute;left:26px;top:-16px;white-space:nowrap;transform:rotate(-32deg);
-    padding:6px 9px;font-size:11.5px;font-weight:500;letter-spacing:.03em;color:#6b5b40;background:rgba(250,247,239,.9);
-    border-bottom:1px solid rgba(160,138,104,.35);opacity:var(--depth-alpha);transition:opacity .3s,color .3s}
+    padding:7px 11px;font-size:13px;font-weight:600;letter-spacing:.03em;color:#4e4230;background:rgba(252,249,242,.96);
+    border:1px solid rgba(160,138,104,.4);border-radius:3px;box-shadow:0 4px 10px rgba(60,52,36,.14);opacity:var(--depth-alpha);transition:opacity .3s,color .3s}
   .bud-2::after,.bud-4::after,.bud-6::after{left:auto;right:28px}
   .bud.lit{background:linear-gradient(150deg,#e2c884 0%,#c99a4e 45%,#a87738 100%);color:#fff;
     box-shadow:0 0 0 11px rgba(214,174,91,.18),0 0 34px rgba(194,136,55,.72),inset 0 0 0 1px rgba(126,82,31,.35),inset -3px 0 5px rgba(90,55,20,.3);
@@ -472,13 +477,13 @@
   .hero-vine .leaf.alt{fill:#a7bd8d;}
   .hero-vine .bud-dot{fill:#d8ca9f;stroke:#526c46;stroke-width:2.4;}
   .hero-sun{background:radial-gradient(circle,rgba(255,244,196,.7),rgba(255,238,176,.18) 42%,transparent 72%);}
-  .hero-die-wrap{right:7%;bottom:10%;width:270px;height:260px;}
-  .hero-die-wrap .die{--s:150px;--h:75px;}
-  .hero-die-wrap::before{width:250px;height:92px;left:-22px;bottom:18px;background:radial-gradient(ellipse,rgba(76,99,57,.42),rgba(126,151,95,.18) 50%,transparent 72%);}
-  .floor{width:300px;height:86px;border-radius:58% 42% 44% 56% / 44% 48% 52% 56%;background:
+  .hero-die-wrap{right:9%;bottom:12%;width:236px;height:228px;}
+  .hero-die-wrap .die{--s:124px;--h:62px;}
+  .hero-die-wrap::before{width:222px;height:80px;left:-20px;bottom:14px;background:radial-gradient(ellipse,rgba(76,99,57,.42),rgba(126,151,95,.18) 50%,transparent 72%);}
+  .floor{width:250px;height:72px;border-radius:58% 42% 44% 56% / 44% 48% 52% 56%;background:
     linear-gradient(180deg,rgba(141,157,91,.8),rgba(91,76,47,.85)),
     repeating-linear-gradient(168deg,rgba(240,221,177,.18) 0 2px,transparent 2px 12px);
-    filter:blur(.2px);transform:translate(12px,100px) rotate(-9deg);box-shadow:inset 0 14px 18px rgba(217,208,157,.18),0 18px 18px rgba(44,46,29,.22);animation:none;}
+    filter:blur(.2px);transform:translate(10px,86px) rotate(-9deg);box-shadow:inset 0 14px 18px rgba(217,208,157,.18),0 18px 18px rgba(44,46,29,.22);animation:none;}
   .floor::after{content:'';position:absolute;inset:16% 12%;background:radial-gradient(ellipse at 30% 35%,rgba(42,46,27,.28) 0 2px,transparent 3px),radial-gradient(ellipse at 72% 68%,rgba(232,209,155,.3) 0 2px,transparent 3px);opacity:.8;}
 
   .fork-in{max-width:1120px;}
@@ -513,17 +518,17 @@
   .yr::before{top:50%;bottom:auto;width:28px;height:28px;border-radius:58% 42% 55% 45%;background:radial-gradient(circle at 35% 28%,#e8d9a9 0 12%,#b98a4e 38%,#5b784a 72%);box-shadow:0 0 0 6px rgba(218,224,193,.62),7px 8px 10px rgba(39,60,37,.24);transform:translate(-50%,-50%) rotate(18deg);}
   .yr::after{width:10px;height:22px;top:calc(50% - 15px);left:calc(50% + 14px);border-radius:80% 20% 80% 20%;background:#a7bf8a;transform:rotate(30deg);box-shadow:0 0 0 2px rgba(71,98,57,.14);}
   .row:nth-child(even) .yr::after{left:auto;right:calc(50% + 14px);transform:rotate(210deg);}
-  .yr span{padding:7px 5px;background:rgba(60,82,48,.72);border:1px solid rgba(238,225,174,.32);box-shadow:0 5px 10px rgba(40,57,37,.18);text-shadow:0 1px 2px rgba(29,45,27,.5);}
-  .cell{padding:19px 22px;z-index:1;}
-  .cell.l{border:1px solid rgba(95,123,73,.26);background:linear-gradient(140deg,rgba(247,246,225,.84),rgba(221,231,205,.66));box-shadow:0 16px 30px rgba(52,71,43,.15),inset 0 1px rgba(255,255,255,.72);clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);}
+  .yr span{padding:7px 9px;background:rgba(58,78,45,.94);border:1px solid rgba(238,225,174,.42);border-radius:3px;letter-spacing:.02em;box-shadow:0 5px 10px rgba(40,57,37,.18);text-shadow:0 1px 2px rgba(29,45,27,.5);}
+  .cell{padding:22px 26px;z-index:1;}
+  .cell.l{border:1px solid rgba(95,123,73,.26);background:linear-gradient(140deg,rgba(251,249,239,.96),rgba(239,244,230,.93));box-shadow:0 16px 30px rgba(52,71,43,.15),inset 0 1px rgba(255,255,255,.72);clip-path:polygon(10px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 10px);}
   .cell.l::before{right:-22px;width:35px;height:2px;background:linear-gradient(90deg,#678457,#b7c892);box-shadow:0 2px 4px rgba(48,72,42,.18);}
-  .cell.l h4{color:#30492f;}
-  .cell.l p{color:#53664c;}
-  .cell.a{margin-left:8px;border-left:1px solid rgba(177,139,79,.7);background:linear-gradient(90deg,rgba(231,218,176,.70),rgba(247,240,211,.32));padding-left:27px;}
+  .cell.l h4{color:#30492f;font-size:17px;}
+  .cell.l p{font-size:13.5px;line-height:1.85;color:#47533f;max-width:30em;}
+  .cell.a{margin-left:8px;border-left:1px solid rgba(177,139,79,.7);background:linear-gradient(90deg,rgba(248,241,216,.96),rgba(250,245,227,.9));padding-left:30px;}
   .cell.a::before{content:'✦';left:-9px;top:13px;color:#c59c58;background:#e5e4c9;}
   .cell.a::after{content:'';position:absolute;left:-28px;top:50%;width:28px;height:1px;background:repeating-linear-gradient(90deg,rgba(179,143,83,.7) 0 5px,transparent 5px 9px);}
-  .cell.a h4{color:#71582f;}
-  .cell.a p{color:#6b5b3a;}
+  .cell.a h4{color:#71582f;font-size:16px;}
+  .cell.a p{font-size:13.5px;line-height:1.85;color:#5b4a2e;max-width:30em;}
   .cell.a.todo{background:linear-gradient(90deg,rgba(176,160,117,.48),rgba(247,240,211,.18) 78%);}
   .linkline{height:1px;margin:9px 18% 0;background:linear-gradient(90deg,transparent,rgba(114,146,85,.22),rgba(184,143,79,.25),transparent);}
   /* 时间线底部暗角钉在视口底端，不随内容滚走 */
@@ -533,10 +538,11 @@
       radial-gradient(ellipse at 77% 88%,rgba(51,42,29,.18),transparent 38%);}
 
   @media(max-width:900px){
-    .hero-die-wrap{width:220px;height:220px;right:4%;bottom:0;}
+    .hero-scene{min-height:320px;}
+    .hero-die-wrap{width:200px;height:200px;right:4%;bottom:0;}
     .hero-die-wrap .die{--s:120px;--h:60px;}
-    .hero-die-wrap::before{width:215px;height:78px;left:-18px;bottom:8px;}
-    .floor{width:218px;height:68px;transform:translate(10px,82px) rotate(-9deg);}
+    .hero-die-wrap::before{width:196px;height:72px;left:-18px;bottom:8px;}
+    .floor{width:210px;height:62px;transform:translate(8px,76px) rotate(-9deg);}
   }
   @media(max-width:760px){
     #v-timeline.paper{padding-bottom:110px;}
@@ -544,12 +550,12 @@
     .tl-head{padding-left:27px;margin-bottom:36px;}
     #tlRows{padding-left:8px;}
     #tlRows::before{left:22px;top:-25px;bottom:-30px;width:9px;transform:rotate(-2deg);}
-    .row{grid-template-columns:44px 1fr;grid-template-areas:"year left" "year ai" "line line";gap:8px;margin-bottom:22px;}
-    .yr{grid-area:year;align-self:start;padding-top:13px;font-size:12px;}
-    .yr::before{left:22px;width:22px;height:22px;}
-    .yr::after{left:34px;right:auto;width:8px;height:17px;top:calc(50% - 13px);}
-    .row:nth-child(even) .yr::after{left:34px;right:auto;transform:rotate(210deg);}
-    .yr span{position:relative;left:-3px;padding:5px 3px;background:rgba(60,82,48,.78);font-size:11px;}
+    .row{grid-template-columns:78px 1fr;grid-template-areas:"year left" "year ai" "line line";gap:8px;margin-bottom:22px;}
+    .yr{grid-area:year;align-self:start;padding-top:13px;padding-left:18px;font-size:12px;z-index:3;}
+    .yr::before{left:12px;width:18px;height:18px;}
+    .yr::after{left:24px;width:8px;height:17px;top:calc(50% - 13px);}
+    .row:nth-child(even) .yr::after{left:24px;right:auto;transform:rotate(210deg);}
+    .yr span{position:relative;left:0;padding:5px 4px;background:rgba(58,78,45,.94);font-size:11px;white-space:nowrap;border-radius:3px;}
     .cell.l,.row:nth-child(even) .cell.l{transform:none;margin-left:0;padding:16px 16px 15px;}
     .cell.l::before{left:-20px;right:auto;width:22px;}
     .cell.a,.row:nth-child(even) .cell.a{transform:none;margin-left:0;padding:14px 14px 16px 20px;}
@@ -559,6 +565,66 @@
   }
   @media(prefers-reduced-motion:reduce){
     .hero-die-wrap .die,.floor{animation:none!important;}
+  }
+
+  /* ================= 作品图鉴 · 全部项目抽屉 ================= */
+  .cat-link{font:inherit;font-size:14px;font-weight:650;letter-spacing:.06em;color:#4e6b45;cursor:pointer;
+    padding:8px 0;border:0;border-bottom:1px solid rgba(78,107,69,.4);background:none;transition:color .25s,border-color .25s}
+  .cat-link:hover{color:#9a3a24;border-color:#9a3a24}
+  #v-hero .cat-link{margin:0 0 0 18px;display:inline-block;vertical-align:middle;padding-bottom:2px}
+  .fork-cat{display:flex;justify-content:center;margin:26px 0 0;position:relative;z-index:3}
+  .fork-cat .cat-link{font-size:13px;padding:9px 16px;border:1px solid rgba(160,138,104,.34);border-radius:2px;
+    background:rgba(251,248,241,.84);box-shadow:0 6px 16px rgba(60,52,36,.12)}
+  .fork-cat .cat-link:hover{border-color:#9a3a24}
+  .cat{position:fixed;inset:0;z-index:70;visibility:hidden;opacity:0;transition:opacity .32s ease,visibility .32s}
+  .cat.on{visibility:visible;opacity:1}
+  .cat-bd{position:absolute;inset:0;background:rgba(40,33,24,.42);backdrop-filter:blur(5px)}
+  .cat-panel{position:absolute;right:0;top:0;bottom:0;width:min(560px,100%);overflow-y:auto;-webkit-overflow-scrolling:touch;
+    padding:38px 34px 46px;border-left:1px solid rgba(160,138,104,.3);
+    background:linear-gradient(170deg,#fbf8f1,#f2ebdd);box-shadow:-26px 0 60px rgba(30,24,16,.34);
+    transform:translateX(26px);transition:transform .42s cubic-bezier(.2,1,.3,1)}
+  .cat.on .cat-panel{transform:none}
+  .cat-panel::before{content:'';position:absolute;inset:0;opacity:.3;mix-blend-mode:multiply;pointer-events:none;
+    background-image:var(--grain)}
+  .cat-panel>*{position:relative;z-index:2}
+  .cat-x{position:absolute;top:16px;right:18px;z-index:5;font:inherit;font-size:12.5px;cursor:pointer;
+    padding:7px 14px;border-radius:99px;border:1px solid rgba(160,138,104,.34);background:rgba(255,255,255,.7);color:var(--ink2)}
+  .cat-x:hover{color:var(--ink)}
+  .cat-kick{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink3);margin-bottom:9px}
+  .cat-h{font-family:var(--serif);font-size:30px;font-weight:600;letter-spacing:.04em;margin-bottom:8px;padding-right:70px}
+  .cat-intro{font-size:13px;line-height:1.8;color:var(--ink2);margin-bottom:18px;max-width:38em}
+  .cat-filters{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:22px}
+  .cat-chip{font:inherit;font-size:12.5px;cursor:pointer;padding:6px 12px;border-radius:2px;
+    border:1px solid rgba(160,138,104,.34);background:rgba(255,255,255,.5);color:#6b5a3e;transition:background .2s,color .2s,border-color .2s}
+  .cat-chip:hover{border-color:rgba(160,138,104,.7)}
+  .cat-chip.on{background:rgba(63,96,60,.9);color:#fbf8f1;border-color:rgba(63,96,60,.9)}
+  .cat-list{display:flex;flex-direction:column;gap:14px}
+  .cat-card{padding:18px 20px 16px;border:1px solid rgba(145,120,84,.28);background:rgba(255,253,246,.86);
+    box-shadow:0 10px 22px rgba(83,66,43,.08);clip-path:polygon(9px 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%,0 9px)}
+  .cat-card[hidden]{display:none}
+  .cat-card.flash{box-shadow:0 0 0 2px rgba(154,58,36,.45),0 10px 22px rgba(83,66,43,.1)}
+  .cat-head{display:flex;align-items:baseline;gap:10px;margin-bottom:6px}
+  .cat-no{font-family:var(--serif);font-size:12px;color:var(--gold2);letter-spacing:.08em}
+  .cat-card h3{font-family:var(--serif);font-size:18px;font-weight:600;color:#30492f;line-height:1.35}
+  .cat-meta{display:block;font-size:11.5px;color:var(--ink3);letter-spacing:.04em;margin-top:2px}
+  .cat-sum{font-size:13px;line-height:1.8;color:#4a5540;margin:8px 0 10px}
+  .cat-line{font-size:12.5px;line-height:1.75;color:#5b5342;margin-bottom:6px}
+  .cat-line b{font-weight:650;color:#6b5432;margin-right:6px}
+  .cat-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  .cat-tags span{font-size:11px;letter-spacing:.04em;padding:3px 8px;border-radius:2px;
+    background:rgba(160,138,104,.14);color:#6b5a3e;border:1px solid rgba(160,138,104,.28)}
+  .cat-rels{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}
+  .cat-rels button{font:inherit;font-size:11.5px;cursor:pointer;padding:5px 10px;border-radius:99px;
+    border:1px solid rgba(160,138,104,.42);background:rgba(255,255,255,.4);color:#5b5040;transition:border-color .2s,color .2s}
+  .cat-rels button:hover{border-color:#9a3a24;color:#9a3a24}
+  .cat-rels button span{color:#9d8e75;font-size:10.5px;margin-left:4px}
+  .cat-more{display:flex;justify-content:flex-start;margin-top:12px}
+  .cat-empty{font-size:12.5px;color:var(--ink3);padding:18px 2px}
+  @media(max-width:760px){
+    .cat-panel{width:100%;padding:32px 22px 40px}
+    .cat-h{font-size:26px}
+    .cat-card{padding:16px 16px 14px}
+    #v-hero .cat-link{margin:14px 0 0 18px;display:inline-block}
   }
 </style>
 </head>
@@ -582,6 +648,7 @@
       </div>
       <button class="enter" id="toFork">沿藤蔓出发 <span class="arr">→</span></button>
       <button class="about-link" id="navAbout" type="button">档案 · 关于我 →</button>
+      <button class="cat-link" id="heroCatalog" type="button" data-catalog="1">全部作品 ↗</button>
     </div>
     <div class="hero-scene" aria-hidden="true">
       <div class="hero-sun"></div>
@@ -662,6 +729,9 @@
         <span class="go">交给偶然一次 →</span>
       </button>
     </div>
+    <div class="fork-cat">
+      <button class="cat-link" type="button" data-catalog="1">不用掷骰，直接看全部作品 ↗</button>
+    </div>
   </div>
 </section>
 
@@ -721,6 +791,19 @@
     <label><input type="checkbox" id="dcSnd" checked> 音效</label>
   </div>
 </section>
+
+<!-- ============ 作品图鉴 ============ -->
+<div class="cat" id="cat" aria-hidden="true">
+  <div class="cat-bd" data-cat-close></div>
+  <aside class="cat-panel" id="catPanel" role="dialog" aria-modal="true" aria-labelledby="catTitle" tabindex="-1">
+    <button class="cat-x" id="catX" type="button">关闭</button>
+    <div class="cat-kick">All work / 作品图鉴</div>
+    <h2 class="cat-h" id="catTitle">全部项目</h2>
+    <p class="cat-intro">八组实践，六种观察角度。想按时间读，也可以从下面任意一个项目跳回它对应的经历。</p>
+    <div class="cat-filters" id="catFilters" role="group" aria-label="按认知角度筛选"></div>
+    <div class="cat-list" id="catList"></div>
+  </aside>
+</div>
 
 <!-- ============ 项目详情 ============ -->
 <div class="sheet" id="sheet"><div class="sheet-in" id="sheetIn"></div></div>
@@ -948,6 +1031,48 @@ var ABOUT={t:'关于我', s:'数量经济学硕士 · 国家奖学金 · 主导�
    honors:['国家奖学金','一等学业奖学金','三好研究生','优秀研究生干部','校级优秀毕业论文'],
    hi:['习惯「问题驱动 → 机制假设 → 模型验证 → 稳健性检验」闭环','聚焦任务编排、风险识别和最终验收，不绑定单一模型','对事实、规则、异常路径和最终结果负责']};
 
+/* =========================
+   作品图鉴：八组项目档案
+   简介与角度归属沿用冷光版 v7；「我做的部分」「留下的判断」均摘自本页时间线原文
+   ========================= */
+var CATALOG=[
+  {id:'reading', name:'伪人读书', type:'AI 内容与交互', when:'2026.07',
+   summary:'围绕原文阅读、模拟读者批注与防剧透规则组织低干扰的阅读体验。',
+   part:'让几个不同人设的 AI 读者陪同一本书。',
+   note:'一个人的问题，不等于一群人的问题。',
+   angles:['收窄','验证','沉淀','分工','落地','交付'], rel:['fake-reader']},
+  {id:'workbench', name:'求职工作台', type:'AI 应用与效率工具', when:'2026.05',
+   summary:'将岗位研究、事实核对、生成约束和联系跟进组织为可追溯流程。',
+   part:'本来指望靠它找到工作。',
+   note:'砍掉需要规模才能验证的功能。',
+   angles:['收窄','验证','沉淀','分工','落地','交付'], rel:['job-workbench']},
+  {id:'huafei', name:'华飞智营', type:'业务系统与交易', when:'2026.08',
+   summary:'梳理商品选购、订单履约、售后和员工权限的多端业务链路。',
+   part:'家里的公司要转零售，我来定义它该做什么。',
+   note:'先想清楚我们比电商平台多什么。',
+   angles:['收窄','验证','沉淀','分工','落地','交付'], rel:['wechat-miniapp']},
+  {id:'deskpet', name:'芽砚 Deskpet', type:'AI 陪伴与桌面交互', when:'2026.07',
+   summary:'探索低干扰桌面陪伴、专注记录、动画回退与用户确认的长期记忆。',
+   part:'看别人的桌宠眼馋，自己做一只。',
+   note:'换路，比死磕划算。',
+   angles:['收窄','分工','落地'], rel:['deskpet']},
+  {id:'decision-dice', name:'决策骰子', type:'交互实验', when:'2026.09',
+   summary:'以骰子交互探索选择与行动；独立产品与本作品集的六面导航不是同一个项目。',
+   part:'常在聊天框里丢骰子，干脆自己做了一个。',
+   note:'需求极小、自己就是用户的时候，动作最快。',
+   angles:['落地','交付'], rel:['dice']},
+  {id:'quant', name:'AI 量化投研平台', type:'数据产品与模型评估',
+   summary:'围绕数据分层、质量门禁、样本外模型比较与研究结果追溯组织工作台。',
+   angles:['验证','沉淀','落地','交付'], rel:[]},
+  {id:'research', name:'研究项目组 · 数字参与 / V2G', type:'因果评估与用户策略',
+   summary:'通过面板数据、问卷与分群分析研究政策效果、数字参与及价格敏感度。',
+   angles:['验证','交付'], rel:['grey-contest','v2g','thesis','papers','xinmiao']},
+  {id:'other', name:'补充实践 · 废品回收 / 软通动力', type:'业务与流程实践',
+   summary:'补充呈现业务调研、流程梳理、金融渠道指标监控及异常处理规范等经历。',
+   angles:['沉淀','交付'], rel:['recycle','softcom','hangzhou-month']}
+];
+var CAT_ANGLE_NAMES=['收窄','验证','沉淀','分工','落地','交付'];
+
 var dc={W:0,H:0,main:null,branch:null,buds:[],leafIdx:[3,8,14,20,26,32,38,44,47],groundCache:null,
         die:null,state:'idle',revealStage:'idle',litBud:-1,cardEl:null,restTimer:0,fallT:0,P:{tense:.72,wind:.24,snd:true},
         target:null,phase:0,stateAt:0,revealToken:0,revealTimer:0,cardTimer:0,
@@ -964,7 +1089,7 @@ var elLeaves=[0,1,2,3,4,5].map(function(i){return $('lf'+i)});
 function diceResize(){
   dc.W=dcStage.clientWidth; dc.H=dcStage.clientHeight;
   /* 骰子随视口放大，物理半径同步，避免视觉尺寸与碰撞体脱节。 */
-  var ds=Math.max(72,Math.min(96,Math.round(dc.W*.085)));
+  var ds=Math.max(48,Math.min(64,Math.round(dc.W*.057)));
   dcStage.style.setProperty('--die-s',ds+'px');
   dc.dieR=ds/2;
   if(dc.die) dc.die.r=dc.dieR;
@@ -1209,14 +1334,22 @@ function drawCanvasScene(now){
   }else{
   if(dcRoadImg.complete&&dcRoadImg.naturalWidth){
     /* road.png 自带透明天空与真实草路，按视口高度裁切，避免移动端只剩一条窄路。 */
-    var roadH=Math.max(dc.H*.62,520), roadY=dc.H-roadH-62;
-    var roadBase=ctx.createLinearGradient(0,dc.H*.73,0,dc.H);
-    roadBase.addColorStop(0,'#8aa564');roadBase.addColorStop(.24,'#6f8e4e');roadBase.addColorStop(1,'#3f6035');
-    ctx.fillStyle=roadBase;ctx.fillRect(0,dc.H*.73,dc.W,dc.H-dc.H*.73);
+    var roadH=Math.max(dc.H*.62,520), roadY=dc.H-roadH-18;
+    /* 底色从 0.72H 渐入，避免与上方照片形成一条水平硬边 */
+    var roadBase=ctx.createLinearGradient(0,dc.H*.72,0,dc.H);
+    roadBase.addColorStop(0,'rgba(138,165,100,0)');
+    roadBase.addColorStop(.10,'rgba(134,164,95,.62)');
+    roadBase.addColorStop(.26,'rgba(111,142,78,.92)');
+    roadBase.addColorStop(1,'#3f6035');
+    ctx.fillStyle=roadBase;ctx.fillRect(0,dc.H*.72,dc.W,dc.H-dc.H*.72);
     ctx.drawImage(dcRoadImg,-dc.W*.04,roadY,dc.W*1.08,roadH);
     var roadShade=ctx.createLinearGradient(0,dc.H*.77,0,dc.H);
     roadShade.addColorStop(0,'rgba(34,55,28,0)');roadShade.addColorStop(1,'rgba(24,40,22,.22)');
     ctx.fillStyle=roadShade;ctx.fillRect(0,dc.H*.77,dc.W,dc.H*.23);
+    /* 前景压暗：路面图底部收在视口内，用渐层把接缝揉进草地，避免一条硬边色带 */
+    var roadBlend=ctx.createLinearGradient(0,dc.H-110,0,dc.H);
+    roadBlend.addColorStop(0,'rgba(58,88,47,0)');roadBlend.addColorStop(.55,'rgba(52,80,43,.42)');roadBlend.addColorStop(1,'rgba(44,68,38,.62)');
+    ctx.fillStyle=roadBlend;ctx.fillRect(0,dc.H-110,dc.W,110);
   }else{
   /* 地面：一条泥土小径蜿蜒穿过草坡，通向远处被阳光照亮的沙土台。
      轮廓全部由确定性函数生成，每帧重绘不闪烁。物理地面仍是 y=dc.H*0.74。 */
@@ -1759,7 +1892,8 @@ function openSheet(i){
     +'<div class="sh-sec"><h5>我怎么看这件事</h5><p>'+p.intro+'</p></div>'
     +'<div class="sh-sec"><h5>我做到的几次</h5><ul class="sh-hi">'+practices+'</ul></div>'
     +'<div class="sh-sec"><h5>练到的能力</h5><ul class="sh-hi">'+skills+'</ul></div>'
-    +'<div class="sh-sec"><h5>相关经历</h5><div class="sh-rels">'+rel+'</div></div>';
+    +'<div class="sh-sec"><h5>相关经历</h5><div class="sh-rels">'+rel+'</div></div>'
+    +'<div class="sh-sec"><h5>换个角度看项目</h5><button class="cat-link" type="button" data-catalog="1" data-catalog-angle="'+p.t+'">看这个角度关联的全部项目 ↗</button></div>';
   $('sheet').classList.add('on');
   $('sheetX').addEventListener('click',closeSheet);
   $('sheetIn').querySelectorAll('[data-rel]').forEach(function(b){
@@ -1789,11 +1923,92 @@ var navAboutEl=$('navAbout');
 if(navAboutEl) navAboutEl.addEventListener('click',openAbout);
 function closeSheet(){ $('sheet').classList.remove('on'); }
 $('sheet').addEventListener('click',function(e){ if(e.target===$('sheet')) closeSheet(); });
-document.addEventListener('keydown',function(e){ if(e.key==='Escape') closeSheet(); });
+document.addEventListener('keydown',function(e){
+  if(e.key!=='Escape') return;
+  if($('cat').classList.contains('on')) closeCatalog(); else closeSheet();
+});
 document.addEventListener('click',function(e){
   var t=e.target.closest?e.target.closest('[data-detail]'):null;
   if(t) openSheet(Number(t.getAttribute('data-detail')));
 });
+
+/* ---- 作品图鉴 ---- */
+var catFilter='全部', catReturnFocus=null;
+function catCardHtml(p,i){
+  var angs=(p.angles||[]).map(function(a){return '<span>'+a+'</span>'}).join('');
+  var rels=(p.rel||[]).map(function(id){
+    var k=TL_IDS.indexOf(id); if(k<0) return '';
+    var r=TIMELINE[k]; if(!r) return '';
+    return '<button type="button" data-rel="'+id+'">'+r.l.t+'<span>'+r.y+'</span></button>';
+  }).join('');
+  return '<article class="cat-card" data-id="'+p.id+'" data-angles="'+(p.angles||[]).join(' ')+'">'
+    + '<div class="cat-head"><span class="cat-no">'+('0'+(i+1)).slice(-2)+'</span><div>'
+    + '<h3>'+p.name+'</h3><span class="cat-meta">'+p.type+(p.when?' · '+p.when:'')+'</span></div></div>'
+    + '<p class="cat-sum">'+p.summary+'</p>'
+    + (p.part?'<p class="cat-line"><b>我做的部分</b>'+p.part+'</p>':'')
+    + (p.note?'<p class="cat-line"><b>留下的判断</b>'+p.note+'</p>':'')
+    + (angs?'<div class="cat-tags">'+angs+'</div>':'')
+    + (rels?'<div class="cat-rels">'+rels+'</div>':'')
+    + '</article>';
+}
+function renderCatalog(){
+  var list=$('catList'), html='';
+  CATALOG.forEach(function(p,i){ html+=catCardHtml(p,i); });
+  list.innerHTML=html;
+  var filters='<button type="button" class="cat-chip" data-angle="全部">全部</button>';
+  CAT_ANGLE_NAMES.forEach(function(a){ filters+='<button type="button" class="cat-chip" data-angle="'+a+'">'+a+'</button>'; });
+  $('catFilters').innerHTML=filters;
+  syncCatFilter();
+}
+function syncCatFilter(){
+  var chips=$('catFilters').querySelectorAll('.cat-chip');
+  for(var i=0;i<chips.length;i++) chips[i].classList.toggle('on',chips[i].getAttribute('data-angle')===catFilter);
+  var cards=$('catList').querySelectorAll('.cat-card');
+  for(var j=0;j<cards.length;j++){
+    var on=catFilter==='全部'||(' '+cards[j].getAttribute('data-angles')+' ').indexOf(' '+catFilter+' ')>-1;
+    cards[j].hidden=!on;
+  }
+}
+function openCatalog(opts){
+  opts=opts||{};
+  if($('sheet').classList.contains('on')) closeSheet();
+  catReturnFocus=document.activeElement;
+  catFilter=opts.angle||'全部';
+  if(!$('catList').children.length) renderCatalog(); else syncCatFilter();
+  $('cat').classList.add('on');
+  $('cat').setAttribute('aria-hidden','false');
+  try{ $('catX').focus({preventScroll:true}); }catch(e){ $('catX').focus(); }
+  if(opts.project){
+    var card=$('catList').querySelector('.cat-card[data-id="'+opts.project+'"]');
+    if(card){
+      card.scrollIntoView({block:'center',behavior:'smooth'});
+      card.classList.add('flash');
+      setTimeout(function(){ card.classList.remove('flash'); },2200);
+    }
+  } else {
+    $('catPanel').scrollTop=0;
+  }
+}
+function closeCatalog(){
+  $('cat').classList.remove('on');
+  $('cat').setAttribute('aria-hidden','true');
+  if(catReturnFocus&&catReturnFocus.isConnected){
+    try{ catReturnFocus.focus({preventScroll:true}); }catch(e){}
+  }
+}
+function openCatalogByAngle(angle){ openCatalog({angle:angle}); }
+document.addEventListener('click',function(e){
+  var target=e.target;
+  var trig=target.closest?target.closest('[data-catalog]'):null;
+  if(trig){ e.preventDefault(); openCatalog({angle:trig.getAttribute('data-catalog-angle')||''}); return; }
+  var close=target.closest?target.closest('[data-cat-close]'):null;
+  if(close){ closeCatalog(); return; }
+  var chip=target.closest?target.closest('.cat-chip'):null;
+  if(chip){ catFilter=chip.getAttribute('data-angle'); syncCatFilter(); return; }
+  var rel=target.closest?target.closest('#catList [data-rel]'):null;
+  if(rel){ closeCatalog(); jumpToTimeline(rel.getAttribute('data-rel')); return; }
+});
+$('catX').addEventListener('click',closeCatalog);
 
 /* ---- 交互 ---- */
 function exitReveal(){
