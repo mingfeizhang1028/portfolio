@@ -1,7 +1,7 @@
 # 冷光档案馆 · 张明菲作品集
 
 > 当前版本：V13（对外叙事版）· 已上线
-> 线上地址：https://mingfeizhang1028.github.io/portfolio/
+> 线上地址：https://mingfeizhang1028.github.io/portfolio/cold/
 > 定位：AI 应用产品经理 · 产品设计 / 规则约束 / 验证与交付
 
 ## 简介
@@ -19,30 +19,33 @@
 
 | 版本 | 本地位置 | 线上地址 | 说明 |
 |---|---|---|---|
-| 冷光档案馆 V13（主版本） | 根目录 `index.html`、`explore.html`、各项目页 | `/` | 深色多页站，首页 + 九个项目档案 + 成长轨道 + 六面探索 |
-| 自然探索版 | `natural/index.html` | `/natural/` | 浅色水彩纸与藤蔓单页，时间线、掷骰、作品图鉴都在这一页里 |
+| 冷光档案馆 V13（主版本） | `cold/` | `/cold/` | 深色多页站，首页 + 九个项目档案 + 成长轨道 + 六面探索 |
+| 自然探索版 | `natural/` | `/natural/` | 浅色水彩纸与藤蔓单页，时间线、掷骰、作品图鉴都在这一页里 |
 | 旧冷光单页（归档） | `cold.html` | `/cold.html` | 上一版单页，保留旧链接可用，新站不再链接 |
 | 源包与素材归档 | `archive/` | 不发布 | V13 源包、设计稿、压缩包、旧工作记录 |
 
+根目录 `index.html` 只是一个即时跳转页，访问 `/` 会直接进入 `/cold/`，所以站点链接可以继续用根地址。
 两个在线版本互相有入口：冷光版页脚有「自然探索版 ↗」，自然探索版首屏有「冷光档案馆 →」。
 
 ## 目录
 
 ```
-index.html            冷光版首页（精选项目 / 探索入口 / 联系方式）
-explore.html          成长轨道 + 六面探索（?mode=time / ?mode=dice）
-reading.html          伪人读书
-workbench.html        求职工作台
-huafei.html           华飞智营
-deskpet.html          芽砚 Deskpet
-decision-dice.html    决策骰子
-quant.html            AI 量化投研平台
-research.html         研究项目组 · 数字参与 / V2G
-recycle.html          废品回收平台
-softtech.html         支付渠道运维实践
-style.css / site.js   冷光版样式与交互
-media/                项目真实截图
-assets/cold/          三维轨道组件（V13 用 orbit-archive-v13.html）
+index.html            根入口：即时跳转到 cold/（并保留自然版链接）
+cold/                 冷光档案馆 V13
+  index.html            首页（精选项目 / 探索入口 / 联系方式）
+  explore.html          成长轨道 + 六面探索（?mode=time / ?mode=dice）
+  reading.html          伪人读书
+  workbench.html        求职工作台
+  huafei.html           华飞智营
+  deskpet.html          芽砚 Deskpet
+  decision-dice.html    决策骰子
+  quant.html            AI 量化投研平台
+  research.html         研究项目组 · 数字参与 / V2G
+  recycle.html          废品回收平台
+  softtech.html         支付渠道运维实践
+  style.css / site.js   样式与交互
+  media/                项目真实截图
+  assets/cold/          三维轨道组件
 natural/              自然探索版：index.html + assets/ + media/
 cold.html             旧版冷光单页（归档）
 archive/              不发布的源包、设计稿、压缩包、旧工作记录
