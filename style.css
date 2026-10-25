@@ -129,3 +129,5 @@ body{font-size:16px} .nav{font-size:14px}.nav .contact{border-color:rgba(150,195
 @keyframes v8HeroCube{0%,100%{transform:rotateX(-29deg) rotateY(34deg)}50%{transform:rotateX(-32deg) rotateY(42deg)}}
 .cube-face{backface-visibility:hidden!important}
 @media(prefers-reduced-motion:reduce){.die-core.dice-3d{animation:none!important;transform:rotateX(-29deg) rotateY(34deg)!important}}
+
+.site-footer a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(145,166,193,.35);padding-bottom:2px}.site-footer a:hover{color:#cfe3fb;border-color:#cfe3fb}
