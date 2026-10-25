@@ -1,6 +1,8 @@
-# 部署只需要 index.html 和 assets/，其余为本地工作文件
-# 背景图已压成 jpg，原 PNG 留本地作素材
+# 上线内容：根目录冷光版 + natural/ 自然探索版 + cold.html 旧单页
+# 本地素材与归档
 assets/*.png
+archive/
+.workbuddy/
 .superpowers/
 .playwright-cli/
 docs/
@@ -9,6 +11,7 @@ _c9.js
 findings.md
 progress.md
 task_plan.md
+启动站点.cmd
 打开作品集.cmd
 .tmp_*
 *.b64
